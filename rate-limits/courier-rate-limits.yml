@@ -16,9 +16,11 @@ tags:
 - Quotas
 - Throttling
 description: Placeholder rate-limit artifact for Courier. Replace with real limits once researched.
-notes: Initial scaffold — limits have not yet been reconciled.
+notes: "Initial scaffold \u2014 limits have not yet been reconciled."
 sources:
 - https://www.courier.com/
+- https://www.courier.com/docs
+- https://www.courier.com/docs/reference
 responseCodes:
   throttled: 429
 limits:
