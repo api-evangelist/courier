@@ -1,0 +1,29 @@
+aid: courier
+url: https://raw.githubusercontent.com/api-evangelist/courier/refs/heads/main/apis.yml
+name: Courier
+x-type: company
+description: >-
+  Courier is a multi-channel notification API offering routing across email, SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Notifications
+  - Email
+  - SMS
+  - Push
+  - API
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://www.courier.com/
+  - type: Plans
+    url: plans/courier-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/courier-rate-limits.yml
+  - type: FinOps
+    url: finops/courier-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
