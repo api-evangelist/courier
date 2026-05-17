@@ -1,7 +1,7 @@
 aid: courier
 url: https://raw.githubusercontent.com/api-evangelist/courier/refs/heads/main/apis.yml
 name: Courier
-x-type: company
+kind: company
 description: Courier is a multi-channel notification API offering routing across email, SMS, push, chat, and in-app, with
   templates, preferences, and a no-code studio.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
