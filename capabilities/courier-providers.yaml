@@ -1,0 +1,286 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Providers
+  description: 'Courier — Providers. 6 operations. Lead operation: List providers. Self-contained Naftiko capability covering
+    one Courier business surface.'
+  tags:
+  - Courier
+  - Providers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-providers
+    baseUri: https://api.courier.com
+    description: Courier — Providers business capability. Self-contained, no shared references.
+    resources:
+    - name: providers
+      path: /providers
+      operations:
+      - name: providerslist
+        method: GET
+        description: List providers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: Opaque cursor for fetching the next page.
+      - name: providerscreate
+        method: POST
+        description: Create a provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: providers-catalog
+      path: /providers/catalog
+      operations:
+      - name: providerscatalog
+        method: GET
+        description: List available provider types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: keys
+          in: query
+          type: string
+          description: Comma-separated provider keys to filter by (e.g. `sendgrid,twilio`).
+        - name: name
+          in: query
+          type: string
+          description: Case-insensitive substring match against the provider display name.
+        - name: channel
+          in: query
+          type: string
+          description: Exact match (case-insensitive) against the provider channel taxonomy (e.g. `email`, `sms`, `push`).
+    - name: providers-id
+      path: /providers/{id}
+      operations:
+      - name: providersretrieve
+        method: GET
+        description: Get a provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: A unique identifier of the provider configuration.
+          required: true
+      - name: providersupdate
+        method: PUT
+        description: Update a provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: A unique identifier of the provider configuration to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: providersdelete
+        method: DELETE
+        description: Delete a provider
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: A unique identifier of the provider configuration to delete.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-providers-rest
+    port: 8080
+    description: REST adapter for Courier — Providers. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/providers
+      name: providers
+      description: REST surface for providers.
+      operations:
+      - method: GET
+        name: providerslist
+        description: List providers
+        call: courier-providers.providerslist
+        with:
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: providerscreate
+        description: Create a provider
+        call: courier-providers.providerscreate
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/providers/catalog
+      name: providers-catalog
+      description: REST surface for providers-catalog.
+      operations:
+      - method: GET
+        name: providerscatalog
+        description: List available provider types
+        call: courier-providers.providerscatalog
+        with:
+          keys: rest.keys
+          name: rest.name
+          channel: rest.channel
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/providers/{id}
+      name: providers-id
+      description: REST surface for providers-id.
+      operations:
+      - method: GET
+        name: providersretrieve
+        description: Get a provider
+        call: courier-providers.providersretrieve
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: providersupdate
+        description: Update a provider
+        call: courier-providers.providersupdate
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: providersdelete
+        description: Delete a provider
+        call: courier-providers.providersdelete
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-providers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Providers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-providers
+      description: List providers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-providers.providerslist
+      with:
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-provider
+      description: Create a provider
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-providers.providerscreate
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-available-provider-types
+      description: List available provider types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-providers.providerscatalog
+      with:
+        keys: tools.keys
+        name: tools.name
+        channel: tools.channel
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-provider
+      description: Get a provider
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-providers.providersretrieve
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-provider
+      description: Update a provider
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-providers.providersupdate
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-provider
+      description: Delete a provider
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: courier-providers.providersdelete
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

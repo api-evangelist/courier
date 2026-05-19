@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Send
+  description: 'Courier — Send. 1 operations. Lead operation: Send a message. Self-contained Naftiko capability covering one
+    Courier business surface.'
+  tags:
+  - Courier
+  - Send
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-send
+    baseUri: https://api.courier.com
+    description: Courier — Send business capability. Self-contained, no shared references.
+    resources:
+    - name: send
+      path: /send
+      operations:
+      - name: send
+        method: POST
+        description: Send a message
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-send-rest
+    port: 8080
+    description: REST adapter for Courier — Send. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/send
+      name: send
+      description: REST surface for send.
+      operations:
+      - method: POST
+        name: send
+        description: Send a message
+        call: courier-send.send
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-send-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Send. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: send-message
+      description: Send a message
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-send.send
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

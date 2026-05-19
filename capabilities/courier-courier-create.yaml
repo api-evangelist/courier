@@ -1,0 +1,303 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Courier Create
+  description: 'Courier — Courier Create. 5 operations. Lead operation: List Templates in Tenant. Self-contained Naftiko capability
+    covering one Courier business surface.'
+  tags:
+  - Courier
+  - Courier Create
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-courier-create
+    baseUri: https://api.courier.com
+    description: Courier — Courier Create business capability. Self-contained, no shared references.
+    resources:
+    - name: tenants-tenant_id-templates
+      path: /tenants/{tenant_id}/templates
+      operations:
+      - name: tenantsgettemplatelistbytenant
+        method: GET
+        description: List Templates in Tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_id
+          in: path
+          type: string
+          description: Id of the tenant for which to retrieve the templates.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: The number of templates to return (defaults to 20, maximum value of 100)
+        - name: cursor
+          in: query
+          type: string
+          description: Continue the pagination with the next cursor
+    - name: tenants-tenant_id-templates-template_id
+      path: /tenants/{tenant_id}/templates/{template_id}
+      operations:
+      - name: tenantsgettemplatebytenant
+        method: GET
+        description: Get a Template in Tenant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_id
+          in: path
+          type: string
+          description: Id of the tenant for which to retrieve the template.
+          required: true
+        - name: template_id
+          in: path
+          type: string
+          description: Id of the template to be retrieved.
+          required: true
+      - name: tenantsreplacetemplate
+        method: PUT
+        description: Create or Update a Tenant Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_id
+          in: path
+          type: string
+          description: Id of the tenant for which to create or update the template.
+          required: true
+        - name: template_id
+          in: path
+          type: string
+          description: Id of the template to be created or updated.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: tenants-tenant_id-templates-template_id-publish
+      path: /tenants/{tenant_id}/templates/{template_id}/publish
+      operations:
+      - name: tenantspublishtemplate
+        method: POST
+        description: Publish a Tenant Template
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_id
+          in: path
+          type: string
+          description: Id of the tenant that owns the template.
+          required: true
+        - name: template_id
+          in: path
+          type: string
+          description: Id of the template to be published.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: tenants-tenant_id-templates-template_id-versions-version
+      path: /tenants/{tenant_id}/templates/{template_id}/versions/{version}
+      operations:
+      - name: tenantsgettemplateversion
+        method: GET
+        description: Get a Specific Template Version
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tenant_id
+          in: path
+          type: string
+          description: Id of the tenant for which to retrieve the template.
+          required: true
+        - name: template_id
+          in: path
+          type: string
+          description: Id of the template to be retrieved.
+          required: true
+        - name: version
+          in: path
+          type: string
+          description: Version of the template to retrieve. Accepts "latest", "published", or a specific version string (e.g.,
+            "v1", "v2").
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-courier-create-rest
+    port: 8080
+    description: REST adapter for Courier — Courier Create. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/tenants/{tenant-id}/templates
+      name: tenants-tenant-id-templates
+      description: REST surface for tenants-tenant_id-templates.
+      operations:
+      - method: GET
+        name: tenantsgettemplatelistbytenant
+        description: List Templates in Tenant
+        call: courier-courier-create.tenantsgettemplatelistbytenant
+        with:
+          tenant_id: rest.tenant_id
+          limit: rest.limit
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/templates/{template-id}
+      name: tenants-tenant-id-templates-template-id
+      description: REST surface for tenants-tenant_id-templates-template_id.
+      operations:
+      - method: GET
+        name: tenantsgettemplatebytenant
+        description: Get a Template in Tenant
+        call: courier-courier-create.tenantsgettemplatebytenant
+        with:
+          tenant_id: rest.tenant_id
+          template_id: rest.template_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: tenantsreplacetemplate
+        description: Create or Update a Tenant Template
+        call: courier-courier-create.tenantsreplacetemplate
+        with:
+          tenant_id: rest.tenant_id
+          template_id: rest.template_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/templates/{template-id}/publish
+      name: tenants-tenant-id-templates-template-id-publish
+      description: REST surface for tenants-tenant_id-templates-template_id-publish.
+      operations:
+      - method: POST
+        name: tenantspublishtemplate
+        description: Publish a Tenant Template
+        call: courier-courier-create.tenantspublishtemplate
+        with:
+          tenant_id: rest.tenant_id
+          template_id: rest.template_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tenants/{tenant-id}/templates/{template-id}/versions/{version}
+      name: tenants-tenant-id-templates-template-id-versions-version
+      description: REST surface for tenants-tenant_id-templates-template_id-versions-version.
+      operations:
+      - method: GET
+        name: tenantsgettemplateversion
+        description: Get a Specific Template Version
+        call: courier-courier-create.tenantsgettemplateversion
+        with:
+          tenant_id: rest.tenant_id
+          template_id: rest.template_id
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-courier-create-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Courier Create. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-templates-tenant
+      description: List Templates in Tenant
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-courier-create.tenantsgettemplatelistbytenant
+      with:
+        tenant_id: tools.tenant_id
+        limit: tools.limit
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-template-tenant
+      description: Get a Template in Tenant
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-courier-create.tenantsgettemplatebytenant
+      with:
+        tenant_id: tools.tenant_id
+        template_id: tools.template_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-update-tenant-template
+      description: Create or Update a Tenant Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-courier-create.tenantsreplacetemplate
+      with:
+        tenant_id: tools.tenant_id
+        template_id: tools.template_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: publish-tenant-template
+      description: Publish a Tenant Template
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-courier-create.tenantspublishtemplate
+      with:
+        tenant_id: tools.tenant_id
+        template_id: tools.template_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-specific-template-version
+      description: Get a Specific Template Version
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-courier-create.tenantsgettemplateversion
+      with:
+        tenant_id: tools.tenant_id
+        template_id: tools.template_id
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.

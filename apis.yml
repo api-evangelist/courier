@@ -87,6 +87,8 @@ apis:
   - type: OpenAPI
     url: openapi/courier-openapi.yml
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/trycourier
 - type: Website
   url: https://www.courier.com/
 - type: Plans

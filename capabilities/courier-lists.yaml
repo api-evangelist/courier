@@ -1,0 +1,483 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Lists
+  description: 'Courier — Lists. 10 operations. Lead operation: Get all lists. Self-contained Naftiko capability covering
+    one Courier business surface.'
+  tags:
+  - Courier
+  - Lists
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-lists
+    baseUri: https://api.courier.com
+    description: Courier — Lists business capability. Self-contained, no shared references.
+    resources:
+    - name: lists
+      path: /lists
+      operations:
+      - name: listslist
+        method: GET
+        description: Get all lists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: A unique identifier that allows for fetching the next page of lists.
+        - name: pattern
+          in: query
+          type: string
+          description: '"A pattern used to filter the list items returned. Pattern types supported: exact match on `list_id`
+            or a pattern of one or more pattern parts. you may replace '
+    - name: lists-list_id
+      path: /lists/{list_id}
+      operations:
+      - name: listsget
+        method: GET
+        description: Get a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+      - name: listsupdate
+        method: PUT
+        description: Update a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listsdelete
+        method: DELETE
+        description: Delete a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+    - name: lists-list_id-restore
+      path: /lists/{list_id}/restore
+      operations:
+      - name: listsrestore
+        method: PUT
+        description: Restore a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: lists-list_id-subscriptions
+      path: /lists/{list_id}/subscriptions
+      operations:
+      - name: listsgetsubscribers
+        method: GET
+        description: Get the subscriptions for a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: cursor
+          in: query
+          type: string
+          description: A unique identifier that allows for fetching the next set of list subscriptions
+      - name: listsaddsubscribers
+        method: POST
+        description: Add subscribers to a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listsupdatesubscribers
+        method: PUT
+        description: Subscribe users to a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: lists-list_id-subscriptions-user_id
+      path: /lists/{list_id}/subscriptions/{user_id}
+      operations:
+      - name: listssubscribe
+        method: PUT
+        description: Subscribe a single user profile to a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the recipient associated with the list
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listsunsubscribe
+        method: DELETE
+        description: Unsubscribe a user profile from a list
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: list_id
+          in: path
+          type: string
+          description: A unique identifier representing the list you wish to retrieve.
+          required: true
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the recipient associated with the list
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-lists-rest
+    port: 8080
+    description: REST adapter for Courier — Lists. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/lists
+      name: lists
+      description: REST surface for lists.
+      operations:
+      - method: GET
+        name: listslist
+        description: Get all lists
+        call: courier-lists.listslist
+        with:
+          cursor: rest.cursor
+          pattern: rest.pattern
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/lists/{list-id}
+      name: lists-list-id
+      description: REST surface for lists-list_id.
+      operations:
+      - method: GET
+        name: listsget
+        description: Get a list
+        call: courier-lists.listsget
+        with:
+          list_id: rest.list_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: listsupdate
+        description: Update a list
+        call: courier-lists.listsupdate
+        with:
+          list_id: rest.list_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: listsdelete
+        description: Delete a list
+        call: courier-lists.listsdelete
+        with:
+          list_id: rest.list_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/lists/{list-id}/restore
+      name: lists-list-id-restore
+      description: REST surface for lists-list_id-restore.
+      operations:
+      - method: PUT
+        name: listsrestore
+        description: Restore a list
+        call: courier-lists.listsrestore
+        with:
+          list_id: rest.list_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/lists/{list-id}/subscriptions
+      name: lists-list-id-subscriptions
+      description: REST surface for lists-list_id-subscriptions.
+      operations:
+      - method: GET
+        name: listsgetsubscribers
+        description: Get the subscriptions for a list
+        call: courier-lists.listsgetsubscribers
+        with:
+          list_id: rest.list_id
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: listsaddsubscribers
+        description: Add subscribers to a list
+        call: courier-lists.listsaddsubscribers
+        with:
+          list_id: rest.list_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: listsupdatesubscribers
+        description: Subscribe users to a list
+        call: courier-lists.listsupdatesubscribers
+        with:
+          list_id: rest.list_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/lists/{list-id}/subscriptions/{user-id}
+      name: lists-list-id-subscriptions-user-id
+      description: REST surface for lists-list_id-subscriptions-user_id.
+      operations:
+      - method: PUT
+        name: listssubscribe
+        description: Subscribe a single user profile to a list
+        call: courier-lists.listssubscribe
+        with:
+          list_id: rest.list_id
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: listsunsubscribe
+        description: Unsubscribe a user profile from a list
+        call: courier-lists.listsunsubscribe
+        with:
+          list_id: rest.list_id
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-lists-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Lists. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-lists
+      description: Get all lists
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-lists.listslist
+      with:
+        cursor: tools.cursor
+        pattern: tools.pattern
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list
+      description: Get a list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-lists.listsget
+      with:
+        list_id: tools.list_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-list
+      description: Update a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-lists.listsupdate
+      with:
+        list_id: tools.list_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-list
+      description: Delete a list
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: courier-lists.listsdelete
+      with:
+        list_id: tools.list_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: restore-list
+      description: Restore a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-lists.listsrestore
+      with:
+        list_id: tools.list_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-subscriptions-list
+      description: Get the subscriptions for a list
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-lists.listsgetsubscribers
+      with:
+        list_id: tools.list_id
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-subscribers-list
+      description: Add subscribers to a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-lists.listsaddsubscribers
+      with:
+        list_id: tools.list_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: subscribe-users-list
+      description: Subscribe users to a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-lists.listsupdatesubscribers
+      with:
+        list_id: tools.list_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: subscribe-single-user-profile-list
+      description: Subscribe a single user profile to a list
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-lists.listssubscribe
+      with:
+        list_id: tools.list_id
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unsubscribe-user-profile-list
+      description: Unsubscribe a user profile from a list
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: courier-lists.listsunsubscribe
+      with:
+        list_id: tools.list_id
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Journeys
+  description: 'Courier — Journeys. 2 operations. Lead operation: List Journeys. Self-contained Naftiko capability covering
+    one Courier business surface.'
+  tags:
+  - Courier
+  - Journeys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-journeys
+    baseUri: https://api.courier.com
+    description: Courier — Journeys business capability. Self-contained, no shared references.
+    resources:
+    - name: journeys
+      path: /journeys
+      operations:
+      - name: journeyslist
+        method: GET
+        description: List Journeys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: cursor
+          in: query
+          type: string
+          description: A cursor token for pagination. Use the cursor from the previous response to fetch the next page of
+            results.
+        - name: version
+          in: query
+          type: string
+          description: The version of journeys to retrieve. Accepted values are published (for published journeys) or draft
+            (for draft journeys). Defaults to published.
+    - name: journeys-templateId-invoke
+      path: /journeys/{templateId}/invoke
+      operations:
+      - name: journeysinvoke
+        method: POST
+        description: Invoke a Journey
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: templateId
+          in: path
+          type: string
+          description: A unique identifier representing the journey template to be invoked. This could be the Journey Template
+            ID or the Journey Template Alias.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-journeys-rest
+    port: 8080
+    description: REST adapter for Courier — Journeys. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/journeys
+      name: journeys
+      description: REST surface for journeys.
+      operations:
+      - method: GET
+        name: journeyslist
+        description: List Journeys
+        call: courier-journeys.journeyslist
+        with:
+          cursor: rest.cursor
+          version: rest.version
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/journeys/{templateid}/invoke
+      name: journeys-templateid-invoke
+      description: REST surface for journeys-templateId-invoke.
+      operations:
+      - method: POST
+        name: journeysinvoke
+        description: Invoke a Journey
+        call: courier-journeys.journeysinvoke
+        with:
+          templateId: rest.templateId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-journeys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Journeys. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-journeys
+      description: List Journeys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-journeys.journeyslist
+      with:
+        cursor: tools.cursor
+        version: tools.version
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: invoke-journey
+      description: Invoke a Journey
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-journeys.journeysinvoke
+      with:
+        templateId: tools.templateId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

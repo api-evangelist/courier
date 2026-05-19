@@ -1,0 +1,366 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — User Profiles
+  description: 'Courier — User Profiles. 8 operations. Lead operation: Get a profile. Self-contained Naftiko capability covering
+    one Courier business surface.'
+  tags:
+  - Courier
+  - User Profiles
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-user-profiles
+    baseUri: https://api.courier.com
+    description: Courier — User Profiles business capability. Self-contained, no shared references.
+    resources:
+    - name: profiles-user_id
+      path: /profiles/{user_id}
+      operations:
+      - name: profilesget
+        method: GET
+        description: Get a profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested profile.
+          required: true
+      - name: profilescreate
+        method: POST
+        description: Create a profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested profile.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: profilesreplace
+        method: PUT
+        description: Replace a profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested user profile.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: profilesmergeprofile
+        method: PATCH
+        description: Update a profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested user profile.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: profilesdelete
+        method: DELETE
+        description: Delete a profile
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested user profile.
+          required: true
+    - name: profiles-user_id-lists
+      path: /profiles/{user_id}/lists
+      operations:
+      - name: profilesgetlistsubscriptions
+        method: GET
+        description: Get list subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested user profile.
+          required: true
+        - name: cursor
+          in: query
+          type: string
+          description: A unique identifier that allows for fetching the next set of message statuses.
+      - name: profilessubscribetolist
+        method: POST
+        description: Subscribe to one or more lists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested user profile.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: profilesdeletelistsubscription
+        method: DELETE
+        description: Delete list subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: user_id
+          in: path
+          type: string
+          description: A unique identifier representing the user associated with the requested profile.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-user-profiles-rest
+    port: 8080
+    description: REST adapter for Courier — User Profiles. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/profiles/{user-id}
+      name: profiles-user-id
+      description: REST surface for profiles-user_id.
+      operations:
+      - method: GET
+        name: profilesget
+        description: Get a profile
+        call: courier-user-profiles.profilesget
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: profilescreate
+        description: Create a profile
+        call: courier-user-profiles.profilescreate
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: profilesreplace
+        description: Replace a profile
+        call: courier-user-profiles.profilesreplace
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: profilesmergeprofile
+        description: Update a profile
+        call: courier-user-profiles.profilesmergeprofile
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: profilesdelete
+        description: Delete a profile
+        call: courier-user-profiles.profilesdelete
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/profiles/{user-id}/lists
+      name: profiles-user-id-lists
+      description: REST surface for profiles-user_id-lists.
+      operations:
+      - method: GET
+        name: profilesgetlistsubscriptions
+        description: Get list subscriptions
+        call: courier-user-profiles.profilesgetlistsubscriptions
+        with:
+          user_id: rest.user_id
+          cursor: rest.cursor
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: profilessubscribetolist
+        description: Subscribe to one or more lists
+        call: courier-user-profiles.profilessubscribetolist
+        with:
+          user_id: rest.user_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: profilesdeletelistsubscription
+        description: Delete list subscriptions
+        call: courier-user-profiles.profilesdeletelistsubscription
+        with:
+          user_id: rest.user_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-user-profiles-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — User Profiles. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-profile
+      description: Get a profile
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-user-profiles.profilesget
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-profile
+      description: Create a profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-user-profiles.profilescreate
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replace-profile
+      description: Replace a profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-user-profiles.profilesreplace
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-profile
+      description: Update a profile
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: courier-user-profiles.profilesmergeprofile
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-profile
+      description: Delete a profile
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: courier-user-profiles.profilesdelete
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-subscriptions
+      description: Get list subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: courier-user-profiles.profilesgetlistsubscriptions
+      with:
+        user_id: tools.user_id
+        cursor: tools.cursor
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: subscribe-one-more-lists
+      description: Subscribe to one or more lists
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-user-profiles.profilessubscribetolist
+      with:
+        user_id: tools.user_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-list-subscriptions
+      description: Delete list subscriptions
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: courier-user-profiles.profilesdeletelistsubscription
+      with:
+        user_id: tools.user_id
+      outputParameters:
+      - type: object
+        mapping: $.

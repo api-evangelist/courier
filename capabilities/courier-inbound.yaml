@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Courier — Inbound
+  description: 'Courier — Inbound. 1 operations. Lead operation: Courier Track Event. Self-contained Naftiko capability covering
+    one Courier business surface.'
+  tags:
+  - Courier
+  - Inbound
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COURIER_API_KEY: COURIER_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: courier-inbound
+    baseUri: https://api.courier.com
+    description: Courier — Inbound business capability. Self-contained, no shared references.
+    resources:
+    - name: inbound-courier
+      path: /inbound/courier
+      operations:
+      - name: inboundtrack
+        method: POST
+        description: Courier Track Event
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.COURIER_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: courier-inbound-rest
+    port: 8080
+    description: REST adapter for Courier — Inbound. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/inbound/courier
+      name: inbound-courier
+      description: REST surface for inbound-courier.
+      operations:
+      - method: POST
+        name: inboundtrack
+        description: Courier Track Event
+        call: courier-inbound.inboundtrack
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: courier-inbound-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Courier — Inbound. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: courier-track-event
+      description: Courier Track Event
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: courier-inbound.inboundtrack
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
