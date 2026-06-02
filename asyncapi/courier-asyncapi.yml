@@ -1,0 +1,363 @@
+asyncapi: '2.6.0'
+info:
+  title: Courier Inbox Real-Time API
+  version: '1.0.0'
+  description: |
+    AsyncAPI definition for Courier's Inbox WebSocket service used by the
+    Courier client SDKs (JS, React, React Native, iOS, Android, Flutter, Web
+    Components) to receive real-time, in-app notification events.
+
+    The Inbox socket delivers newly sent inbox messages and synchronizes
+    message state changes (read, unread, opened, archived, clicked, etc.)
+    across devices for the authenticated user.
+
+    Authentication uses a short-lived JWT issued by the Courier Issue Token
+    endpoint (`/auth/issue-token`). For Inbox functionality the JWT must
+    carry at minimum the `inbox:read:messages` and `inbox:write:events`
+    scopes.
+
+    Sources:
+      - https://www.courier.com/docs/sdk-libraries/courier-js-web
+      - https://www.courier.com/docs/platform/inbox/inbox-overview
+      - https://www.courier.com/docs/platform/inbox/authentication
+      - https://www.courier.com/docs/sdk-libraries/courier-react-web
+  contact:
+    name: Courier
+    url: https://www.courier.com/docs
+  license:
+    name: Proprietary
+    url: https://www.courier.com/legal/terms/
+
+defaultContentType: application/json
+
+servers:
+  us:
+    url: realtime.courier.io
+    protocol: wss
+    description: US real-time WebSocket endpoint (default).
+    security:
+      - inboxJwt: []
+  eu:
+    url: realtime.eu.courier.io
+    protocol: wss
+    description: EU real-time WebSocket endpoint.
+    security:
+      - inboxJwt: []
+
+channels:
+  inbox/message:
+    description: |
+      Fires when a new inbox message is delivered to the authenticated
+      user. Maps to the `NewMessage` (`'message'`) event emitted by the
+      SDKs via `addMessageEventListener()`.
+    subscribe:
+      operationId: onNewMessage
+      summary: New inbox message delivered in real time.
+      message:
+        $ref: '#/components/messages/NewMessageEvent'
+
+  inbox/read:
+    description: |
+      Fires when a message is marked as read. Synchronizes the read
+      state across all connected devices for the user.
+    subscribe:
+      operationId: onRead
+      summary: A message was marked read.
+      message:
+        $ref: '#/components/messages/ReadEvent'
+
+  inbox/unread:
+    description: |
+      Fires when a previously-read message is marked unread.
+    subscribe:
+      operationId: onUnread
+      summary: A message was marked unread.
+      message:
+        $ref: '#/components/messages/UnreadEvent'
+
+  inbox/opened:
+    description: |
+      Fires when a message is opened (viewed in detail).
+    subscribe:
+      operationId: onOpened
+      summary: A message was opened.
+      message:
+        $ref: '#/components/messages/OpenedEvent'
+
+  inbox/unopened:
+    description: |
+      Fires when a previously-opened message is marked unopened.
+    subscribe:
+      operationId: onUnopened
+      summary: A message was marked unopened.
+      message:
+        $ref: '#/components/messages/UnopenedEvent'
+
+  inbox/archive:
+    description: |
+      Fires when a single message is archived.
+    subscribe:
+      operationId: onArchive
+      summary: A message was archived.
+      message:
+        $ref: '#/components/messages/ArchiveEvent'
+
+  inbox/archive-all:
+    description: |
+      Fires when the user archives all messages.
+    subscribe:
+      operationId: onArchiveAll
+      summary: All messages were archived.
+      message:
+        $ref: '#/components/messages/ArchiveAllEvent'
+
+  inbox/archive-read:
+    description: |
+      Fires when the user archives all already-read messages.
+    subscribe:
+      operationId: onArchiveRead
+      summary: All read messages were archived.
+      message:
+        $ref: '#/components/messages/ArchiveReadEvent'
+
+  inbox/clicked:
+    description: |
+      Fires when a message (or one of its actions) is clicked.
+    subscribe:
+      operationId: onClicked
+      summary: A message was clicked.
+      message:
+        $ref: '#/components/messages/ClickedEvent'
+
+  inbox/mark-all-read:
+    description: |
+      Fires when all messages are marked read in bulk.
+    subscribe:
+      operationId: onMarkAllRead
+      summary: All messages were marked read.
+      message:
+        $ref: '#/components/messages/MarkAllReadEvent'
+
+components:
+  securitySchemes:
+    inboxJwt:
+      type: httpApiKey
+      in: query
+      name: token
+      description: |
+        Short-lived JWT issued by the Courier `/auth/issue-token` endpoint.
+        Must include the `inbox:read:messages` and `inbox:write:events`
+        scopes for the Inbox socket. Generate server-side only.
+
+  messages:
+    NewMessageEvent:
+      name: NewMessage
+      title: New Message
+      summary: A new inbox message was delivered.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    ReadEvent:
+      name: Read
+      title: Read
+      summary: A message was marked read.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    UnreadEvent:
+      name: Unread
+      title: Unread
+      summary: A message was marked unread.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    OpenedEvent:
+      name: Opened
+      title: Opened
+      summary: A message was opened.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    UnopenedEvent:
+      name: Unopened
+      title: Unopened
+      summary: A message was marked unopened.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    ArchiveEvent:
+      name: Archive
+      title: Archive
+      summary: A message was archived.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    ArchiveAllEvent:
+      name: ArchiveAll
+      title: Archive All
+      summary: All messages were archived.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxBulkEventEnvelope'
+
+    ArchiveReadEvent:
+      name: ArchiveRead
+      title: Archive Read
+      summary: All read messages were archived.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxBulkEventEnvelope'
+
+    ClickedEvent:
+      name: Clicked
+      title: Clicked
+      summary: A message or message action was clicked.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxMessageEventEnvelope'
+
+    MarkAllReadEvent:
+      name: MarkAllRead
+      title: Mark All Read
+      summary: All messages were marked read.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/InboxBulkEventEnvelope'
+
+  schemas:
+    InboxMessageEvent:
+      type: string
+      description: |
+        Enumeration of event types emitted on the Inbox WebSocket, as
+        defined by the `InboxMessageEvent` enum in the Courier client
+        SDKs. `NewMessage` is emitted over the wire as `'message'`.
+      enum:
+        - message
+        - read
+        - unread
+        - opened
+        - unopened
+        - archive
+        - archive-all
+        - archive-read
+        - clicked
+        - mark-all-read
+
+    InboxMessageEventEnvelope:
+      type: object
+      description: |
+        Envelope wrapping each per-message event delivered by the Inbox
+        socket. Mirrors the `InboxMessageEventEnvelope` type emitted to
+        `addMessageEventListener()` callbacks in the SDKs.
+      required:
+        - event
+      properties:
+        event:
+          $ref: '#/components/schemas/InboxMessageEvent'
+        message:
+          $ref: '#/components/schemas/InboxMessage'
+        messageId:
+          type: string
+          description: Identifier of the message the event applies to.
+        trackingId:
+          type: string
+          description: |
+            Tracking identifier associated with the state change (for
+            example the `readTrackingId` or `archiveTrackingId` from the
+            originating message).
+
+    InboxBulkEventEnvelope:
+      type: object
+      description: |
+        Envelope for bulk events that affect more than one message, such
+        as `ArchiveAll`, `ArchiveRead`, and `MarkAllRead`.
+      required:
+        - event
+      properties:
+        event:
+          $ref: '#/components/schemas/InboxMessageEvent'
+
+    InboxMessage:
+      type: object
+      description: |
+        Inbox message schema delivered over the socket. Mirrors the
+        `InboxMessage` TypeScript interface exposed by `@trycourier/courier-js`.
+      required:
+        - messageId
+      properties:
+        messageId:
+          type: string
+        title:
+          type: string
+        body:
+          type: string
+        preview:
+          type: string
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboxAction'
+        data:
+          type: object
+          additionalProperties: true
+          description: Arbitrary key-value metadata attached to the message.
+        created:
+          type: string
+          description: Creation timestamp.
+        archived:
+          type: string
+          description: Archived timestamp (set when the message is archived).
+        read:
+          type: string
+          description: Read timestamp (set when the message is read).
+        opened:
+          type: string
+          description: Opened timestamp (set when the message is opened).
+        tags:
+          type: array
+          items:
+            type: string
+        trackingIds:
+          $ref: '#/components/schemas/InboxTrackingIds'
+
+    InboxAction:
+      type: object
+      description: |
+        Action button rendered with an inbox message. Mirrors the
+        `InboxAction` TypeScript interface.
+      properties:
+        content:
+          type: string
+        href:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+        background_color:
+          type: string
+        style:
+          type: string
+
+    InboxTrackingIds:
+      type: object
+      description: |
+        Tracking identifiers used to acknowledge inbox state changes.
+      properties:
+        archiveTrackingId:
+          type: string
+        openTrackingId:
+          type: string
+        clickTrackingId:
+          type: string
+        deliverTrackingId:
+          type: string
+        unreadTrackingId:
+          type: string
+        readTrackingId:
+          type: string

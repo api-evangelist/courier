@@ -12,7 +12,7 @@ tags:
   - Push
   - API
 created: '2026-05-08'
-modified: '2026-05-08'
+modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
   - name: Courier Send API
@@ -86,6 +86,24 @@ apis:
       url: https://www.courier.com/docs/reference
     - type: OpenAPI
       url: openapi/courier-openapi.yml
+  - name: Courier Inbox Real-Time API
+    description: WebSocket service that delivers Inbox messages and message-state
+      events (read, unread, opened, archived, clicked, mark-all-read, archive-all,
+      archive-read) to authenticated users in real time.
+    humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
+    baseURL: wss://realtime.courier.io
+    tags:
+    - Inbox
+    - WebSocket
+    - Real-Time
+    - Events
+    properties:
+    - type: Documentation
+      url: https://www.courier.com/docs/platform/inbox/inbox-overview
+    - type: Documentation
+      url: https://www.courier.com/docs/sdk-libraries/courier-js-web
+    - type: AsyncAPI
+      url: asyncapi/courier-asyncapi.yml
 common:
   - type: GitHubOrganization
     url: https://github.com/trycourier
