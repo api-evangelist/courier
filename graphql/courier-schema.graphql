@@ -1,0 +1,882 @@
+"""
+Courier GraphQL Schema
+Native GraphQL API available at https://api.courier.com/graphql
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum MessageStatusEnum {
+  ENQUEUED
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  UNDELIVERABLE
+  CANCELED
+  UNMAPPED
+}
+
+enum NotificationType {
+  NOTIFICATION
+  AUTOMATION
+  TEST
+}
+
+enum NotificationChannelType {
+  EMAIL
+  SMS
+  PUSH
+  DIRECT_MESSAGE
+  INBOX
+  WEBHOOK
+}
+
+enum SubscriptionStatus {
+  SUBSCRIBED
+  UNSUBSCRIBED
+}
+
+enum TopicStatus {
+  OPTED_IN
+  OPTED_OUT
+  REQUIRED
+}
+
+enum StepType {
+  SEND
+  DELAY
+  FETCH_DATA
+  BRANCH
+  CANCEL
+  INVOKE
+  SEND_LIST
+  SUBSCRIBE
+  UNSUBSCRIBE
+  UPDATE_PROFILE
+}
+
+enum WebhookEventType {
+  SENT
+  DELIVERED
+  OPENED
+  CLICKED
+  BOUNCED
+  UNSUBSCRIBED
+  COMPLAINT
+  UNDELIVERABLE
+}
+
+# ─────────────────────────────────────────────
+# Message Types
+# ─────────────────────────────────────────────
+
+"""A notification message sent through Courier."""
+type Message {
+  messageId: String!
+  requestId: String
+  status: MessageStatusEnum!
+  enqueued: DateTime
+  sent: DateTime
+  delivered: DateTime
+  opened: DateTime
+  clicked: DateTime
+  recipient: String
+  notification: String
+  channel: String
+  provider: MessageProvider
+  content: MessageContent
+  data: MessageData
+  log: [MessageLog!]
+}
+
+"""High-level details of a message with routing context."""
+type MessageDetails {
+  messageId: String!
+  requestId: String
+  status: MessageStatusEnum!
+  notification: String
+  recipient: String
+  channel: MessageChannel
+  provider: MessageProvider
+  channels: [MessageChannel!]
+  providers: [MessageProvider!]
+  tags: [String!]
+  enqueued: DateTime
+  sent: DateTime
+}
+
+"""Status summary of a message delivery attempt."""
+type MessageStatus {
+  messageId: String!
+  status: MessageStatusEnum!
+  reason: String
+  code: String
+  updatedAt: DateTime
+}
+
+"""A single log entry for a message lifecycle event."""
+type MessageLog {
+  messageId: String!
+  timestamp: DateTime!
+  type: String!
+  body: String
+  error: String
+  details: JSON
+}
+
+"""Arbitrary data payload attached to a message."""
+type MessageData {
+  messageId: String!
+  data: JSON
+}
+
+"""Provider-level delivery details for a message."""
+type MessageProvider {
+  channel: String
+  provider: String
+  status: String
+  providerMessageId: String
+  reference: JSON
+  error: String
+  sentAt: DateTime
+  deliveredAt: DateTime
+}
+
+"""Channel-level routing details for a message."""
+type MessageChannel {
+  channel: String!
+  provider: String
+  status: String
+  reason: String
+  selected: Boolean
+}
+
+"""Rendered content of a message."""
+type MessageContent {
+  title: String
+  body: String
+  html: String
+  text: String
+  data: JSON
+}
+
+# ─────────────────────────────────────────────
+# Template / Notification Types
+# ─────────────────────────────────────────────
+
+"""A Courier notification template."""
+type Template {
+  templateId: String!
+  title: String!
+  created: DateTime
+  updated: DateTime
+  published: DateTime
+  type: NotificationType
+}
+
+"""Full details of a notification template."""
+type TemplateDetails {
+  templateId: String!
+  title: String!
+  tags: [String!]
+  channels: [TemplateChannel!]
+  fields: TemplateFields
+  created: DateTime
+  updated: DateTime
+}
+
+"""The human-readable name/title pair of a template."""
+type TemplateName {
+  id: String!
+  name: String!
+}
+
+"""Configurable fields/variables defined in a template."""
+type TemplateFields {
+  templateId: String!
+  fields: JSON
+}
+
+"""A channel configuration within a template."""
+type TemplateChannel {
+  channel: String!
+  provider: String
+  enabled: Boolean
+  config: JSON
+}
+
+"""A Courier notification definition (alias for template in some contexts)."""
+type Notification {
+  id: String!
+  title: String!
+  created: DateTime
+  updated: DateTime
+  type: NotificationType
+}
+
+"""Extended notification details including channel breakdown."""
+type NotificationDetails {
+  id: String!
+  title: String!
+  channels: [NotificationChannel!]
+  tags: [String!]
+  type: NotificationType
+  created: DateTime
+  updated: DateTime
+}
+
+"""Channel-specific configuration for a notification."""
+type NotificationChannel {
+  channel: String!
+  enabled: Boolean!
+  type: NotificationChannelType
+  providers: [String!]
+}
+
+"""A log entry for a notification-level event."""
+type NotificationLog {
+  notificationId: String!
+  timestamp: DateTime!
+  event: String!
+  details: JSON
+}
+
+# ─────────────────────────────────────────────
+# Recipient / Profile Types
+# ─────────────────────────────────────────────
+
+"""A notification recipient."""
+type Recipient {
+  recipientId: String!
+  email: String
+  phone: String
+  locale: String
+  profile: Profile
+}
+
+"""Detailed recipient record with channel addresses and metadata."""
+type RecipientDetails {
+  recipientId: String!
+  email: String
+  phone: String
+  locale: String
+  avatar: String
+  profile: ProfileDetails
+  preferences: PreferenceSet
+}
+
+"""Profile data embedded in a recipient."""
+type RecipientProfile {
+  recipientId: String!
+  email: String
+  phone: String
+  locale: String
+  data: JSON
+}
+
+"""A profile object with channel address fields."""
+type Profile {
+  email: String
+  phone_number: String
+  locale: String
+  name: String
+  avatar: String
+  data: JSON
+}
+
+"""Full profile details for a recipient."""
+type ProfileDetails {
+  recipientId: String!
+  email: String
+  phone_number: String
+  locale: String
+  name: String
+  avatar: String
+  custom: JSON
+  updatedAt: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Preference Types
+# ─────────────────────────────────────────────
+
+"""A recipient's full set of notification preferences."""
+type PreferenceSet {
+  recipientId: String!
+  categories: JSON
+  notifications: JSON
+  topics: [PreferenceTopic!]
+}
+
+"""Preference details for a specific notification or category."""
+type PreferenceDetails {
+  id: String!
+  status: TopicStatus!
+  rules: [TopicRule!]
+}
+
+"""A preference topic the recipient can opt in or out of."""
+type PreferenceTopic {
+  topicId: String!
+  topicName: String
+  status: TopicStatus!
+  hasCustomRouting: Boolean
+  customRouting: [String!]
+}
+
+"""A rule applied to a preference topic."""
+type TopicRule {
+  type: String!
+  until: DateTime
+  start: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Subscription / List Types
+# ─────────────────────────────────────────────
+
+"""A subscription record linking a recipient to a list."""
+type Subscription {
+  listId: String!
+  recipientId: String!
+  status: SubscriptionStatus!
+  subscribedAt: DateTime
+}
+
+"""A Courier subscription list."""
+type List {
+  listId: String!
+  name: String!
+  created: DateTime
+  updated: DateTime
+}
+
+"""Extended details for a list, including subscriber count."""
+type ListDetails {
+  listId: String!
+  name: String!
+  subscriberCount: Int
+  preferences: JSON
+  created: DateTime
+  updated: DateTime
+}
+
+"""A recipient's subscription record on a list."""
+type ListSubscription {
+  recipientId: String!
+  listId: String!
+  status: SubscriptionStatus!
+  preferences: JSON
+  subscribedAt: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Audience Types
+# ─────────────────────────────────────────────
+
+"""A dynamically computed audience segment."""
+type Audience {
+  audienceId: String!
+  name: String!
+  filter: AudienceFilter
+  created: DateTime
+  updated: DateTime
+}
+
+"""Full details of an audience including computed membership."""
+type AudienceDetails {
+  audienceId: String!
+  name: String!
+  description: String
+  filter: AudienceFilter
+  memberCount: Int
+  created: DateTime
+  updated: DateTime
+}
+
+"""Filter criteria for an audience segment."""
+type AudienceFilter {
+  operator: String!
+  rules: [JSON!]
+}
+
+# ─────────────────────────────────────────────
+# Brand Types
+# ─────────────────────────────────────────────
+
+"""A Courier brand theme."""
+type Brand {
+  brandId: String!
+  name: String!
+  published: DateTime
+  created: DateTime
+  updated: DateTime
+}
+
+"""Full brand configuration including colors, fonts, and logo."""
+type BrandDetails {
+  brandId: String!
+  name: String!
+  colors: BrandColor
+  font: BrandFont
+  logo: BrandLogo
+  settings: JSON
+  created: DateTime
+  updated: DateTime
+}
+
+"""Color palette for a brand."""
+type BrandColor {
+  primary: String
+  secondary: String
+  tertiary: String
+}
+
+"""Font configuration for a brand."""
+type BrandFont {
+  family: String
+  size: String
+  weight: String
+}
+
+"""Logo asset configuration for a brand."""
+type BrandLogo {
+  image: String
+  href: String
+}
+
+# ─────────────────────────────────────────────
+# Event Types
+# ─────────────────────────────────────────────
+
+"""A Courier event that maps to a notification template."""
+type Event {
+  eventId: String!
+  notificationId: String
+  type: String
+}
+
+"""Full event details with mapping and metadata."""
+type EventDetails {
+  eventId: String!
+  notificationId: String
+  type: String
+  created: DateTime
+  updated: DateTime
+}
+
+"""A log entry for an event invocation."""
+type EventLog {
+  eventId: String!
+  timestamp: DateTime!
+  recipientId: String
+  requestId: String
+  status: String
+  details: JSON
+}
+
+# ─────────────────────────────────────────────
+# Channel-Specific Log Types
+# ─────────────────────────────────────────────
+
+"""Delivery log for an email channel message."""
+type EmailLog {
+  messageId: String!
+  provider: String!
+  toAddress: String
+  subject: String
+  status: String!
+  sentAt: DateTime
+  deliveredAt: DateTime
+  openedAt: DateTime
+  clickedAt: DateTime
+  error: String
+}
+
+"""Delivery log for a Slack channel message."""
+type SlackLog {
+  messageId: String!
+  provider: String
+  channel: String
+  status: String!
+  ts: String
+  sentAt: DateTime
+  error: String
+}
+
+"""Delivery log for a push notification channel message."""
+type PushLog {
+  messageId: String!
+  provider: String!
+  deviceToken: String
+  status: String!
+  sentAt: DateTime
+  deliveredAt: DateTime
+  error: String
+}
+
+"""Delivery log for an SMS channel message."""
+type SMSLog {
+  messageId: String!
+  provider: String!
+  toPhone: String
+  status: String!
+  sentAt: DateTime
+  deliveredAt: DateTime
+  error: String
+  segments: Int
+}
+
+# ─────────────────────────────────────────────
+# Automation Types
+# ─────────────────────────────────────────────
+
+"""An automation workflow definition."""
+type Automation {
+  automationId: String!
+  name: String
+  templateId: String
+  created: DateTime
+  updated: DateTime
+}
+
+"""Full automation details including step definitions."""
+type AutomationDetails {
+  automationId: String!
+  name: String
+  templateId: String
+  cancelationToken: String
+  steps: [Step!]
+  created: DateTime
+  updated: DateTime
+}
+
+"""A single execution run of an automation workflow."""
+type AutomationRun {
+  runId: String!
+  automationId: String!
+  status: String!
+  recipientId: String
+  startedAt: DateTime
+  completedAt: DateTime
+  steps: [StepRun!]
+}
+
+"""A step definition within an automation workflow."""
+type Step {
+  stepId: String!
+  type: StepType!
+  action: JSON
+  ref: String
+}
+
+"""Full details of an automation step including configuration."""
+type StepDetails {
+  stepId: String!
+  automationId: String!
+  type: StepType!
+  action: JSON
+  if_: String
+  ref: String
+}
+
+"""The result of executing a single automation step."""
+type StepRun {
+  stepId: String!
+  runId: String!
+  type: StepType!
+  status: String!
+  startedAt: DateTime
+  completedAt: DateTime
+  output: JSON
+  error: String
+}
+
+# ─────────────────────────────────────────────
+# Workspace / API Key Types
+# ─────────────────────────────────────────────
+
+"""A Courier workspace (tenant)."""
+type Workspace {
+  workspaceId: String!
+  name: String!
+  created: DateTime
+}
+
+"""Full workspace details."""
+type WorkspaceDetails {
+  workspaceId: String!
+  name: String!
+  domain: String
+  apiKeys: [APIKey!]
+  created: DateTime
+  updated: DateTime
+}
+
+"""An API key associated with a workspace."""
+type APIKey {
+  keyId: String!
+  name: String!
+  scope: String
+  created: DateTime
+  lastUsed: DateTime
+}
+
+"""A short-lived JWT token issued for client-side use."""
+type Token {
+  token: String!
+  expiresAt: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Webhook Types
+# ─────────────────────────────────────────────
+
+"""An event payload delivered via webhook."""
+type WebhookEvent {
+  id: String!
+  type: WebhookEventType!
+  timestamp: DateTime!
+  data: JSON
+}
+
+"""A webhook endpoint registration."""
+type Webhook {
+  webhookId: String!
+  url: String!
+  events: [WebhookEventType!]
+  active: Boolean!
+  created: DateTime
+  updated: DateTime
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+"""Input to send a notification via GraphQL mutation."""
+input SendNotificationInput {
+  event: String
+  recipient: String
+  brand: String
+  profile: JSON
+  data: JSON
+  preferences: JSON
+  routing: JSON
+  channels: JSON
+  providers: JSON
+}
+
+"""Input to create or update a recipient profile."""
+input ProfileInput {
+  email: String
+  phone_number: String
+  locale: String
+  name: String
+  avatar: String
+  data: JSON
+}
+
+"""Input to subscribe a recipient to a list."""
+input ListSubscriptionInput {
+  listId: String!
+  recipientId: String!
+  preferences: JSON
+}
+
+"""Input to set preference topic status for a recipient."""
+input PreferenceInput {
+  topicId: String!
+  status: TopicStatus!
+  hasCustomRouting: Boolean
+  customRouting: [String!]
+}
+
+"""Input for paginated queries."""
+input PaginationInput {
+  cursor: String
+  pageSize: Int
+}
+
+# ─────────────────────────────────────────────
+# Connection / Pagination Types
+# ─────────────────────────────────────────────
+
+"""A page of Message results."""
+type MessageConnection {
+  nodes: [Message!]!
+  pageInfo: PageInfo!
+}
+
+"""A page of Template results."""
+type TemplateConnection {
+  nodes: [Template!]!
+  pageInfo: PageInfo!
+}
+
+"""A page of List results."""
+type ListConnection {
+  nodes: [List!]!
+  pageInfo: PageInfo!
+}
+
+"""Pagination metadata."""
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+# ─────────────────────────────────────────────
+# Root Query
+# ─────────────────────────────────────────────
+
+type Query {
+  """Fetch a single message by ID."""
+  message(messageId: String!): Message
+
+  """Fetch detailed delivery information for a message."""
+  messageDetails(messageId: String!): MessageDetails
+
+  """Fetch the current status of a message."""
+  messageStatus(messageId: String!): MessageStatus
+
+  """List messages with optional filters and pagination."""
+  messages(
+    recipientId: String
+    notificationId: String
+    status: MessageStatusEnum
+    pagination: PaginationInput
+  ): MessageConnection
+
+  """Fetch a notification template by ID."""
+  template(templateId: String!): TemplateDetails
+
+  """List all notification templates."""
+  templates(pagination: PaginationInput): TemplateConnection
+
+  """Fetch a notification definition by ID."""
+  notification(notificationId: String!): NotificationDetails
+
+  """Fetch a recipient profile by ID."""
+  recipient(recipientId: String!): RecipientDetails
+
+  """Fetch a recipient's notification preferences."""
+  preferences(recipientId: String!): PreferenceSet
+
+  """Fetch a subscription list by ID."""
+  list(listId: String!): ListDetails
+
+  """List all subscription lists."""
+  lists(cursor: String): ListConnection
+
+  """Fetch subscriptions for a list."""
+  listSubscriptions(listId: String!, cursor: String): [ListSubscription!]
+
+  """Fetch an audience segment by ID."""
+  audience(audienceId: String!): AudienceDetails
+
+  """Fetch a brand by ID."""
+  brand(brandId: String!): BrandDetails
+
+  """List all brands."""
+  brands: [Brand!]
+
+  """Fetch event mapping by event ID."""
+  event(eventId: String!): EventDetails
+
+  """List all event mappings."""
+  events: [Event!]
+
+  """Fetch an automation by ID."""
+  automation(automationId: String!): AutomationDetails
+
+  """Fetch an automation run by ID."""
+  automationRun(runId: String!): AutomationRun
+
+  """Fetch workspace details."""
+  workspace: WorkspaceDetails
+
+  """List API keys for the current workspace."""
+  apiKeys: [APIKey!]
+
+  """Fetch a webhook registration by ID."""
+  webhook(webhookId: String!): Webhook
+
+  """List all webhook registrations."""
+  webhooks: [Webhook!]
+}
+
+# ─────────────────────────────────────────────
+# Root Mutation
+# ─────────────────────────────────────────────
+
+type Mutation {
+  """Send a notification to a recipient."""
+  sendNotification(input: SendNotificationInput!): MessageStatus
+
+  """Create or replace a recipient profile."""
+  mergeProfile(recipientId: String!, profile: ProfileInput!): RecipientDetails
+
+  """Patch specific fields of a recipient profile."""
+  patchProfile(recipientId: String!, profile: ProfileInput!): RecipientDetails
+
+  """Delete a recipient profile."""
+  deleteProfile(recipientId: String!): Boolean
+
+  """Subscribe a recipient to a list."""
+  subscribe(input: ListSubscriptionInput!): Subscription
+
+  """Unsubscribe a recipient from a list."""
+  unsubscribe(listId: String!, recipientId: String!): Boolean
+
+  """Create a new subscription list."""
+  createList(listId: String!, name: String!): List
+
+  """Update a subscription list name."""
+  updateList(listId: String!, name: String!): List
+
+  """Delete a subscription list."""
+  deleteList(listId: String!): Boolean
+
+  """Set notification preferences for a recipient."""
+  setPreferences(recipientId: String!, preferences: [PreferenceInput!]!): PreferenceSet
+
+  """Create or update a brand."""
+  putBrand(brandId: String!, name: String!, settings: JSON): BrandDetails
+
+  """Delete a brand."""
+  deleteBrand(brandId: String!): Boolean
+
+  """Map an event ID to a notification template."""
+  putEvent(eventId: String!, notificationId: String!, type: String): Event
+
+  """Delete an event mapping."""
+  deleteEvent(eventId: String!): Boolean
+
+  """Invoke an automation run."""
+  invokeAutomation(templateId: String!, data: JSON, recipient: JSON): AutomationRun
+
+  """Cancel an automation run by cancelation token."""
+  cancelAutomation(cancelationToken: String!): Boolean
+
+  """Issue a short-lived JWT token for a recipient."""
+  issueToken(recipientId: String!, scope: String!): Token
+
+  """Register a new webhook endpoint."""
+  createWebhook(url: String!, events: [WebhookEventType!]!): Webhook
+
+  """Update an existing webhook registration."""
+  updateWebhook(webhookId: String!, url: String, events: [WebhookEventType!], active: Boolean): Webhook
+
+  """Delete a webhook registration."""
+  deleteWebhook(webhookId: String!): Boolean
+}

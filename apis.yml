@@ -2,121 +2,123 @@ aid: courier
 url: https://raw.githubusercontent.com/api-evangelist/courier/refs/heads/main/apis.yml
 name: Courier
 kind: company
-description: Courier is a multi-channel notification API offering routing across email, SMS, push, chat, and in-app, with
-  templates, preferences, and a no-code studio.
+description: Courier is a multi-channel notification API offering routing across email,
+  SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Notifications
-  - Email
-  - SMS
-  - Push
-  - API
+- Notifications
+- Email
+- SMS
+- Push
+- API
 created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
-  - name: Courier Send API
-    description: Send notifications across channels with templates and routing.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Send
-    - Multi-Channel
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier User Profiles API
-    description: Manage recipient profile data and channel addresses.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Users
-    - Profiles
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier Lists API
-    description: Manage subscription lists for broadcast notifications.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Lists
-    - Subscriptions
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier Events API
-    description: Trigger notifications via mapped event types.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Events
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier Brands API
-    description: Configure brand themes used across templates.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Brands
-    - Branding
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier Authentication API
-    description: Issue JWTs for client-side and inbox authentication.
-    humanURL: https://www.courier.com/docs/reference
-    baseURL: https://api.courier.com
-    tags:
-    - Authentication
-    - JWT
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/reference
-    - type: OpenAPI
-      url: openapi/courier-openapi.yml
-  - name: Courier Inbox Real-Time API
-    description: WebSocket service that delivers Inbox messages and message-state
-      events (read, unread, opened, archived, clicked, mark-all-read, archive-all,
-      archive-read) to authenticated users in real time.
-    humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
-    baseURL: wss://realtime.courier.io
-    tags:
-    - Inbox
-    - WebSocket
-    - Real-Time
-    - Events
-    properties:
-    - type: Documentation
-      url: https://www.courier.com/docs/platform/inbox/inbox-overview
-    - type: Documentation
-      url: https://www.courier.com/docs/sdk-libraries/courier-js-web
-    - type: AsyncAPI
-      url: asyncapi/courier-asyncapi.yml
+- name: Courier Send API
+  description: Send notifications across channels with templates and routing.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Send
+  - Multi-Channel
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+  - url: graphql/courier-graphql.md
+    type: GraphQL
+- name: Courier User Profiles API
+  description: Manage recipient profile data and channel addresses.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Users
+  - Profiles
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+- name: Courier Lists API
+  description: Manage subscription lists for broadcast notifications.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Lists
+  - Subscriptions
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+- name: Courier Events API
+  description: Trigger notifications via mapped event types.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Events
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+- name: Courier Brands API
+  description: Configure brand themes used across templates.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Brands
+  - Branding
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+- name: Courier Authentication API
+  description: Issue JWTs for client-side and inbox authentication.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Authentication
+  - JWT
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: OpenAPI
+    url: openapi/courier-openapi.yml
+- name: Courier Inbox Real-Time API
+  description: WebSocket service that delivers Inbox messages and message-state events
+    (read, unread, opened, archived, clicked, mark-all-read, archive-all, archive-read)
+    to authenticated users in real time.
+  humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
+  baseURL: wss://realtime.courier.io
+  tags:
+  - Inbox
+  - WebSocket
+  - Real-Time
+  - Events
+  properties:
+  - type: Documentation
+    url: https://www.courier.com/docs/platform/inbox/inbox-overview
+  - type: Documentation
+    url: https://www.courier.com/docs/sdk-libraries/courier-js-web
+  - type: AsyncAPI
+    url: asyncapi/courier-asyncapi.yml
 common:
-  - type: GitHubOrganization
-    url: https://github.com/trycourier
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/trycourier
-  - type: Website
-    url: https://www.courier.com/
-  - type: Plans
-    url: plans/courier-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/courier-rate-limits.yml
-  - type: FinOps
-    url: finops/courier-finops.yml
+- type: GitHubOrganization
+  url: https://github.com/trycourier
+- type: LinkedIn
+  url: https://www.linkedin.com/company/trycourier
+- type: Website
+  url: https://www.courier.com/
+- type: Plans
+  url: plans/courier-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/courier-rate-limits.yml
+- type: FinOps
+  url: finops/courier-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
