@@ -1,0 +1,3040 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Send",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Send a message to one or more recipients."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the specified user profile."
+        },
+        {
+          "info": {
+            "name": "Create a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Merge the supplied values with an existing profile or create a new profile if one doesn't already exist."
+        },
+        {
+          "info": {
+            "name": "Replace a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. \nAny key-value pairs that exist in the profile but fail to be included in the `PUT` request will be \nremoved from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, \nuse the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request."
+        },
+        {
+          "info": {
+            "name": "Update a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a profile"
+        },
+        {
+          "info": {
+            "name": "Delete a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the specified user profile."
+        },
+        {
+          "info": {
+            "name": "Get list subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of message statuses."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the subscribed lists for a specified user."
+        },
+        {
+          "info": {
+            "name": "Subscribe to one or more lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes the given user to one or more lists. If the list does not exist, it will be created."
+        },
+        {
+          "info": {
+            "name": "Delete list subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes all list subscriptions for given user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next page of lists."
+              },
+              {
+                "name": "pattern",
+                "value": "",
+                "type": "query",
+                "description": "\"A pattern used to filter the list items returned. Pattern types supported: exact match on `list_id` or a pattern of one or more pattern parts. you may replace a part with either: `*` to match all parts in that position, or `**` to signify a wildcard `endsWith` pattern match.\""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all of the lists, with the ability to filter based on a pattern."
+        },
+        {
+          "info": {
+            "name": "Get a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list based on the list ID provided."
+        },
+        {
+          "info": {
+            "name": "Update a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or replace an existing list with the supplied values."
+        },
+        {
+          "info": {
+            "name": "Delete a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a list by list ID."
+        },
+        {
+          "info": {
+            "name": "Restore a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/restore",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restore a previously deleted list."
+        },
+        {
+          "info": {
+            "name": "Get the subscriptions for a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of list subscriptions"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list's subscriptions."
+        },
+        {
+          "info": {
+            "name": "Add subscribers to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes additional users to the list, without modifying existing subscriptions. If the list does not exist, it will be automatically created."
+        },
+        {
+          "info": {
+            "name": "Subscribe users to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes the users to the list, overwriting existing subscriptions. If the list does not exist, it will be automatically created."
+        },
+        {
+          "info": {
+            "name": "Subscribe a single user profile to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions/:user_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the recipient associated with the list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribe a user to an existing list (note: if the List does not exist, it will be automatically created)."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe a user profile from a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions/:user_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the recipient associated with the list"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a subscription to a list by list ID and user ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience_id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the specified audience by id."
+        },
+        {
+          "info": {
+            "name": "Update an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates audience."
+        },
+        {
+          "info": {
+            "name": "Delete an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the specified audience."
+        },
+        {
+          "info": {
+            "name": "List audience members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences/:audience_id/members",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of members"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get list of members of an audience."
+        },
+        {
+          "info": {
+            "name": "List all audiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of audiences"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the audiences associated with the authorization token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sent Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/messages",
+            "params": [
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "A boolean value that indicates whether archived messages should be included in the response."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of messages."
+              },
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier representing the event that was used to send the event."
+              },
+              {
+                "name": "list",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier representing the list the message was sent to."
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier representing the message_id returned from either /send or /send/list."
+              },
+              {
+                "name": "notification",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier representing the notification that was used to send the event."
+              },
+              {
+                "name": "provider",
+                "value": "",
+                "type": "query",
+                "description": "The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier representing the recipient associated with the requested profile."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "An indicator of the current status of the message. Allows multiple values to be set in query parameters."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters."
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Messages sent with the context of a Tenant"
+              },
+              {
+                "name": "enqueued_after",
+                "value": "",
+                "type": "query",
+                "description": "The enqueued datetime of a message to filter out messages received before."
+              },
+              {
+                "name": "traceId",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier used to trace the requests"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch the statuses of messages you've previously sent."
+        },
+        {
+          "info": {
+            "name": "Get message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/messages/:message_id",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the message you wish to retrieve (results from a send)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch the status of a message you've previously sent."
+        },
+        {
+          "info": {
+            "name": "Cancel message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/messages/:message_id/cancel",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the message ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a message that is currently in the process of being delivered. A well-formatted API call to the cancel message API will return either `200` status code for a successful cancellation or `409` status code for an unsuccessful cancellation. Both cases will include the actual message record in the response body (see details below)."
+        },
+        {
+          "info": {
+            "name": "Get message history",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/messages/:message_id/history",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the message ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "A supported Message History type that will filter the events returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch the array of events of a message you've previously sent."
+        },
+        {
+          "info": {
+            "name": "Get message content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/messages/:message_id/output",
+            "params": [
+              {
+                "name": "message_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the message you wish to retrieve (results from a send)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get message content"
+        },
+        {
+          "info": {
+            "name": "Archive message",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/requests/:request_id/archive",
+            "params": [
+              {
+                "name": "request_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the request ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Archive message"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Notification Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Notification Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "notes",
+                "value": "",
+                "type": "query",
+                "description": "Include template notes in the response. Only applies to legacy templates."
+              },
+              {
+                "name": "event_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to templates linked to this event map ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List notification templates in your workspace."
+        },
+        {
+          "info": {
+            "name": "Create Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/notifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a notification template. Requires all fields in the notification object. Templates are created in draft state by default."
+        },
+        {
+          "info": {
+            "name": "Get Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version to retrieve. One of \"draft\", \"published\", or a version string like \"v001\". Defaults to \"published\"."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a notification template by ID. Returns the published version by default. Pass version=draft to retrieve an unpublished template."
+        },
+        {
+          "info": {
+            "name": "Replace Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace a notification template. All fields are required."
+        },
+        {
+          "info": {
+            "name": "Archive Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Archive a notification template."
+        },
+        {
+          "info": {
+            "name": "List Notification Template Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/versions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of versions to return per page. Default 10, max 10."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List versions of a notification template."
+        },
+        {
+          "info": {
+            "name": "Publish Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/notifications/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Publish a notification template. Publishes the current draft by default. Pass a version in the request body to publish a specific historical version."
+        },
+        {
+          "info": {
+            "name": "Get Notification Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults to `published`."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the content of a notification template. The response shape depends on whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use the `version` query parameter to select draft, published, or a specific historical version."
+        },
+        {
+          "info": {
+            "name": "Put Notification Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace the elemental content of a notification template. Overwrites all elements in the template with the provided content. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Put Notification Element",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/elements/:elementId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "path",
+                "description": "Element ID within the template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a single element within a notification template. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Put Notification Locale",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/locales/:localeId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "localeId",
+                "value": "",
+                "type": "path",
+                "description": "Locale code (e.g., `es`, `fr`, `pt-BR`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set locale-specific content overrides for a notification template. Each element override must reference an existing element by ID. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Get Submission Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the checks for a notification template submission."
+        },
+        {
+          "info": {
+            "name": "Replace Submission Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace the checks for a notification template submission."
+        },
+        {
+          "info": {
+            "name": "Cancel Submission",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a notification template submission."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a JWT",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/auth/issue-token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a new access token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the tenant to be returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Replace a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the tenant to be returned."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or Replace a Tenant"
+        },
+        {
+          "info": {
+            "name": "Delete a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Tenant"
+        },
+        {
+          "info": {
+            "name": "Get a List of Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants",
+            "params": [
+              {
+                "name": "parent_tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter the list of tenants by parent_id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of tenants to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a List of Tenants"
+        },
+        {
+          "info": {
+            "name": "Get Users in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/users",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for user membership."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Users in Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Replace Default Preferences For Topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id/default_preferences/items/:topic_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to update the default preferences for."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the subscription topic you want to have a default preference for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or Replace Default Preferences For Topic"
+        },
+        {
+          "info": {
+            "name": "Remove Default Preferences For Topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/tenants/:tenant_id/default_preferences/items/:topic_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to update the default preferences for."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the subscription topic you want to have a default preference for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove Default Preferences For Topic"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tenants associated with a given user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to retrieve all associated tenants for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of user tenant associations."
+        },
+        {
+          "info": {
+            "name": "Add a User to Multiple Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to add a user to\nmultiple tenants in one call.\nA custom profile can also be supplied for each tenant. \nThis profile will be merged with the user's main \nprofile when sending to the user with that tenant."
+        },
+        {
+          "info": {
+            "name": "Remove User From All Associated Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be removed from the supplied tenant."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from any tenants they may have been associated with."
+        },
+        {
+          "info": {
+            "name": "Add a User to a Single Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be added to the supplied tenant."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant the user should be added to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to add a single tenant.\n\nA custom profile can also be supplied with the tenant. \nThis profile will be merged with the user's main profile \nwhen sending to the user with that tenant."
+        },
+        {
+          "info": {
+            "name": "Remove User from a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be removed from the supplied tenant."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant the user should be removed from."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from the supplied tenant."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user's preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/preferences",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Query the preferences of a user for this specific tenant context."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch all user preferences."
+        },
+        {
+          "info": {
+            "name": "Get user subscription topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/preferences/:topic_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with a subscription topic."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Query the preferences of a user for this specific tenant context."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch user preferences for a specific subscription topic."
+        },
+        {
+          "info": {
+            "name": "Update or Create user preferences for a specific subscription topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/preferences/:topic_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with a subscription topic."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Update the preferences of a user for this specific tenant context."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update or Create user preferences for a specific subscription topic."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Device Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tokens",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets all tokens available for a :user_id"
+        },
+        {
+          "info": {
+            "name": "Add multiple tokens to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tokens",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds multiple tokens to a user and overwrites matching existing tokens."
+        },
+        {
+          "info": {
+            "name": "Get single token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get single token available for a `:token`"
+        },
+        {
+          "info": {
+            "name": "Add single token to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a single token to a user and overwrites a matching existing token."
+        },
+        {
+          "info": {
+            "name": "Update a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Apply a JSON Patch (RFC 6902) to the specified token."
+        },
+        {
+          "info": {
+            "name": "Delete User Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete User Token"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/automations",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of templates to retrieve. Accepted values are published (for published templates) or draft (for draft templates). Defaults to published."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of automations."
+        },
+        {
+          "info": {
+            "name": "Invoke an Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/automations/:templateId/invoke",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke an automation run from an automation template."
+        },
+        {
+          "info": {
+            "name": "Invoke an Ad Hoc Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/automations/invoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Journeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Journeys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/journeys",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of journeys to retrieve. Accepted values are published (for published journeys) or draft (for draft journeys). Defaults to published."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of journeys."
+        },
+        {
+          "info": {
+            "name": "Invoke a Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/journeys/:templateId/invoke",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke a journey run from a journey template."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Brands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/brands",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of brands."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of brands."
+        },
+        {
+          "info": {
+            "name": "Create a new brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/brands",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new brand"
+        },
+        {
+          "info": {
+            "name": "Get a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a specific brand by brand ID."
+        },
+        {
+          "info": {
+            "name": "Replace a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace an existing brand with the supplied values."
+        },
+        {
+          "info": {
+            "name": "Delete a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a brand by brand ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inbound",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Courier Track Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/inbound/courier",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Courier Track Event"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Translations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/translations/:domain/:locale",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain you want to retrieve translations for. Only `default` is supported at the moment"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "path",
+                "description": "The locale you want to retrieve the translations for"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get translations by locale"
+        },
+        {
+          "info": {
+            "name": "Update translations by locale",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/translations/:domain/:locale",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain you want to retrieve translations for. Only `default` is supported at the moment"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "path",
+                "description": "The locale you want to retrieve the translations for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a translation"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Courier Create",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Template in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Template in Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Update a Tenant Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to create or update the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be created or updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates a notification template for a tenant.\n\nIf the template already exists for the tenant, it will be updated (200).\nOtherwise, a new template is created (201).\n\nOptionally publishes the template immediately if the `published` flag is set to true.\n"
+        },
+        {
+          "info": {
+            "name": "Publish a Tenant Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id/publish",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant that owns the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be published."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Publishes a specific version of a notification template for a tenant.\n\nThe template must already exist in the tenant's notification map.\nIf no version is specified, defaults to publishing the \"latest\" version.\n"
+        },
+        {
+          "info": {
+            "name": "Get a Specific Template Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id/versions/:version",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be retrieved."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetches a specific version of a tenant template.\n\nSupports the following version formats:\n- `latest` - The most recent version of the template\n- `published` - The currently published version\n- `v{version}` - A specific version (e.g., \"v1\", \"v2\", \"v1.0.0\")\n"
+        },
+        {
+          "info": {
+            "name": "List Templates in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the templates."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of templates to return (defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Templates in Tenant"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bulk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a bulk job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new bulk job for sending messages to multiple recipients.\n\n**Required**: `message.event` (event ID or notification ID)\n\n**Optional (V2 format)**: `message.template` (notification ID) or `message.content` (Elemental content) \ncan be provided to override the notification associated with the event.\n"
+        },
+        {
+          "info": {
+            "name": "Get a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/bulk/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a bulk job"
+        },
+        {
+          "info": {
+            "name": "Add users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Ingest user data into a Bulk Job. \n\n**Important**: For email-based bulk jobs, each user must include `profile.email` \nfor provider routing to work correctly. The `to.email` field is not sufficient \nfor email provider routing.\n"
+        },
+        {
+          "info": {
+            "name": "Run a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk/:job_id/run",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Run a bulk job"
+        },
+        {
+          "info": {
+            "name": "Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/bulk/:job_id/users",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of users added to the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Bulk Job Users"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audit Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all audit events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audit-events",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of audit events."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch the list of audit events"
+        },
+        {
+          "info": {
+            "name": "Get an audit event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audit-events/:audit-event-id",
+            "params": [
+              {
+                "name": "audit-event-id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the audit event you wish to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a specific audit event by ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Routing Strategies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Routing Strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page. Default 20, max 100."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List routing strategies in your workspace. Returns metadata only (no routing/channels/providers content). Use GET /routing-strategies/{id} for full details."
+        },
+        {
+          "info": {
+            "name": "Create Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/routing-strategies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a routing strategy. Requires a name and routing configuration at minimum. Channels and providers default to empty if omitted."
+        },
+        {
+          "info": {
+            "name": "Get Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a routing strategy by ID. Returns the full entity including routing content and metadata."
+        },
+        {
+          "info": {
+            "name": "Replace Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace a routing strategy. Full document replacement; the caller must send the complete desired state. Missing optional fields are cleared."
+        },
+        {
+          "info": {
+            "name": "Archive Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Archive a routing strategy. The strategy must not have associated notification templates. Unlink all templates before archiving."
+        },
+        {
+          "info": {
+            "name": "List Associated Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies/:id/notifications",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (`rs_` prefix)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page. Default 20, max 100."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List notification templates associated with a routing strategy. Includes template metadata only, not full content."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/providers",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque cursor for fetching the next page."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List configured provider integrations for the current workspace. Supports cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Create a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new provider configuration. The `provider` field must be a known Courier provider key (see catalog)."
+        },
+        {
+          "info": {
+            "name": "List available provider types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/providers/catalog",
+            "params": [
+              {
+                "name": "keys",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider keys to filter by (e.g. `sendgrid,twilio`)."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Case-insensitive substring match against the provider display name."
+              },
+              {
+                "name": "channel",
+                "value": "",
+                "type": "query",
+                "description": "Exact match (case-insensitive) against the provider channel taxonomy (e.g. `email`, `sms`, `push`)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the catalog of available provider types with their display names, descriptions, and configuration schema fields (snake_case, with `type` and `required`). Providers with no configurable schema return only `provider`, `name`, and `description`."
+        },
+        {
+          "info": {
+            "name": "Get a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/providers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier of the provider configuration."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a single provider configuration by ID."
+        },
+        {
+          "info": {
+            "name": "Update a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/providers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier of the provider configuration to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace an existing provider configuration. The `provider` key is required and determines which provider-specific settings schema is applied. All other fields are optional — omitted fields are cleared from the stored configuration (this is a full replacement, not a partial merge). Changing the provider type for an existing configuration is not supported."
+        },
+        {
+          "info": {
+            "name": "Delete a provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/providers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier of the provider configuration to delete."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a provider configuration. Returns 409 if the provider is still referenced by routing or notifications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
