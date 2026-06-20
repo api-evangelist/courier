@@ -4,7 +4,7 @@ name: Courier
 kind: company
 description: Courier is a multi-channel notification API offering routing across email,
   SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Notifications
 - Email
