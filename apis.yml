@@ -107,6 +107,12 @@ apis:
   - type: AsyncAPI
     url: asyncapi/courier-asyncapi.yml
 common:
+- type: TrustCenter
+  url: security/courier-trust-center.yml
+- type: DomainSecurity
+  url: security/courier-domain-security.yml
+- type: Authentication
+  url: authentication/courier-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/trycourier
 - type: LinkedIn
@@ -119,6 +125,8 @@ common:
   url: rate-limits/courier-rate-limits.yml
 - type: FinOps
   url: finops/courier-finops.yml
+- url: https://www.courier.com/blog/feed
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
