@@ -1,0 +1,13 @@
+{
+  "repo": "courier",
+  "feeds": [
+    {
+      "source": "https://www.courier.com/blog/feed",
+      "feed_url": "https://www.courier.com/blog/feed",
+      "saved": 0,
+      "error": "no_feed_no_posts"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 25
+}
