@@ -107,6 +107,8 @@ apis:
   - type: AsyncAPI
     url: asyncapi/courier-asyncapi.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/courier-agentic-access.yml
 - type: TrustCenter
   url: security/courier-trust-center.yml
 - type: DomainSecurity
