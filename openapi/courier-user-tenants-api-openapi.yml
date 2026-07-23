@@ -1,0 +1,218 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences User Tenants API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: User Tenants
+paths:
+  /users/{user_id}/tenants:
+    get:
+      description: Returns a paginated list of user tenant associations.
+      operationId: users_tenants_list
+      tags:
+      - User Tenants
+      parameters:
+      - name: user_id
+        in: path
+        description: Id of the user to retrieve all associated tenants for.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+        required: false
+        schema:
+          type: integer
+          nullable: true
+      - name: cursor
+        in: query
+        description: Continue the pagination with the next cursor
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersListTenantsForUserResponse'
+      summary: Get tenants associated with a given user
+      security:
+      - BearerAuth: []
+    put:
+      description: "This endpoint is used to add a user to\nmultiple tenants in one call.\nA custom profile can also be supplied for each tenant. \nThis profile will be merged with the user's main \nprofile when sending to the user with that tenant."
+      operationId: users_tenants_addMultiple
+      tags:
+      - User Tenants
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Add a User to Multiple Tenants
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tenants:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserTenantAssociation'
+              required:
+              - tenants
+    delete:
+      description: Removes a user from any tenants they may have been associated with.
+      operationId: users_tenants_removeAll
+      tags:
+      - User Tenants
+      parameters:
+      - name: user_id
+        in: path
+        description: Id of the user to be removed from the supplied tenant.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Remove User From All Associated Tenants
+      security:
+      - BearerAuth: []
+  /users/{user_id}/tenants/{tenant_id}:
+    put:
+      description: "This endpoint is used to add a single tenant.\n\nA custom profile can also be supplied with the tenant. \nThis profile will be merged with the user's main profile \nwhen sending to the user with that tenant."
+      operationId: users_tenants_add
+      tags:
+      - User Tenants
+      parameters:
+      - name: user_id
+        in: path
+        description: Id of the user to be added to the supplied tenant.
+        required: true
+        schema:
+          type: string
+      - name: tenant_id
+        in: path
+        description: Id of the tenant the user should be added to.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Add a User to a Single Tenant
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  additionalProperties: true
+                  nullable: true
+    delete:
+      description: Removes a user from the supplied tenant.
+      operationId: users_tenants_remove
+      tags:
+      - User Tenants
+      parameters:
+      - name: user_id
+        in: path
+        description: Id of the user to be removed from the supplied tenant.
+        required: true
+        schema:
+          type: string
+      - name: tenant_id
+        in: path
+        description: Id of the tenant the user should be removed from.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Remove User from a Tenant
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    UsersListTenantsForUserResponse:
+      title: UsersListTenantsForUserResponse
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTenantAssociation'
+          nullable: true
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        next_url:
+          type: string
+          nullable: true
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when `has_more` is set to true"
+        cursor:
+          type: string
+          nullable: true
+          description: "A pointer to the next page of results. Defined \nonly when `has_more` is set to true"
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to `list`. Represents the type of this object.
+      required:
+      - has_more
+      - url
+      - type
+    UserTenantAssociation:
+      title: UserTenantAssociation
+      type: object
+      properties:
+        user_id:
+          type: string
+          nullable: true
+          description: User ID for the association between tenant and user
+        type:
+          type: string
+          enum:
+          - user
+          nullable: true
+        tenant_id:
+          type: string
+          description: Tenant ID for the association between tenant and user
+        profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Additional metadata to be applied to a user profile when used in a tenant context
+      required:
+      - tenant_id
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -1,0 +1,510 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences User Profiles API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: User Profiles
+paths:
+  /profiles/{user_id}:
+    get:
+      description: Returns the specified user profile.
+      operationId: profiles_get
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileGetResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get a profile
+      security:
+      - BearerAuth: []
+    post:
+      description: Merge the supplied values with an existing profile or create a new profile if one doesn't already exist.
+      operationId: profiles_create
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeProfileResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Create a profile
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  additionalProperties: true
+              required:
+              - profile
+    put:
+      description: "When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. \nAny key-value pairs that exist in the profile but fail to be included in the `PUT` request will be \nremoved from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, \nuse the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request."
+      operationId: profiles_replace
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested user profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplaceProfileResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Replace a profile
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: object
+                  additionalProperties: true
+              required:
+              - profile
+    patch:
+      operationId: profiles_mergeProfile
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested user profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Update a profile
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileUpdateRequest'
+    delete:
+      description: Deletes the specified user profile.
+      operationId: profiles_delete
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested user profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Delete a profile
+      security:
+      - BearerAuth: []
+  /profiles/{user_id}/lists:
+    get:
+      description: Returns the subscribed lists for a specified user.
+      operationId: profiles_getListSubscriptions
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested user profile.
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of message statuses.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetListSubscriptionsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get list subscriptions
+      security:
+      - BearerAuth: []
+    post:
+      description: Subscribes the given user to one or more lists. If the list does not exist, it will be created.
+      operationId: profiles_subscribeToList
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested user profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscribeToListsResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Subscribe to one or more lists
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeToListsRequest'
+    delete:
+      description: Removes all list subscriptions for given user.
+      operationId: profiles_deleteListSubscription
+      tags:
+      - User Profiles
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier representing the user associated with the requested profile.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteListSubscriptionResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Delete list subscriptions
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    GetListSubscriptionsItem:
+      title: GetListSubscriptionsItem
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: List name
+        created:
+          type: string
+          description: The date/time of when the list was created. Represented as a string in ISO format.
+        updated:
+          type: string
+          description: The date/time of when the list was updated. Represented as a string in ISO format.
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - id
+      - name
+      - created
+      - updated
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    SubscribeToListsRequest:
+      title: SubscribeToListsRequest
+      type: object
+      properties:
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscribeToListsRequestItem'
+      required:
+      - lists
+    NotificationPreferenceDetails:
+      title: NotificationPreferenceDetails
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rule'
+          nullable: true
+        channel_preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
+          nullable: true
+      required:
+      - status
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type: string
+          nullable: true
+        until:
+          type: string
+      required:
+      - until
+    ProfileUpdateRequest:
+      title: ProfileUpdateRequest
+      type: object
+      properties:
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfilePatch'
+          description: List of patch operations to apply to the profile.
+      required:
+      - patch
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
+    SubscribeToListsRequestItem:
+      title: SubscribeToListsRequestItem
+      type: object
+      properties:
+        listId:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - listId
+    MergeProfileResponse:
+      title: MergeProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    ReplaceProfileResponse:
+      title: ReplaceProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    RecipientPreferences:
+      title: RecipientPreferences
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/NotificationPreferences'
+          nullable: true
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+          nullable: true
+    UserProfilePatch:
+      title: UserProfilePatch
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to perform.
+        path:
+          type: string
+          description: The JSON path specifying the part of the profile to operate on.
+        value:
+          type: string
+          description: The value for the operation.
+      required:
+      - op
+      - path
+      - value
+    ProfileGetResponse:
+      title: ProfileGetResponse
+      type: object
+      properties:
+        profile:
+          type: object
+          additionalProperties: true
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - profile
+    SubscribeToListsResponse:
+      title: SubscribeToListsResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    DeleteListSubscriptionResponse:
+      title: DeleteListSubscriptionResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    GetListSubscriptionsResponse:
+      title: GetListSubscriptionsResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetListSubscriptionsItem'
+          description: An array of lists
+      required:
+      - paging
+      - results
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

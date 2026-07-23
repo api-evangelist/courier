@@ -1,0 +1,122 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Audit Events API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Audit Events
+paths:
+  /audit-events:
+    get:
+      description: Fetch the list of audit events
+      operationId: auditEvents_list
+      tags:
+      - Audit Events
+      parameters:
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of audit events.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAuditEventsResponse'
+      summary: Get all audit events
+      security:
+      - BearerAuth: []
+  /audit-events/{audit-event-id}:
+    get:
+      description: Fetch a specific audit event by ID.
+      operationId: auditEvents_get
+      tags:
+      - Audit Events
+      parameters:
+      - name: audit-event-id
+        in: path
+        description: A unique identifier associated with the audit event you wish to retrieve
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditEvent'
+      summary: Get an audit event
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    AuditEvent:
+      title: AuditEvent
+      type: object
+      properties:
+        auditEventId:
+          type: string
+        actor:
+          $ref: '#/components/schemas/Actor'
+        target:
+          type: string
+        source:
+          type: string
+        timestamp:
+          type: string
+        type:
+          type: string
+      required:
+      - auditEventId
+      - actor
+      - target
+      - source
+      - timestamp
+      - type
+    Actor:
+      title: Actor
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          nullable: true
+      required:
+      - id
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+    ListAuditEventsResponse:
+      title: ListAuditEventsResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEvent'
+      required:
+      - paging
+      - results
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

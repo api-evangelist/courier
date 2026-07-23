@@ -1,0 +1,497 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Brands API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Brands
+paths:
+  /brands:
+    post:
+      operationId: brands_create
+      tags:
+      - Brands
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '402':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentRequired'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlreadyExists'
+      summary: Create a new brand
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandParameters'
+    get:
+      description: Get the list of brands.
+      operationId: brands_list
+      tags:
+      - Brands
+      parameters:
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of brands.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrandsResponse'
+      summary: List brands
+      security:
+      - BearerAuth: []
+  /brands/{brand_id}:
+    get:
+      description: Fetch a specific brand by brand ID.
+      operationId: brands_get
+      tags:
+      - Brands
+      parameters:
+      - name: brand_id
+        in: path
+        description: A unique identifier associated with the brand you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+      summary: Get a brand
+      security:
+      - BearerAuth: []
+    put:
+      description: Replace an existing brand with the supplied values.
+      operationId: brands_replace
+      tags:
+      - Brands
+      parameters:
+      - name: brand_id
+        in: path
+        description: A unique identifier associated with the brand you wish to update.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Brand'
+      summary: Replace a brand
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the brand.
+                settings:
+                  $ref: '#/components/schemas/BrandSettings'
+                  nullable: true
+                snippets:
+                  $ref: '#/components/schemas/BrandSnippets'
+                  nullable: true
+              required:
+              - name
+    delete:
+      description: Delete a brand by brand ID.
+      operationId: brands_delete
+      tags:
+      - Brands
+      parameters:
+      - name: brand_id
+        in: path
+        description: A unique identifier associated with the brand you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+      summary: Delete a brand
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Brand:
+      title: Brand
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        published:
+          type: integer
+          format: int64
+          nullable: true
+        created:
+          type: integer
+          format: int64
+        updated:
+          type: integer
+          format: int64
+        settings:
+          $ref: '#/components/schemas/BrandSettings'
+          nullable: true
+        snippets:
+          $ref: '#/components/schemas/BrandSnippets'
+          nullable: true
+        version:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+      - created
+      - updated
+    BrandSettingsInApp:
+      title: BrandSettingsInApp
+      type: object
+      properties:
+        borderRadius:
+          type: string
+          nullable: true
+        disableMessageIcon:
+          type: boolean
+          nullable: true
+        fontFamily:
+          type: string
+          nullable: true
+        placement:
+          $ref: '#/components/schemas/InAppPlacement'
+          nullable: true
+        widgetBackground:
+          $ref: '#/components/schemas/WidgetBackground'
+        colors:
+          $ref: '#/components/schemas/BrandColors'
+        icons:
+          $ref: '#/components/schemas/Icons'
+      required:
+      - widgetBackground
+      - colors
+      - icons
+    BrandTemplate:
+      title: BrandTemplate
+      type: object
+      properties:
+        backgroundColor:
+          type: string
+          nullable: true
+        blocksBackgroundColor:
+          type: string
+          nullable: true
+        enabled:
+          type: boolean
+        footer:
+          type: string
+          nullable: true
+        head:
+          type: string
+          nullable: true
+        header:
+          type: string
+          nullable: true
+        width:
+          type: string
+          nullable: true
+      required:
+      - enabled
+    PaymentRequired:
+      title: PaymentRequired
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - authorization_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BrandSnippets:
+      title: BrandSnippets
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BrandSnippet'
+          nullable: true
+    WidgetBackground:
+      title: WidgetBackground
+      type: object
+      properties:
+        topColor:
+          type: string
+          nullable: true
+        bottomColor:
+          type: string
+          nullable: true
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    EmailFooter:
+      title: EmailFooter
+      type: object
+      properties:
+        content:
+          type: string
+          nullable: true
+        inheritDefault:
+          type: boolean
+          nullable: true
+    Logo:
+      title: Logo
+      type: object
+      properties:
+        href:
+          type: string
+          nullable: true
+        image:
+          type: string
+          nullable: true
+    EmailHeader:
+      title: EmailHeader
+      type: object
+      properties:
+        inheritDefault:
+          type: boolean
+          nullable: true
+        barColor:
+          type: string
+          nullable: true
+        logo:
+          $ref: '#/components/schemas/Logo'
+      required:
+      - logo
+    BrandColors:
+      title: BrandColors
+      type: object
+      properties:
+        primary:
+          type: string
+        secondary:
+          type: string
+      additionalProperties:
+        type: string
+    BrandSettings:
+      title: BrandSettings
+      type: object
+      properties:
+        colors:
+          $ref: '#/components/schemas/BrandColors'
+          nullable: true
+        email:
+          $ref: '#/components/schemas/BrandSettingsEmail'
+          nullable: true
+        inapp:
+          $ref: '#/components/schemas/BrandSettingsInApp'
+          nullable: true
+    Icons:
+      title: Icons
+      type: object
+      properties:
+        bell:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+    AlreadyExists:
+      title: AlreadyExists
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BrandSettingsEmail:
+      title: BrandSettingsEmail
+      type: object
+      properties:
+        templateOverride:
+          $ref: '#/components/schemas/BrandTemplateOverride'
+          nullable: true
+        head:
+          $ref: '#/components/schemas/EmailHead'
+          nullable: true
+        footer:
+          $ref: '#/components/schemas/EmailFooter'
+          nullable: true
+        header:
+          $ref: '#/components/schemas/EmailHeader'
+          nullable: true
+    BrandParameters:
+      title: BrandParameters
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/BrandSettings'
+          nullable: true
+        snippets:
+          $ref: '#/components/schemas/BrandSnippets'
+          nullable: true
+      required:
+      - name
+    BrandsResponse:
+      title: BrandsResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Brand'
+      required:
+      - paging
+      - results
+    EmailHead:
+      title: EmailHead
+      type: object
+      properties:
+        inheritDefault:
+          type: boolean
+        content:
+          type: string
+          nullable: true
+      required:
+      - inheritDefault
+    InAppPlacement:
+      title: InAppPlacement
+      type: string
+      enum:
+      - top
+      - bottom
+      - left
+      - right
+    BrandSnippet:
+      title: BrandSnippet
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+    BrandTemplateOverride:
+      title: BrandTemplateOverride
+      type: object
+      properties:
+        mjml:
+          $ref: '#/components/schemas/BrandTemplate'
+        footerBackgroundColor:
+          type: string
+          nullable: true
+        footerFullWidth:
+          type: boolean
+          nullable: true
+      required:
+      - mjml
+      allOf:
+      - $ref: '#/components/schemas/BrandTemplate'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

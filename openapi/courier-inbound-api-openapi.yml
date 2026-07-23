@@ -1,0 +1,137 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Inbound API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Inbound
+paths:
+  /inbound/courier:
+    post:
+      operationId: inbound_track
+      tags:
+      - Inbound
+      parameters: []
+      responses:
+        '202':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackAcceptedResponse'
+              examples:
+                Example1:
+                  value:
+                    messageId: 1-6952feeb-7fed6092da5363f2af38eb42
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+      summary: Courier Track Event
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InboundTrackEvent'
+            examples:
+              Example1:
+                value:
+                  event: New Order Placed
+                  messageId: 4c62c457-b329-4bea-9bfc-17bba86c393f
+                  userId: '1234'
+                  type: track
+                  properties:
+                    order_id: 123
+                    total_orders: 5
+                    last_order_id: 122
+components:
+  schemas:
+    TrackAcceptedResponse:
+      title: TrackAcceptedResponse
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: A successful call returns a `202` status code along with a `requestId` in the response body.
+          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
+      required:
+      - messageId
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    InboundTrackEvent:
+      title: InboundTrackEvent
+      type: object
+      properties:
+        event:
+          type: string
+          description: A descriptive name of the event. This name will appear as a trigger in the Courier Automation Trigger node.
+          example: New Order Placed
+        messageId:
+          type: string
+          description: A required unique identifier that will be used to de-duplicate requests. If not unique, will respond with 409 Conflict status
+          example: 4c62c457-b329-4bea-9bfc-17bba86c393f
+        properties:
+          type: object
+          additionalProperties: true
+        type:
+          type: string
+          enum:
+          - track
+        userId:
+          type: string
+          nullable: true
+          description: The user id associated with the track
+      required:
+      - event
+      - messageId
+      - properties
+      - type
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

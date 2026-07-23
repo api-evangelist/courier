@@ -1,0 +1,306 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Journeys API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Journeys
+paths:
+  /journeys:
+    get:
+      description: Get the list of journeys.
+      operationId: journeys_list
+      tags:
+      - Journeys
+      parameters:
+      - name: cursor
+        in: query
+        description: A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results.
+        required: false
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: The version of journeys to retrieve. Accepted values are published (for published journeys) or draft (for draft journeys). Defaults to published.
+        required: false
+        schema:
+          type: string
+          enum:
+          - published
+          - draft
+          default: published
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneysListResponse'
+              examples:
+                Example1:
+                  value:
+                    templates:
+                    - name: Welcome Journey
+                      id: abc-123-def-456
+                      version: published
+                      createdAt: '2024-01-01T00:00:00Z'
+                      updatedAt: '2024-01-02T00:00:00Z'
+                    - name: Onboarding Flow
+                      id: xyz-789-ghi-012
+                      version: published
+                      createdAt: '2024-01-03T00:00:00Z'
+                      updatedAt: '2024-01-04T00:00:00Z'
+                    cursor: eyJpZCI6InRlbXBsYXRlLTIifQ==
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                InvalidVersion:
+                  value:
+                    type: invalid_request_error
+                    message: 'Invalid version parameter "invalid". Accepted values are: published (for published templates) or draft (for draft templates)'
+                InvalidCursor:
+                  value:
+                    type: invalid_request_error
+                    message: Invalid cursor format
+      summary: List Journeys
+      security:
+      - BearerAuth: []
+  /journeys/{templateId}/invoke:
+    post:
+      description: Invoke a journey run from a journey template.
+      operationId: journeys_invoke
+      tags:
+      - Journeys
+      parameters:
+      - name: templateId
+        in: path
+        description: A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Journey invocation accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JourneysInvokeResponse'
+              examples:
+                Example1:
+                  value:
+                    runId: 1-65f240a0-47a6a120c8374de9bcf9f22c
+        '400':
+          description: Bad Request - validation error, invalid version, or missing recipient
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                MissingTemplateId:
+                  value:
+                    type: invalid_request_error
+                    message: templateId is required
+                MissingRecipient:
+                  value:
+                    type: invalid_request_error
+                    message: User identifier or profile required. Provide user_id, user_id/userId/anonymousId in profile/data, or profile with contact info.
+                InvalidVersion:
+                  value:
+                    type: invalid_request_error
+                    message: Invalid automation version. Expected 2025-09-03, got 2022-12-01
+        '404':
+          description: Journey template not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Automation template abc-123 not found
+        '422':
+          description: Unprocessable Entity - trigger conditions failed, template archived or disabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntity'
+              examples:
+                TriggerConditionFailed:
+                  value:
+                    type: invalid_request_error
+                    message: Trigger conditions not met
+                ArchivedTemplate:
+                  value:
+                    type: invalid_request_error
+                    message: Cannot invoke archived automation template abc-123
+                DisabledTemplate:
+                  value:
+                    type: invalid_request_error
+                    message: Cannot invoke disabled automation template abc-123
+      summary: Invoke a Journey
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneysInvokeRequest'
+            examples:
+              WithUserId:
+                summary: Invoke with user_id
+                value:
+                  user_id: user-123
+                  data:
+                    order_id: order-456
+                    amount: 99.99
+              WithProfile:
+                summary: Invoke with profile containing contact info
+                value:
+                  profile:
+                    email: user@example.com
+                    first_name: John
+                  data:
+                    welcome_message: Hello!
+              WithUserIdInProfile:
+                summary: Invoke with user_id in profile
+                value:
+                  profile:
+                    user_id: user-123
+                    email: user@example.com
+                  data:
+                    foo: bar
+              WithTenantScopedProfile:
+                summary: Invoke with tenant-scoped profile
+                description: Load a user's profile scoped to a specific tenant
+                value:
+                  user_id: doctor-smith
+                  profile:
+                    context:
+                      tenant_id: hospital-a
+                  data:
+                    report_date: '2024-01-15'
+components:
+  schemas:
+    UnprocessableEntity:
+      title: UnprocessableEntity
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+          description: A unique identifier for the journey run that was created.
+      required:
+      - runId
+    JourneysListResponse:
+      title: JourneysListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Journey'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    JourneysInvokeRequest:
+      title: JourneysInvokeRequest
+      type: object
+      description: Request body for invoking a journey. Requires either a user identifier or a profile with contact information. User identifiers can be provided via user_id field, or resolved from profile/data objects (user_id, userId, or anonymousId fields).
+      properties:
+        user_id:
+          type: string
+          description: A unique identifier for the user. If not provided, the system will attempt to resolve the user identifier from profile or data objects.
+        profile:
+          type: object
+          additionalProperties: true
+          description: Profile data for the user. Can contain contact information (email, phone_number), user identifiers (user_id, userId, anonymousId), or any custom profile fields. Profile fields are merged with any existing stored profile for the user. Include context.tenant_id to load a tenant-scoped profile for multi-tenant scenarios.
+        data:
+          type: object
+          additionalProperties: true
+          description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
+    Journey:
+      title: Journey
+      type: object
+      description: A journey template representing an automation workflow.
+      properties:
+        name:
+          type: string
+          description: The name of the journey.
+        id:
+          type: string
+          description: The unique identifier of the journey.
+        version:
+          type: string
+          description: The version of the journey (published or draft).
+          enum:
+          - published
+          - draft
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the journey was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the journey was last updated.
+      required:
+      - name
+      - id
+      - version
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

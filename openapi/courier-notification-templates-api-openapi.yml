@@ -1,0 +1,1952 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Notification Templates API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Notification Templates
+paths:
+  /notifications:
+    get:
+      description: List notification templates in your workspace.
+      operationId: notifications_list
+      tags:
+      - Notification Templates
+      parameters:
+      - name: cursor
+        in: query
+        description: Opaque pagination cursor from a previous response. Omit for the first page.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: notes
+        in: query
+        description: Include template notes in the response. Only applies to legacy templates.
+        required: false
+        schema:
+          type: boolean
+          nullable: true
+      - name: event_id
+        in: query
+        description: Filter to templates linked to this event map ID.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListResponse'
+      summary: List Notification Templates
+      security:
+      - BearerAuth: []
+    post:
+      description: Create a notification template. Requires all fields in the notification object. Templates are created in draft state by default.
+      operationId: notifications_create
+      tags:
+      - Notification Templates
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTemplateResponse'
+              examples:
+                DraftCreated:
+                  value:
+                    id: nt_01abc123
+                    name: Welcome Email
+                    tags:
+                    - onboarding
+                    - welcome
+                    brand:
+                      id: brand_abc
+                    subscription:
+                      topic_id: marketing
+                    routing:
+                      strategy_id: rs_123
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Welcome!
+                        - type: text
+                          content: Hello {{data.name}}.
+                    state: DRAFT
+                    created: 1710000000000
+                    creator: user_abc
+                    updated: 1710000000000
+                    updater: user_abc
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'notification.name: Required; notification.content: Required'
+                RoutingStrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+      summary: Create Notification Template
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTemplateCreateRequest'
+            examples:
+              DraftWithAllFields:
+                summary: Create a draft template with all fields populated
+                value:
+                  notification:
+                    name: Welcome Email
+                    tags:
+                    - onboarding
+                    - welcome
+                    brand:
+                      id: brand_abc
+                    subscription:
+                      topic_id: marketing
+                    routing:
+                      strategy_id: rs_123
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Welcome!
+                        - type: text
+                          content: Hello {{data.name}}.
+                  state: DRAFT
+              MinimalDraft:
+                summary: Create a minimal draft template
+                value:
+                  notification:
+                    name: Bare Minimum
+                    tags: []
+                    brand: null
+                    subscription: null
+                    routing: null
+                    content:
+                      version: '2022-01-01'
+                      elements: []
+              AutoPublish:
+                summary: Create and immediately publish
+                value:
+                  notification:
+                    name: Auto-Published Template
+                    tags:
+                    - alerts
+                    brand: null
+                    subscription: null
+                    routing: null
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Alert
+                        - type: text
+                          content: You have a new alert.
+                  state: PUBLISHED
+  /notifications/{id}:
+    get:
+      description: Retrieve a notification template by ID. Returns the published version by default. Pass version=draft to retrieve an unpublished template.
+      operationId: notifications_retrieve
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Template ID (nt_ prefix).
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: Version to retrieve. One of "draft", "published", or a version string like "v001". Defaults to "published".
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTemplateResponse'
+              examples:
+                PublishedTemplate:
+                  value:
+                    id: nt_01abc123
+                    name: Welcome Email
+                    tags:
+                    - onboarding
+                    brand:
+                      id: brand_abc
+                    subscription:
+                      topic_id: marketing
+                    routing: null
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Welcome!
+                        - type: text
+                          content: Hello {{data.name}}.
+                    state: PUBLISHED
+                    created: 1710000000000
+                    creator: user_abc
+                    updated: 1710000001000
+                    updater: user_def
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Get Notification Template
+      security:
+      - BearerAuth: []
+    put:
+      description: Replace a notification template. All fields are required.
+      operationId: notifications_replace
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Template ID (nt_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTemplateResponse'
+              examples:
+                Replaced:
+                  value:
+                    id: nt_01abc123
+                    name: Updated Name
+                    tags:
+                    - updated
+                    brand: null
+                    subscription: null
+                    routing: null
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Updated
+                        - type: text
+                          content: Updated content.
+                    state: PUBLISHED
+                    created: 1710000000000
+                    creator: user_abc
+                    updated: 1710000001000
+                    updater: user_def
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'notification.name: Required; notification.content: Required'
+                RoutingStrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Replace Notification Template
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTemplateUpdateRequest'
+            examples:
+              FullReplace:
+                summary: Replace all fields
+                value:
+                  notification:
+                    name: Updated Name
+                    tags:
+                    - updated
+                    brand: null
+                    subscription: null
+                    routing: null
+                    content:
+                      version: '2022-01-01'
+                      elements:
+                      - type: channel
+                        channel: email
+                        elements:
+                        - type: meta
+                          title: Updated
+                        - type: text
+                          content: Updated content.
+                  state: PUBLISHED
+    delete:
+      description: Archive a notification template.
+      operationId: notifications_archive
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Template ID (nt_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully archived.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Archive Notification Template
+      security:
+      - BearerAuth: []
+  /notifications/{id}/versions:
+    get:
+      description: List versions of a notification template.
+      operationId: notifications_listVersions
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Template ID (nt_ prefix).
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Opaque pagination cursor from a previous response. Omit for the first page.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of versions to return per page. Default 10, max 10.
+        required: false
+        schema:
+          type: integer
+          default: 10
+          maximum: 10
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationTemplateVersionListResponse'
+              examples:
+                VersionHistory:
+                  value:
+                    versions:
+                    - version: draft
+                      created: 1774037925522
+                      creator: user_abc
+                      has_changes: true
+                    - version: published:v003
+                      created: 1774037924446
+                      creator: user_abc
+                    - version: v002
+                      created: 1774037923967
+                      creator: user_def
+                    - version: v001
+                      created: 1774037922000
+                      creator: user_def
+                    paging:
+                      cursor: null
+                      more: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                InvalidCursor:
+                  value:
+                    type: invalid_request_error
+                    message: Invalid cursor format
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: List Notification Template Versions
+      security:
+      - BearerAuth: []
+  /notifications/{id}/publish:
+    post:
+      description: Publish a notification template. Publishes the current draft by default. Pass a version in the request body to publish a specific historical version.
+      operationId: notifications_publish
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Template ID (nt_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully published, or already published with no changes (idempotent).
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                InvalidVersion:
+                  value:
+                    type: invalid_request_error
+                    message: 'version: Expected format: v001, v002, etc.'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+                VersionNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Version not found for template nt_123
+      summary: Publish Notification Template
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationTemplatePublishRequest'
+            examples:
+              PublishDraft:
+                summary: Publish the current draft (default)
+                value: {}
+              PublishSpecificVersion:
+                summary: Publish a specific historical version (rollback)
+                value:
+                  version: v001
+  /notifications/{id}/content:
+    get:
+      description: Retrieve the content of a notification template. The response shape depends on whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use the `version` query parameter to select draft, published, or a specific historical version.
+      operationId: notifications_getContent
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID (`nt_` prefix).
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults to `published`.
+        required: false
+        schema:
+          type: string
+        examples:
+          published:
+            value: published
+            summary: Current published version (default)
+          draft:
+            value: draft
+            summary: Current draft version
+          historical:
+            value: v001
+            summary: Specific historical version
+      responses:
+        '200':
+          description: Template content retrieved.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/NotificationContentGetResponse'
+                - $ref: '#/components/schemas/NotificationGetContentResponse'
+              examples:
+                V2Content:
+                  summary: V2 elemental content response
+                  value:
+                    version: '2022-01-01'
+                    elements:
+                    - id: elem_channel_1
+                      type: channel
+                      checksum: abc123def456
+                      locales:
+                        es:
+                          checksum: es_abc123
+                        fr:
+                          checksum: fr_abc123
+                      elements:
+                      - id: elem_meta_1
+                        type: meta
+                        checksum: meta_abc123
+                      - id: elem_text_1
+                        type: text
+                        checksum: text_abc123
+                V1Content:
+                  summary: V1 blocks/channels content response (legacy)
+                  value:
+                    blocks:
+                    - id: block_1
+                      type: text
+                      content: Hello
+                    channels:
+                    - id: channel_1
+                      type: email
+                    checksum: legacy_checksum
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Get Notification Content
+      security:
+      - BearerAuth: []
+    put:
+      description: Replace the elemental content of a notification template. Overwrites all elements in the template with the provided content. Only supported for V2 (elemental) templates.
+      operationId: notifications_putContent
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID (`nt_` prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Content replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationContentMutationResponse'
+              examples:
+                ContentUpdated:
+                  summary: Content replaced successfully
+                  value:
+                    id: nt_01abc123
+                    version: '2022-01-01'
+                    elements:
+                    - id: elem_1
+                      checksum: abc123
+                    - id: elem_2
+                      checksum: def456
+                    state: DRAFT
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'content: Required'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Put Notification Content
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationContentPutRequest'
+            examples:
+              ReplaceContent:
+                summary: Replace all content elements
+                value:
+                  content:
+                    version: '2022-01-01'
+                    elements:
+                    - type: channel
+                      channel: email
+                      elements:
+                      - type: meta
+                        title: Welcome!
+                      - type: text
+                        content: Hello {{data.name}}.
+                  state: DRAFT
+  /notifications/{id}/elements/{elementId}:
+    put:
+      description: Update a single element within a notification template. Only supported for V2 (elemental) templates.
+      operationId: notifications_putElement
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID (`nt_` prefix).
+        required: true
+        schema:
+          type: string
+      - name: elementId
+        in: path
+        description: Element ID within the template.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Element updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationContentMutationResponse'
+              examples:
+                ElementUpdated:
+                  summary: Element updated successfully
+                  value:
+                    id: nt_01abc123
+                    version: '2022-01-01'
+                    elements:
+                    - id: elem_1
+                      checksum: abc123
+                    - id: elem_2
+                      checksum: def456
+                    state: DRAFT
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'type: Required'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+                ElementNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Element elem_nonexistent not found in template nt_01abc123
+      summary: Put Notification Element
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationElementPutRequest'
+            examples:
+              UpdateTextElement:
+                summary: Update a text element
+                value:
+                  type: text
+                  data:
+                    content: Updated text content
+                  state: DRAFT
+  /notifications/{id}/locales/{localeId}:
+    put:
+      description: Set locale-specific content overrides for a notification template. Each element override must reference an existing element by ID. Only supported for V2 (elemental) templates.
+      operationId: notifications_putLocale
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID (`nt_` prefix).
+        required: true
+        schema:
+          type: string
+      - name: localeId
+        in: path
+        description: Locale code (e.g., `es`, `fr`, `pt-BR`).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Locale overrides applied.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationContentMutationResponse'
+              examples:
+                LocaleUpdated:
+                  summary: Locale content set successfully
+                  value:
+                    id: nt_01abc123
+                    version: '2022-01-01'
+                    elements:
+                    - id: elem_1
+                      checksum: abc123
+                    - id: elem_2
+                      checksum: def456
+                    state: DRAFT
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'elements: Required'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                TemplateNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Notification template nt_nonexistent not found
+      summary: Put Notification Locale
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationLocalePutRequest'
+            examples:
+              SetSpanishLocale:
+                summary: Set Spanish locale overrides
+                value:
+                  elements:
+                  - id: elem_1
+                    content: Hola {{data.name}}.
+                  - id: elem_2
+                    title: Bienvenido!
+                  state: DRAFT
+  /notifications/{id}/{submissionId}/checks:
+    get:
+      description: Retrieve the checks for a notification template submission.
+      operationId: notifications_getSubmissionChecks
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID.
+        required: true
+        schema:
+          type: string
+      - name: submissionId
+        in: path
+        description: Submission ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Submission checks retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionChecksGetResponse'
+      summary: Get Submission Checks
+      security:
+      - BearerAuth: []
+    put:
+      description: Replace the checks for a notification template submission.
+      operationId: notifications_replaceSubmissionChecks
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID.
+        required: true
+        schema:
+          type: string
+      - name: submissionId
+        in: path
+        description: Submission ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Submission checks replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionChecksReplaceResponse'
+      summary: Replace Submission Checks
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checks:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BaseCheck'
+              required:
+              - checks
+    delete:
+      description: Cancel a notification template submission.
+      operationId: notifications_cancelSubmission
+      tags:
+      - Notification Templates
+      parameters:
+      - name: id
+        in: path
+        description: Notification template ID.
+        required: true
+        schema:
+          type: string
+      - name: submissionId
+        in: path
+        description: Submission ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Submission cancelled.
+      summary: Cancel Submission
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    ElementalImageNode:
+      title: ElementalImageNode
+      type: object
+      description: Used to embed an image into the notification.
+      properties:
+        src:
+          type: string
+          description: The source of the image.
+        href:
+          type: string
+          nullable: true
+          description: A URL to link to when the image is clicked.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          nullable: true
+          description: The alignment of the image.
+        altText:
+          type: string
+          nullable: true
+          description: Alternate text for the image.
+        width:
+          type: string
+          nullable: true
+          description: CSS width properties to apply to the image. For example, 50px
+      required:
+      - src
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    MessageRoutingMethod:
+      title: MessageRoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    NotificationTemplateState:
+      title: NotificationTemplateState
+      type: string
+      description: Template state. Defaults to `DRAFT`.
+      enum:
+      - DRAFT
+      - PUBLISHED
+      default: DRAFT
+    NotificationContentMutationResponse:
+      title: NotificationContentMutationResponse
+      type: object
+      description: Shared mutation response for `PUT` content, `PUT` element, and `PUT` locale operations. Contains the template ID, content version, per-element checksums, and resulting state.
+      properties:
+        id:
+          type: string
+          description: Template ID.
+        version:
+          type: string
+          description: Content version identifier.
+        elements:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              checksum:
+                type: string
+            required:
+            - id
+            - checksum
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - id
+      - version
+      - elements
+      - state
+    NotificationTag:
+      title: NotificationTag
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationTagData'
+      required:
+      - data
+    Locale:
+      title: Locale
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+      - content
+    NotificationElementPutRequest:
+      title: NotificationElementPutRequest
+      type: object
+      description: Request body for updating a single element. Additional type-specific fields are allowed.
+      properties:
+        type:
+          type: string
+          description: Element type (text, meta, action, image, etc.).
+        channels:
+          type: array
+          items:
+            type: string
+        data:
+          type: object
+          additionalProperties: true
+        if:
+          type: string
+        loop:
+          type: string
+        ref:
+          type: string
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - type
+      additionalProperties: true
+    SubmissionChecksGetResponse:
+      title: SubmissionChecksGetResponse
+      type: object
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+      required:
+      - checks
+    SubmissionChecksReplaceResponse:
+      title: SubmissionChecksReplaceResponse
+      type: object
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+      required:
+      - checks
+    ElementalMetaNode:
+      title: ElementalMetaNode
+      type: object
+      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
+      properties:
+        title:
+          type: string
+          nullable: true
+          description: The title to be displayed by supported channels. For example, the email subject.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    Check:
+      title: Check
+      type: object
+      properties:
+        updated:
+          type: integer
+          format: int64
+      required:
+      - updated
+      allOf:
+      - $ref: '#/components/schemas/BaseCheck'
+    Notification:
+      title: Notification
+      type: object
+      properties:
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+        id:
+          type: string
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+        tags:
+          $ref: '#/components/schemas/NotificationTag'
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        topic_id:
+          type: string
+        note:
+          type: string
+        event_ids:
+          type: array
+          items:
+            type: string
+          description: Array of event IDs associated with this notification
+      required:
+      - created_at
+      - updated_at
+      - id
+      - routing
+      - topic_id
+      - event_ids
+    VersionNode:
+      title: VersionNode
+      type: object
+      description: A version entry for a notification template.
+      properties:
+        version:
+          type: string
+          description: Version identifier. One of "draft", "published:vNNN" (current published version), or "vNNN" (historical version).
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when this version was created.
+        creator:
+          type: string
+          description: User ID of the version creator.
+        has_changes:
+          type: boolean
+          description: Whether the draft has unpublished changes. Only present on the draft version.
+      required:
+      - version
+      - created
+      - creator
+    NotificationChannelContent:
+      title: NotificationChannelContent
+      type: object
+      properties:
+        subject:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+    NotificationListResponse:
+      title: NotificationListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          description: Notification templates in this workspace.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/Notification'
+            - $ref: '#/components/schemas/NotificationTemplateSummary'
+      required:
+      - paging
+      - results
+    ElementalDividerNode:
+      title: ElementalDividerNode
+      type: object
+      description: Renders a dividing line between elements.
+      properties:
+        color:
+          type: string
+          nullable: true
+          description: The CSS color to render the line with. For example, `#fff`
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    TextStyle:
+      title: TextStyle
+      type: string
+      enum:
+      - text
+      - h1
+      - h2
+      - subtext
+    ElementalChannelNode:
+      title: ElementalChannelNode
+      type: object
+      description: "The channel element allows a notification to be customized based on which channel it is sent through. \nFor example, you may want to display a detailed message when the notification is sent through email, \nand a more concise message in a push notification. Channel elements are only valid as top-level \nelements; you cannot nest channel elements. If there is a channel element specified at the top-level \nof the document, all sibling elements must be channel elements.\nNote: As an alternative, most elements support a `channel` property. Which allows you to selectively \ndisplay an individual element on a per channel basis. See the \n[control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details."
+      properties:
+        channel:
+          type: string
+          example: email
+          description: 'The channel the contents of this element should be applied to. Can be `email`,
+
+            `push`, `direct_message`, `sms` or a provider such as slack'
+        raw:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationTemplateSummary:
+      title: NotificationTemplateSummary
+      type: object
+      description: V2 (CDS) template summary returned in list responses.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+          enum:
+          - DRAFT
+          - PUBLISHED
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the template was created.
+        creator:
+          type: string
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          description: Epoch milliseconds of last update.
+        updater:
+          type: string
+          description: User ID of the last updater.
+      required:
+      - id
+      - name
+      - tags
+      - state
+      - created
+      - creator
+    IActionButtonStyle:
+      title: IActionButtonStyle
+      type: string
+      enum:
+      - button
+      - link
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    ElementalTextNode:
+      title: ElementalTextNode
+      type: object
+      description: Represents a body of text to be rendered inside of the notification.
+      properties:
+        content:
+          type: string
+          description: 'The text content displayed in the notification. Either this
+
+            field must be specified, or the elements field'
+        align:
+          $ref: '#/components/schemas/TextAlign'
+          description: Text alignment.
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+          nullable: true
+          description: Allows the text to be rendered as a heading level.
+        color:
+          type: string
+          nullable: true
+          description: Specifies the color of text. Can be any valid css color value
+        bold:
+          type: string
+          nullable: true
+          description: Apply bold to the text
+        italic:
+          type: string
+          nullable: true
+          description: Apply italics to the text
+        strikethrough:
+          type: string
+          nullable: true
+          description: Apply a strike through the text
+        underline:
+          type: string
+          nullable: true
+          description: Apply an underline to the text
+        locales:
+          $ref: '#/components/schemas/Locales'
+          nullable: true
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+        format:
+          type: string
+          enum:
+          - markdown
+          nullable: true
+      required:
+      - content
+      - align
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationContentHierarchy:
+      title: NotificationContentHierarchy
+      type: object
+      properties:
+        parent:
+          type: string
+          nullable: true
+        children:
+          type: string
+          nullable: true
+    ElementalHtmlNode:
+      title: ElementalHtmlNode
+      type: object
+      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
+      properties:
+        content:
+          type: string
+          description: Raw HTML string to render inside the notification.
+        locales:
+          $ref: '#/components/schemas/Locales'
+          nullable: true
+          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationContentGetResponse:
+      title: NotificationContentGetResponse
+      type: object
+      description: Elemental content response for V2 templates. Contains versioned elements with content checksums.
+      properties:
+        version:
+          type: string
+          description: Content version identifier.
+          example: '2022-01-01'
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementWithChecksums'
+      required:
+      - version
+      - elements
+    ElementWithChecksums:
+      title: ElementWithChecksums
+      type: object
+      description: An element with its content checksum and optional nested elements and locale checksums.
+      properties:
+        id:
+          type: string
+        checksum:
+          type: string
+          description: MD5 hash of translatable content.
+        type:
+          type: string
+          description: Element type (text, meta, action, etc.).
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementWithChecksums'
+          description: Nested child elements (for group-type elements).
+        locales:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              checksum:
+                type: string
+            required:
+            - checksum
+          description: Locale-specific content with checksums.
+      required:
+      - checksum
+      - type
+      additionalProperties: true
+    NotificationChannel:
+      title: NotificationChannel
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          nullable: true
+        content:
+          $ref: '#/components/schemas/NotificationChannelContent'
+          nullable: true
+        locales:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NotificationChannelContent'
+          nullable: true
+        checksum:
+          type: string
+          nullable: true
+      required:
+      - id
+    NotificationContent:
+      title: NotificationContent
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/NotificationContentHierarchy'
+    BlockType:
+      title: BlockType
+      type: string
+      enum:
+      - action
+      - divider
+      - image
+      - jsonnet
+      - list
+      - markdown
+      - quote
+      - template
+      - text
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    NotificationGetContentResponse:
+      title: NotificationGetContentResponse
+      type: object
+      properties:
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationBlock'
+          nullable: true
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+          nullable: true
+        checksum:
+          type: string
+          nullable: true
+    NotificationTemplateUpdateRequest:
+      title: NotificationTemplateUpdateRequest
+      type: object
+      description: Request body for replacing a notification template. Same shape as create. All fields required (PUT = full replacement).
+      properties:
+        notification:
+          $ref: '#/components/schemas/NotificationTemplatePayload'
+        state:
+          type: string
+          description: Template state after update. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
+          enum:
+          - DRAFT
+          - PUBLISHED
+          default: DRAFT
+      required:
+      - notification
+    ElementalContent:
+      title: ElementalContent
+      type: object
+      properties:
+        version:
+          type: string
+          description: For example, "2022-01-01"
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementalNode'
+      required:
+      - version
+      - elements
+    ElementalActionNode:
+      title: ElementalActionNode
+      type: object
+      description: Allows the user to execute an action. Can be a button or a link.
+      properties:
+        content:
+          type: string
+          description: The text content of the action shown to the user.
+        href:
+          type: string
+          description: The target URL of the action.
+        action_id:
+          type: string
+          nullable: true
+          description: A unique id used to identify the action when it is executed.
+        align:
+          nullable: true
+          description: The alignment of the action button. Defaults to "center".
+          allOf:
+          - $ref: '#/components/schemas/IAlignment'
+        background_color:
+          type: string
+          nullable: true
+          description: The background color of the action button.
+        style:
+          nullable: true
+          description: Defaults to `button`.
+          allOf:
+          - $ref: '#/components/schemas/IActionButtonStyle'
+        locales:
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+          allOf:
+          - $ref: '#/components/schemas/Locales'
+      required:
+      - content
+      - href
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationTemplatePublishRequest:
+      title: NotificationTemplatePublishRequest
+      type: object
+      description: Optional request body for publishing a notification template. Omit or send an empty object to publish the current draft.
+      properties:
+        version:
+          type: string
+          pattern: ^v\d+$
+          description: Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+    ElementalNode:
+      title: ElementalNode
+      oneOf:
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - text
+        - $ref: '#/components/schemas/ElementalTextNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - meta
+        - $ref: '#/components/schemas/ElementalMetaNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - channel
+        - $ref: '#/components/schemas/ElementalChannelNode'
+        required:
+        - type
+        - channel
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - image
+        - $ref: '#/components/schemas/ElementalImageNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - action
+        - $ref: '#/components/schemas/ElementalActionNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - divider
+        - $ref: '#/components/schemas/ElementalDividerNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - quote
+        - $ref: '#/components/schemas/ElementalQuoteNode'
+        required:
+        - type
+      - type: object
+        allOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+              - html
+        - $ref: '#/components/schemas/ElementalHtmlNode'
+        required:
+        - type
+    NotificationTemplateVersionListResponse:
+      title: NotificationTemplateVersionListResponse
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionNode'
+        paging:
+          $ref: '#/components/schemas/Paging'
+      required:
+      - versions
+      - paging
+    Locales:
+      title: Locales
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Locale'
+      nullable: true
+    BaseCheck:
+      title: BaseCheck
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          $ref: '#/components/schemas/CheckStatus'
+        type:
+          type: string
+          enum:
+          - custom
+      required:
+      - id
+      - status
+      - type
+    NotificationTemplatePayload:
+      title: NotificationTemplatePayload
+      type: object
+      description: Core template fields used in POST and PUT request bodies (nested under a `notification` key) and returned at the top level in responses.
+      properties:
+        name:
+          type: string
+          description: Display name for the template.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags for categorization. Send empty array for none.
+        brand:
+          nullable: true
+          type: object
+          description: Brand reference, or null for no brand.
+          properties:
+            id:
+              type: string
+          required:
+          - id
+        subscription:
+          nullable: true
+          type: object
+          description: Subscription topic reference, or null for none.
+          properties:
+            topic_id:
+              type: string
+          required:
+          - topic_id
+        routing:
+          nullable: true
+          type: object
+          description: Routing strategy reference, or null for none.
+          properties:
+            strategy_id:
+              type: string
+          required:
+          - strategy_id
+        content:
+          $ref: '#/components/schemas/ElementalContent'
+          description: Elemental content definition.
+      required:
+      - name
+      - tags
+      - brand
+      - subscription
+      - routing
+      - content
+    NotificationContentPutRequest:
+      title: NotificationContentPutRequest
+      type: object
+      description: Request body for replacing the elemental content of a notification template.
+      properties:
+        content:
+          type: object
+          description: Elemental content payload. The server defaults `version` when omitted.
+          properties:
+            version:
+              type: string
+              description: Content version identifier (e.g., `2022-01-01`). Optional; server defaults when omitted.
+            elements:
+              type: array
+              items:
+                $ref: '#/components/schemas/ElementalNode'
+          required:
+          - elements
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - content
+    NotificationTemplateResponse:
+      title: NotificationTemplateResponse
+      description: Response for GET /notifications/{id}, POST /notifications, and PUT /notifications/{id}. Returns all template fields at the top level.
+      allOf:
+      - $ref: '#/components/schemas/NotificationTemplatePayload'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: The template ID.
+          state:
+            type: string
+            description: The template state. Always uppercase.
+            enum:
+            - DRAFT
+            - PUBLISHED
+          created:
+            type: integer
+            format: int64
+            description: Epoch milliseconds when the template was created.
+          creator:
+            type: string
+            description: User ID of the creator.
+          updated:
+            type: integer
+            format: int64
+            description: Epoch milliseconds of last update.
+          updater:
+            type: string
+            description: User ID of the last updater.
+        required:
+        - id
+        - state
+        - created
+        - creator
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+      required:
+      - method
+      - channels
+    NotificationBlock:
+      title: NotificationBlock
+      type: object
+      properties:
+        alias:
+          type: string
+          nullable: true
+        context:
+          type: string
+          nullable: true
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/BlockType'
+        content:
+          $ref: '#/components/schemas/NotificationContent'
+          nullable: true
+        locales:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/NotificationContent'
+          nullable: true
+        checksum:
+          type: string
+          nullable: true
+      required:
+      - id
+      - type
+    NotificationLocalePutRequest:
+      title: NotificationLocalePutRequest
+      type: object
+      description: Request body for setting locale-specific content overrides. Each element override must include the target element ID.
+      properties:
+        elements:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Target element ID.
+            required:
+            - id
+            additionalProperties: true
+          description: Elements with locale-specific content overrides.
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - elements
+    TextAlign:
+      title: TextAlign
+      type: string
+      enum:
+      - left
+      - center
+      - right
+    ElementalQuoteNode:
+      title: ElementalQuoteNode
+      type: object
+      description: Renders a quote block.
+      properties:
+        content:
+          type: string
+          description: The text value of the quote.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          nullable: true
+          description: Alignment of the quote.
+        borderColor:
+          type: string
+          nullable: true
+          description: CSS border color property. For example, `#fff`
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      - text_style
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ElementalBaseNode:
+      title: ElementalBaseNode
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            type: string
+          nullable: true
+        ref:
+          type: string
+          nullable: true
+        if:
+          type: string
+          nullable: true
+        loop:
+          type: string
+          nullable: true
+    IAlignment:
+      title: IAlignment
+      type: string
+      enum:
+      - center
+      - left
+      - right
+      - full
+    CheckStatus:
+      title: CheckStatus
+      type: string
+      enum:
+      - RESOLVED
+      - FAILED
+      - PENDING
+    NotificationTagData:
+      title: NotificationTagData
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+    NotificationTemplateCreateRequest:
+      title: NotificationTemplateCreateRequest
+      type: object
+      description: Request body for creating a notification template.
+      properties:
+        notification:
+          $ref: '#/components/schemas/NotificationTemplatePayload'
+        state:
+          type: string
+          description: Template state after creation. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
+          enum:
+          - DRAFT
+          - PUBLISHED
+          default: DRAFT
+      required:
+      - notification
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

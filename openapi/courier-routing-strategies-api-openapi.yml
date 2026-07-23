@@ -1,0 +1,804 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Routing Strategies API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Routing Strategies
+paths:
+  /routing-strategies:
+    get:
+      description: List routing strategies in your workspace. Returns metadata only (no routing/channels/providers content). Use GET /routing-strategies/{id} for full details.
+      operationId: routingStrategies_list
+      tags:
+      - Routing Strategies
+      parameters:
+      - name: cursor
+        in: query
+        description: Opaque pagination cursor from a previous response. Omit for the first page.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: limit
+        in: query
+        description: Maximum number of results per page. Default 20, max 100.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingStrategyListResponse'
+              examples:
+                WithResults:
+                  value:
+                    results:
+                    - id: rs_01abc123
+                      name: Email via SendGrid
+                      description: Routes email through sendgrid with SES failover
+                      tags:
+                      - production
+                      - email
+                      created: 1710000000000
+                      creator: user_abc
+                      updated: 1710000000000
+                      updater: user_def
+                    paging:
+                      cursor: eyJway...
+                      more: true
+                Empty:
+                  value:
+                    results: []
+                    paging:
+                      cursor: null
+                      more: false
+      summary: List Routing Strategies
+      security:
+      - BearerAuth: []
+    post:
+      description: Create a routing strategy. Requires a name and routing configuration at minimum. Channels and providers default to empty if omitted.
+      operationId: routingStrategies_create
+      tags:
+      - Routing Strategies
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingStrategyGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'name: Required; routing: Required'
+      summary: Create Routing Strategy
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingStrategyCreateRequest'
+            examples:
+              FullExample:
+                summary: Create a routing strategy with all fields
+                value:
+                  name: Email via SendGrid
+                  description: Routes email through sendgrid with SES failover
+                  tags:
+                  - production
+                  - email
+                  routing:
+                    method: single
+                    channels:
+                    - email
+                  channels:
+                    email:
+                      providers:
+                      - sendgrid
+                      - ses
+                  providers:
+                    sendgrid:
+                      override: {}
+              Minimal:
+                summary: Create a minimal routing strategy
+                value:
+                  name: Simple Email
+                  routing:
+                    method: single
+                    channels:
+                    - email
+  /routing-strategies/{id}:
+    get:
+      description: Retrieve a routing strategy by ID. Returns the full entity including routing content and metadata.
+      operationId: routingStrategies_retrieve
+      tags:
+      - Routing Strategies
+      parameters:
+      - name: id
+        in: path
+        description: Routing strategy ID (rs_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingStrategyGetResponse'
+              examples:
+                FullStrategy:
+                  value:
+                    id: rs_01abc123
+                    name: Email via SendGrid
+                    description: Routes email through sendgrid with SES failover
+                    tags:
+                    - production
+                    - email
+                    routing:
+                      method: single
+                      channels:
+                      - email
+                    channels:
+                      email:
+                        providers:
+                        - sendgrid
+                        - ses
+                    providers:
+                      sendgrid:
+                        override: {}
+                    created: 1710000000000
+                    creator: user_abc
+                    updated: 1710000000000
+                    updater: user_def
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                StrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+      summary: Get Routing Strategy
+      security:
+      - BearerAuth: []
+    put:
+      description: Replace a routing strategy. Full document replacement; the caller must send the complete desired state. Missing optional fields are cleared.
+      operationId: routingStrategies_replace
+      tags:
+      - Routing Strategies
+      parameters:
+      - name: id
+        in: path
+        description: Routing strategy ID (rs_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingStrategyGetResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+              examples:
+                ValidationError:
+                  value:
+                    type: invalid_request_error
+                    message: 'name: Required; routing: Required'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                StrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+      summary: Replace Routing Strategy
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoutingStrategyReplaceRequest'
+            examples:
+              FullReplace:
+                summary: Replace all fields
+                value:
+                  name: Email via SendGrid v2
+                  description: Updated routing with SES primary
+                  tags:
+                  - production
+                  - email
+                  - v2
+                  routing:
+                    method: single
+                    channels:
+                    - email
+                  channels:
+                    email:
+                      providers:
+                      - ses
+                      - sendgrid
+                  providers:
+                    ses:
+                      override: {}
+    delete:
+      description: Archive a routing strategy. The strategy must not have associated notification templates. Unlink all templates before archiving.
+      operationId: routingStrategies_archive
+      tags:
+      - Routing Strategies
+      parameters:
+      - name: id
+        in: path
+        description: Routing strategy ID (rs_ prefix).
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successfully archived.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                StrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conflict'
+              examples:
+                HasAssociatedTemplates:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_01abc123 has associated templates and cannot be archived
+      summary: Archive Routing Strategy
+      security:
+      - BearerAuth: []
+  /routing-strategies/{id}/notifications:
+    get:
+      description: List notification templates associated with a routing strategy. Includes template metadata only, not full content.
+      operationId: routingStrategies_listNotifications
+      tags:
+      - Routing Strategies
+      parameters:
+      - name: id
+        in: path
+        description: Routing strategy ID (`rs_` prefix).
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: Opaque pagination cursor from a previous response. Omit for the first page.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: limit
+        in: query
+        description: Maximum number of results per page. Default 20, max 100.
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+      responses:
+        '200':
+          description: Associated notification templates retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssociatedNotificationListResponse'
+              examples:
+                WithResults:
+                  value:
+                    results:
+                    - id: nt_01abc123
+                      name: Welcome Email
+                      tags:
+                      - onboarding
+                      state: PUBLISHED
+                      created: 1710000000000
+                      creator: user_abc
+                      updated: 1710000000000
+                      updater: user_def
+                    paging:
+                      cursor: eyJway...
+                      more: true
+                Empty:
+                  value:
+                    results: []
+                    paging:
+                      more: false
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+              examples:
+                StrategyNotFound:
+                  value:
+                    type: invalid_request_error
+                    message: Routing strategy rs_nonexistent not found
+      summary: List Associated Notifications
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    MessageChannels:
+      title: MessageChannels
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Channel'
+    MessageRoutingMethod:
+      title: MessageRoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    RoutingStrategyReplaceRequest:
+      title: RoutingStrategyReplaceRequest
+      type: object
+      description: Request body for replacing a routing strategy. Full document replacement; missing optional fields are cleared.
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the routing strategy.
+        description:
+          type: string
+          nullable: true
+          description: Optional description. Omit or null to clear.
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Optional tags. Omit or null to clear.
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Routing tree defining channel selection method and order.
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          nullable: true
+          description: Per-channel delivery configuration. Omit to clear.
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          nullable: true
+          description: Per-provider delivery configuration. Omit to clear.
+      required:
+      - name
+      - routing
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    RoutingStrategyGetResponse:
+      title: RoutingStrategyGetResponse
+      type: object
+      description: Full routing strategy entity returned by GET.
+      properties:
+        id:
+          type: string
+          description: The routing strategy ID (rs_ prefix).
+        name:
+          type: string
+          description: Human-readable name.
+        description:
+          type: string
+          nullable: true
+          description: Description of the routing strategy.
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Tags for categorization.
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Routing tree defining channel selection method and order.
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          description: Per-channel delivery configuration. May be empty.
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          description: Per-provider delivery configuration. May be empty.
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the strategy was created.
+        creator:
+          type: string
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          nullable: true
+          description: Epoch milliseconds of last update.
+        updater:
+          type: string
+          nullable: true
+          description: User ID of the last updater.
+      required:
+      - id
+      - name
+      - routing
+      - channels
+      - providers
+      - created
+      - creator
+    ChannelMetadata:
+      title: ChannelMetadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+          nullable: true
+    RoutingStrategySummary:
+      title: RoutingStrategySummary
+      type: object
+      description: Routing strategy metadata returned in list responses. Does not include routing/channels/providers content.
+      properties:
+        id:
+          type: string
+          description: The routing strategy ID (rs_ prefix).
+        name:
+          type: string
+          description: Human-readable name.
+        description:
+          type: string
+          nullable: true
+          description: Description of the routing strategy.
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Tags for categorization.
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the strategy was created.
+        creator:
+          type: string
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          nullable: true
+          description: Epoch milliseconds of last update.
+        updater:
+          type: string
+          nullable: true
+          description: User ID of the last updater.
+      required:
+      - id
+      - name
+      - created
+      - creator
+    NotificationTemplateSummary:
+      title: NotificationTemplateSummary
+      type: object
+      description: V2 (CDS) template summary returned in list responses.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+          enum:
+          - DRAFT
+          - PUBLISHED
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the template was created.
+        creator:
+          type: string
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          description: Epoch milliseconds of last update.
+        updater:
+          type: string
+          description: User ID of the last updater.
+      required:
+      - id
+      - name
+      - tags
+      - state
+      - created
+      - creator
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    RoutingStrategyCreateRequest:
+      title: RoutingStrategyCreateRequest
+      type: object
+      description: Request body for creating a routing strategy.
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the routing strategy.
+        description:
+          type: string
+          nullable: true
+          description: Optional description of the routing strategy.
+        tags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Optional tags for categorization.
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Routing tree defining channel selection method and order.
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          nullable: true
+          description: Per-channel delivery configuration. Defaults to empty if omitted.
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          nullable: true
+          description: Per-provider delivery configuration. Defaults to empty if omitted.
+      required:
+      - name
+      - routing
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    MessageProvidersType:
+      title: MessageProvidersType
+      type: object
+      properties:
+        override:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Provider-specific overrides.
+        if:
+          type: string
+          nullable: true
+          description: JS conditional with access to data/profile.
+        timeouts:
+          type: integer
+          nullable: true
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+          nullable: true
+    RoutingMethod:
+      title: RoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    Timeouts:
+      title: Timeouts
+      type: object
+      properties:
+        provider:
+          type: integer
+          nullable: true
+        channel:
+          type: integer
+          nullable: true
+      x-stainless-naming:
+        csharp:
+          type_name: ChannelTimeouts
+    Metadata:
+      title: Metadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+          nullable: true
+      x-stainless-naming:
+        csharp:
+          type_name: ProviderMetadata
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    RoutingStrategyListResponse:
+      title: RoutingStrategyListResponse
+      type: object
+      description: Paginated list of routing strategy summaries.
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingStrategySummary'
+      required:
+      - paging
+      - results
+    UTM:
+      title: UTM
+      type: object
+      properties:
+        source:
+          type: string
+          nullable: true
+        medium:
+          type: string
+          nullable: true
+        campaign:
+          type: string
+          nullable: true
+        term:
+          type: string
+          nullable: true
+        content:
+          type: string
+          nullable: true
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+      required:
+      - method
+      - channels
+    MessageProviders:
+      title: MessageProviders
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MessageProvidersType'
+    AssociatedNotificationListResponse:
+      title: AssociatedNotificationListResponse
+      type: object
+      description: Paginated list of notification templates associated with a routing strategy.
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationTemplateSummary'
+      required:
+      - paging
+      - results
+    Channel:
+      title: Channel
+      type: object
+      properties:
+        brand_id:
+          type: string
+          nullable: true
+          description: Brand id used for rendering.
+        providers:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: Providers enabled for this channel.
+        routing_method:
+          $ref: '#/components/schemas/RoutingMethod'
+          nullable: true
+          description: Defaults to `single`.
+        if:
+          type: string
+          nullable: true
+          description: JS conditional with access to data/profile.
+        timeouts:
+          $ref: '#/components/schemas/Timeouts'
+          nullable: true
+        override:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Channel specific overrides.
+        metadata:
+          $ref: '#/components/schemas/ChannelMetadata'
+          nullable: true
+      x-stainless-naming:
+        csharp:
+          type_name: MessageChannel
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

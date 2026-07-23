@@ -1,0 +1,522 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Lists API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Lists
+paths:
+  /lists:
+    get:
+      description: Returns all of the lists, with the ability to filter based on a pattern.
+      operationId: lists_list
+      tags:
+      - Lists
+      parameters:
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next page of lists.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: pattern
+        in: query
+        description: '"A pattern used to filter the list items returned. Pattern types supported: exact match on `list_id` or a pattern of one or more pattern parts. you may replace a part with either: `*` to match all parts in that position, or `**` to signify a wildcard `endsWith` pattern match."'
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGetAllResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get all lists
+      security:
+      - BearerAuth: []
+  /lists/{list_id}:
+    get:
+      description: Returns a list based on the list ID provided.
+      operationId: lists_get
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Get a list
+      security:
+      - BearerAuth: []
+    put:
+      description: Create or replace an existing list with the supplied values.
+      operationId: lists_update
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Update a list
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListPutParams'
+    delete:
+      description: Delete a list by list ID.
+      operationId: lists_delete
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Delete a list
+      security:
+      - BearerAuth: []
+  /lists/{list_id}/restore:
+    put:
+      description: Restore a previously deleted list.
+      operationId: lists_restore
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Restore a list
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  /lists/{list_id}/subscriptions:
+    get:
+      description: Get the list's subscriptions.
+      operationId: lists_getSubscribers
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of list subscriptions
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListGetSubscriptionsResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Get the subscriptions for a list
+      security:
+      - BearerAuth: []
+    post:
+      description: Subscribes additional users to the list, without modifying existing subscriptions. If the list does not exist, it will be automatically created.
+      operationId: lists_addSubscribers
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Add subscribers to a list
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipients:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PutSubscriptionsRecipient'
+              required:
+              - recipients
+    put:
+      description: Subscribes the users to the list, overwriting existing subscriptions. If the list does not exist, it will be automatically created.
+      operationId: lists_updateSubscribers
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: ''
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Subscribe users to a list
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipients:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/PutSubscriptionsRecipient'
+              required:
+              - recipients
+  /lists/{list_id}/subscriptions/{user_id}:
+    put:
+      description: 'Subscribe a user to an existing list (note: if the List does not exist, it will be automatically created).'
+      operationId: lists_subscribe
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        description: A unique identifier representing the recipient associated with the list
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Subscribe a single user profile to a list
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                preferences:
+                  $ref: '#/components/schemas/RecipientPreferences'
+                  nullable: true
+    delete:
+      description: Delete a subscription to a list by list ID and user ID.
+      operationId: lists_unsubscribe
+      tags:
+      - Lists
+      parameters:
+      - name: list_id
+        in: path
+        description: A unique identifier representing the list you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: user_id
+        in: path
+        description: A unique identifier representing the recipient associated with the list
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Unsubscribe a user profile from a list
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    ListGetAllResponse:
+      title: ListGetAllResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionList'
+      required:
+      - paging
+      - items
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    NotificationPreferenceDetails:
+      title: NotificationPreferenceDetails
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rule'
+          nullable: true
+        channel_preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
+          nullable: true
+      required:
+      - status
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    SubscriptionList:
+      title: SubscriptionList
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+      required:
+      - id
+      - name
+    ListSubscriptionRecipient:
+      title: ListSubscriptionRecipient
+      type: object
+      properties:
+        recipientId:
+          type: string
+        created:
+          type: string
+          nullable: true
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - recipientId
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    ListPutParams:
+      title: ListPutParams
+      type: object
+      properties:
+        name:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - name
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type: string
+          nullable: true
+        until:
+          type: string
+      required:
+      - until
+    PutSubscriptionsRecipient:
+      title: PutSubscriptionsRecipient
+      type: object
+      properties:
+        recipientId:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+          nullable: true
+      required:
+      - recipientId
+    ListGetSubscriptionsResponse:
+      title: ListGetSubscriptionsResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ListSubscriptionRecipient'
+      required:
+      - paging
+      - items
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
+    RecipientPreferences:
+      title: RecipientPreferences
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/NotificationPreferences'
+          nullable: true
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+          nullable: true
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

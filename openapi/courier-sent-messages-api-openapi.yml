@@ -1,0 +1,530 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Sent Messages API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Sent Messages
+paths:
+  /messages:
+    get:
+      description: Fetch the statuses of messages you've previously sent.
+      operationId: messages_list
+      tags:
+      - Sent Messages
+      parameters:
+      - name: archived
+        in: query
+        description: A boolean value that indicates whether archived messages should be included in the response.
+        required: false
+        schema:
+          type: boolean
+          nullable: true
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of messages.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: event
+        in: query
+        description: A unique identifier representing the event that was used to send the event.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: list
+        in: query
+        description: A unique identifier representing the list the message was sent to.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: messageId
+        in: query
+        description: A unique identifier representing the message_id returned from either /send or /send/list.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: notification
+        in: query
+        description: A unique identifier representing the notification that was used to send the event.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: provider
+        in: query
+        description: The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+      - name: recipient
+        in: query
+        description: A unique identifier representing the recipient associated with the requested profile.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: status
+        in: query
+        description: An indicator of the current status of the message. Allows multiple values to be set in query parameters.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+      - name: tag
+        in: query
+        description: A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            nullable: true
+      - name: tags
+        in: query
+        description: A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: tenant_id
+        in: query
+        description: Messages sent with the context of a Tenant
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: enqueued_after
+        in: query
+        description: The enqueued datetime of a message to filter out messages received before.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: traceId
+        in: query
+        description: The unique identifier used to trace the requests
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMessagesResponse'
+      summary: List messages
+      security:
+      - BearerAuth: []
+  /messages/{message_id}:
+    get:
+      description: Fetch the status of a message you've previously sent.
+      operationId: messages_get
+      tags:
+      - Sent Messages
+      parameters:
+      - name: message_id
+        in: path
+        description: A unique identifier associated with the message you wish to retrieve (results from a send).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageDetailsExtended'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageNotFound'
+      summary: Get message
+      security:
+      - BearerAuth: []
+  /messages/{message_id}/cancel:
+    post:
+      description: Cancel a message that is currently in the process of being delivered. A well-formatted API call to the cancel message API will return either `200` status code for a successful cancellation or `409` status code for an unsuccessful cancellation. Both cases will include the actual message record in the response body (see details below).
+      operationId: messages_cancel
+      tags:
+      - Sent Messages
+      parameters:
+      - name: message_id
+        in: path
+        description: A unique identifier representing the message ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageDetails'
+      summary: Cancel message
+      security:
+      - BearerAuth: []
+  /messages/{message_id}/history:
+    get:
+      description: Fetch the array of events of a message you've previously sent.
+      operationId: messages_getHistory
+      tags:
+      - Sent Messages
+      parameters:
+      - name: message_id
+        in: path
+        description: A unique identifier representing the message ID
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: A supported Message History type that will filter the events returned.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageHistoryResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageNotFound'
+      summary: Get message history
+      security:
+      - BearerAuth: []
+  /messages/{message_id}/output:
+    get:
+      operationId: messages_getContent
+      tags:
+      - Sent Messages
+      parameters:
+      - name: message_id
+        in: path
+        description: A unique identifier associated with the message you wish to retrieve (results from a send).
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenderOutputResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageNotFound'
+      summary: Get message content
+      security:
+      - BearerAuth: []
+  /requests/{request_id}/archive:
+    put:
+      operationId: messages_archive
+      tags:
+      - Sent Messages
+      parameters:
+      - name: request_id
+        in: path
+        description: A unique identifier representing the request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Archive message
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    RenderOutputResponse:
+      title: RenderOutputResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderOutput'
+          description: An array of render output of a previously sent message.
+      required:
+      - results
+    MessageDetailsExtended:
+      title: MessageDetailsExtended
+      type: object
+      properties:
+        providers:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          nullable: true
+      allOf:
+      - $ref: '#/components/schemas/MessageDetails'
+    RenderedMessageContent:
+      title: RenderedMessageContent
+      type: object
+      properties:
+        html:
+          type: string
+          description: The html content of the rendered message.
+        title:
+          type: string
+          description: The title of the rendered message.
+        body:
+          type: string
+          description: The body of the rendered message.
+        subject:
+          type: string
+          description: The subject of the rendered message.
+        text:
+          type: string
+          description: The text of the rendered message.
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderedMessageBlock'
+          description: The blocks of the rendered message.
+      required:
+      - html
+      - title
+      - body
+      - subject
+      - text
+      - blocks
+    Reason:
+      title: Reason
+      type: string
+      enum:
+      - BOUNCED
+      - FAILED
+      - FILTERED
+      - NO_CHANNELS
+      - NO_PROVIDERS
+      - OPT_IN_REQUIRED
+      - PROVIDER_ERROR
+      - UNPUBLISHED
+      - UNSUBSCRIBED
+    RenderOutput:
+      title: RenderOutput
+      type: object
+      properties:
+        channel:
+          type: string
+          description: The channel used for rendering the message.
+        channel_id:
+          type: string
+          description: The ID of channel used for rendering the message.
+        content:
+          $ref: '#/components/schemas/RenderedMessageContent'
+          description: Content details of the rendered message.
+      required:
+      - channel
+      - channel_id
+      - content
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    ListMessagesResponse:
+      title: ListMessagesResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+          description: Paging information for the result set.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageDetails'
+          description: An array of messages with their details.
+      required:
+      - paging
+      - results
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    MessageNotFound:
+      title: MessageNotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    RenderedMessageBlock:
+      title: RenderedMessageBlock
+      type: object
+      properties:
+        type:
+          type: string
+          description: The block type of the rendered message block.
+        text:
+          type: string
+          description: The block text of the rendered message block.
+      required:
+      - type
+      - text
+    MessageStatus:
+      title: MessageStatus
+      type: string
+      enum:
+      - CANCELED
+      - CLICKED
+      - DELAYED
+      - DELIVERED
+      - DIGESTED
+      - ENQUEUED
+      - FILTERED
+      - OPENED
+      - ROUTED
+      - SENT
+      - SIMULATED
+      - THROTTLED
+      - UNDELIVERABLE
+      - UNMAPPED
+      - UNROUTABLE
+    MessageHistoryResponse:
+      title: MessageHistoryResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+      - results
+    MessageDetails:
+      title: MessageDetails
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier associated with the message you wish to retrieve (results from a send).
+        status:
+          $ref: '#/components/schemas/MessageStatus'
+          description: The current status of the message.
+        enqueued:
+          type: integer
+          format: int64
+          description: A UTC timestamp at which Courier received the message request. Stored as a millisecond representation of the Unix epoch.
+        sent:
+          type: integer
+          format: int64
+          description: A UTC timestamp at which Courier passed the message to the Integration provider. Stored as a millisecond representation of the Unix epoch.
+        delivered:
+          type: integer
+          format: int64
+          description: A UTC timestamp at which the Integration provider delivered the message. Stored as a millisecond representation of the Unix epoch.
+        opened:
+          type: integer
+          format: int64
+          description: A UTC timestamp at which the recipient opened a message for the first time. Stored as a millisecond representation of the Unix epoch.
+        clicked:
+          type: integer
+          format: int64
+          description: A UTC timestamp at which the recipient clicked on a tracked link for the first time. Stored as a millisecond representation of the Unix epoch.
+        recipient:
+          type: string
+          description: A unique identifier associated with the recipient of the delivered message.
+        event:
+          type: string
+          description: A unique identifier associated with the event of the delivered message.
+        notification:
+          type: string
+          description: A unique identifier associated with the notification of the delivered message.
+        error:
+          type: string
+          nullable: true
+          description: A message describing the error that occurred.
+        reason:
+          $ref: '#/components/schemas/Reason'
+          nullable: true
+          description: The reason for the current status of the message.
+      required:
+      - id
+      - status
+      - enqueued
+      - recipient
+      - event
+      - notification
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

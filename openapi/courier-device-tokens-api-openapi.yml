@@ -1,0 +1,396 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Device Tokens API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Device Tokens
+paths:
+  /users/{user_id}/tokens:
+    get:
+      description: Gets all tokens available for a :user_id
+      operationId: users_tokens_list
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersGetAllTokensResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get all tokens
+      security:
+      - BearerAuth: []
+    put:
+      description: Adds multiple tokens to a user and overwrites matching existing tokens.
+      operationId: users_tokens_addMultiple
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Add multiple tokens to user
+      security:
+      - BearerAuth: []
+  /users/{user_id}/tokens/{token}:
+    get:
+      description: Get single token available for a `:token`
+      operationId: users_tokens_get
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      - name: token
+        in: path
+        description: The full token string.
+        required: true
+        schema:
+          type: string
+        x-stainless-param: token_id
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersGetUserTokenResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get single token
+      security:
+      - BearerAuth: []
+    put:
+      description: Adds a single token to a user and overwrites a matching existing token.
+      operationId: users_tokens_add
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      - name: token
+        in: path
+        description: The full token string.
+        required: true
+        schema:
+          type: string
+        x-stainless-param: token_id
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Add single token to user
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersAddSingleTokenBody'
+    patch:
+      description: Apply a JSON Patch (RFC 6902) to the specified token.
+      operationId: users_tokens_update
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      - name: token
+        in: path
+        description: The full token string.
+        required: true
+        schema:
+          type: string
+        x-stainless-param: token_id
+      responses:
+        '204':
+          description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Update a token
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersPatchUserTokenOpts'
+    delete:
+      operationId: users_tokens_delete
+      tags:
+      - Device Tokens
+      parameters:
+      - name: user_id
+        in: path
+        description: The user's ID. This can be any uniquely identifiable string.
+        required: true
+        schema:
+          type: string
+      - name: token
+        in: path
+        description: The full token string.
+        required: true
+        schema:
+          type: string
+        x-stainless-param: token_id
+      responses:
+        '204':
+          description: ''
+      summary: Delete User Token
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    UsersAddSingleTokenBody:
+      title: UsersAddSingleTokenBody
+      type: object
+      description: Request body for adding a single token. The token value itself is provided via the path parameter, so it is omitted from the body.
+      properties:
+        provider_key:
+          $ref: '#/components/schemas/UsersProviderKey'
+        expiry_date:
+          $ref: '#/components/schemas/UsersExpiryDate'
+          nullable: true
+          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
+        properties:
+          nullable: true
+          description: Properties about the token.
+        device:
+          $ref: '#/components/schemas/UsersDevice'
+          nullable: true
+          description: Information about the device the token came from.
+        tracking:
+          $ref: '#/components/schemas/UsersTracking'
+          nullable: true
+          description: Tracking information about the device the token came from.
+      required:
+      - provider_key
+    UsersExpiryDate:
+      title: UsersExpiryDate
+      oneOf:
+      - type: string
+      - type: boolean
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    UsersProviderKey:
+      title: UsersProviderKey
+      type: string
+      enum:
+      - firebase-fcm
+      - apn
+      - expo
+      - onesignal
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    UsersTracking:
+      title: usersTracking
+      type: object
+      properties:
+        os_version:
+          type: string
+          nullable: true
+          description: The operating system version
+        ip:
+          type: string
+          nullable: true
+          description: The IP address of the device
+        lat:
+          type: string
+          nullable: true
+          description: The latitude of the device
+        long:
+          type: string
+          nullable: true
+          description: The longitude of the device
+    UsersGetAllTokensResponse:
+      title: UsersGetAllTokensResponse
+      type: object
+      properties:
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersUserToken'
+      required:
+      - tokens
+      description: A list of tokens registered with the user.
+    UsersUserToken:
+      title: UsersUserToken
+      type: object
+      properties:
+        token:
+          type: string
+          description: Full body of the token. Must match token in URL path parameter.
+        provider_key:
+          $ref: '#/components/schemas/UsersProviderKey'
+        expiry_date:
+          $ref: '#/components/schemas/UsersExpiryDate'
+          nullable: true
+          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
+        properties:
+          nullable: true
+          description: Properties about the token.
+        device:
+          $ref: '#/components/schemas/UsersDevice'
+          nullable: true
+          description: Information about the device the token came from.
+        tracking:
+          $ref: '#/components/schemas/UsersTracking'
+          nullable: true
+          description: Tracking information about the device the token came from.
+      required:
+      - provider_key
+      - token
+    UsersPatchUserTokenOpts:
+      title: UsersPatchUserTokenOpts
+      type: object
+      properties:
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersPatchOperation'
+      required:
+      - patch
+    UsersDevice:
+      title: UsersDevice
+      type: object
+      properties:
+        app_id:
+          type: string
+          nullable: true
+          description: Id of the application the token is used for
+        ad_id:
+          type: string
+          nullable: true
+          description: Id of the advertising identifier
+        device_id:
+          type: string
+          nullable: true
+          description: Id of the device the token is associated with
+        platform:
+          type: string
+          nullable: true
+          description: The device platform i.e. android, ios, web
+        manufacturer:
+          type: string
+          nullable: true
+          description: The device manufacturer
+        model:
+          type: string
+          nullable: true
+          description: The device model
+    UsersTokenStatus:
+      title: UsersTokenStatus
+      type: string
+      enum:
+      - active
+      - unknown
+      - failed
+      - revoked
+    UsersGetUserTokenResponse:
+      title: UsersGetUserTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UsersTokenStatus'
+          nullable: true
+        status_reason:
+          type: string
+          nullable: true
+          description: The reason for the token status.
+      allOf:
+      - $ref: '#/components/schemas/UsersUserToken'
+    UsersPatchOperation:
+      title: UsersPatchOperation
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to perform.
+        path:
+          type: string
+          description: The JSON path specifying the part of the profile to operate on.
+        value:
+          type: string
+          nullable: true
+          description: The value for the operation.
+      required:
+      - op
+      - path
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

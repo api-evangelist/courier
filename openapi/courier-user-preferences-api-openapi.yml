@@ -1,0 +1,302 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences User Preferences API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: User Preferences
+paths:
+  /users/{user_id}/preferences:
+    get:
+      description: Fetch all user preferences.
+      operationId: users_preferences_list
+      tags:
+      - User Preferences
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier associated with the user whose preferences you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: tenant_id
+        in: query
+        description: Query the preferences of a user for this specific tenant context.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersUserPreferencesListResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get user's preferences
+      security:
+      - BearerAuth: []
+  /users/{user_id}/preferences/{topic_id}:
+    get:
+      description: Fetch user preferences for a specific subscription topic.
+      operationId: users_preferences_get
+      tags:
+      - User Preferences
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier associated with the user whose preferences you wish to retrieve.
+        required: true
+        schema:
+          type: string
+      - name: topic_id
+        in: path
+        description: A unique identifier associated with a subscription topic.
+        required: true
+        schema:
+          type: string
+      - name: tenant_id
+        in: query
+        description: Query the preferences of a user for this specific tenant context.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersUserPreferencesGetResponse'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Get user subscription topic
+      security:
+      - BearerAuth: []
+    put:
+      description: Update or Create user preferences for a specific subscription topic.
+      operationId: users_preferences_update
+      tags:
+      - User Preferences
+      parameters:
+      - name: user_id
+        in: path
+        description: A unique identifier associated with the user whose preferences you wish to retrieve.
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: abc-123
+      - name: topic_id
+        in: path
+        description: A unique identifier associated with a subscription topic.
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: 74Q4QGFBEX481DP6JRPMV751H4XT
+      - name: tenant_id
+        in: query
+        description: Update the preferences of a user for this specific tenant context.
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersUserPreferencesUpdateResponse'
+              examples:
+                Example1:
+                  value:
+                    message: success
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Update or Create user preferences for a specific subscription topic
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic:
+                  $ref: '#/components/schemas/UsersTopicPreferenceUpdate'
+              required:
+              - topic
+            examples:
+              Example1:
+                value:
+                  topic:
+                    status: OPTED_IN
+                    has_custom_routing: true
+                    custom_routing:
+                    - inbox
+                    - email
+components:
+  schemas:
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    UsersTopicPreferenceUpdate:
+      title: UsersTopicPreferenceUpdate
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        custom_routing:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelClassification'
+          nullable: true
+          description: The Channels a user has chosen to receive notifications through for this topic
+        has_custom_routing:
+          type: boolean
+          nullable: true
+      required:
+      - status
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    UsersUserPreferencesGetResponse:
+      title: UsersUserPreferencesGetResponse
+      type: object
+      properties:
+        topic:
+          $ref: '#/components/schemas/UsersTopicPreference'
+      required:
+      - topic
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    UsersTopicPreference:
+      title: UsersTopicPreference
+      type: object
+      properties:
+        custom_routing:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelClassification'
+          nullable: true
+          description: The Channels a user has chosen to receive notifications through for this topic
+        default_status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        has_custom_routing:
+          type: boolean
+          nullable: true
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        topic_id:
+          type: string
+        topic_name:
+          type: string
+      required:
+      - default_status
+      - status
+      - topic_id
+      - topic_name
+    UsersUserPreferencesListResponse:
+      title: UsersUserPreferencesListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+          description: Deprecated - Paging not implemented on this endpoint
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersTopicPreference'
+          description: The Preferences associated with the user_id.
+      required:
+      - paging
+      - items
+    UsersUserPreferencesUpdateResponse:
+      title: UsersUserPreferencesUpdateResponse
+      type: object
+      properties:
+        message:
+          type: string
+          example: success
+      required:
+      - message
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

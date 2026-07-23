@@ -1,0 +1,429 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Automations API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Automations
+paths:
+  /automations:
+    get:
+      description: Get the list of automations.
+      operationId: automations_list
+      tags:
+      - Automations
+      parameters:
+      - name: cursor
+        in: query
+        description: A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results.
+        required: false
+        schema:
+          type: string
+      - name: version
+        in: query
+        description: The version of templates to retrieve. Accepted values are published (for published templates) or draft (for draft templates). Defaults to published.
+        required: false
+        schema:
+          type: string
+          enum:
+          - published
+          - draft
+          default: published
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationTemplateListResponse'
+              examples:
+                Example1:
+                  value:
+                    templates:
+                    - name: Welcome Email Automation
+                      id: abc-123-def-456
+                      version: published
+                      createdAt: '2024-01-01T00:00:00Z'
+                      updatedAt: '2024-01-02T00:00:00Z'
+                    - name: Order Confirmation
+                      id: xyz-789-ghi-012
+                      version: published
+                      createdAt: '2024-01-03T00:00:00Z'
+                      updatedAt: '2024-01-04T00:00:00Z'
+                    cursor: eyJpZCI6InRlbXBsYXRlLTIifQ==
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              examples:
+                InvalidVersion:
+                  value:
+                    message: 'Invalid version parameter "invalid". Accepted values are: published (for published templates) or draft (for draft templates)'
+                InvalidCursor:
+                  value:
+                    message: Invalid cursor format
+      summary: List Automations
+      security:
+      - BearerAuth: []
+  /automations/{templateId}/invoke:
+    post:
+      description: Invoke an automation run from an automation template.
+      operationId: automations_invokeAutomationTemplate
+      tags:
+      - Automations
+      parameters:
+      - name: templateId
+        in: path
+        description: A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationInvokeResponse'
+      summary: Invoke an Automation
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationInvokeParams'
+  /automations/invoke:
+    post:
+      description: Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+      operationId: automations_invokeAdHocAutomation
+      tags:
+      - Automations
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomationInvokeResponse'
+              examples:
+                Example1:
+                  value:
+                    runId: 1-65f240a0-47a6a120c8374de9bcf9f22c
+      summary: Invoke an Ad Hoc Automation
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AutomationAdHocInvokeParams'
+            examples:
+              Example1:
+                value:
+                  data:
+                    name: Foo
+                  profile:
+                    tenant_id: abc-123
+                  recipient: user-yes
+                  automation:
+                    cancelation_token: delay-send--user-yes--abc-123
+                    steps:
+                    - action: delay
+                      until: 20240408T080910.123
+                    - action: send
+                      template: 64TP5HKPFTM8VTK1Y75SJDQX9JK0
+components:
+  schemas:
+    AutomationWebhookParams:
+      title: AutomationWebhookParams
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+        body:
+          type: string
+          nullable: true
+      required:
+      - url
+      - method
+    AutomationInvokeStep:
+      title: AutomationInvokeStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - invoke
+        template:
+          type: string
+      required:
+      - action
+      - template
+    AutomationDelayStep:
+      title: AutomationDelayStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - delay
+        duration:
+          type: string
+          nullable: true
+        until:
+          type: string
+          nullable: true
+      required:
+      - action
+    AutomationInvokeResponse:
+      title: AutomationInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+      required:
+      - runId
+    AutomationTemplateListResponse:
+      title: AutomationTemplateListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationTemplate'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    AutomationTemplate:
+      title: AutomationTemplate
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the automation template.
+        id:
+          type: string
+          description: The unique identifier of the automation template.
+        version:
+          type: string
+          description: The version of the template published or drafted.
+          enum:
+          - published
+          - draft
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the template was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the template was last updated.
+      required:
+      - name
+      - id
+      - version
+    AutomationUpdateProfileStep:
+      title: AutomationUpdateProfileStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - update-profile
+        recipient_id:
+          type: string
+          nullable: true
+        merge:
+          type: string
+          enum:
+          - none
+          - overwrite
+          - soft-merge
+          - replace
+          nullable: true
+        profile:
+          type: object
+          additionalProperties: true
+      required:
+      - action
+      - profile
+    AutomationStep:
+      title: AutomationStep
+      oneOf:
+      - $ref: '#/components/schemas/AutomationDelayStep'
+      - $ref: '#/components/schemas/AutomationSendStep'
+      - $ref: '#/components/schemas/AutomationSendListStep'
+      - $ref: '#/components/schemas/AutomationUpdateProfileStep'
+      - $ref: '#/components/schemas/AutomationCancelStep'
+      - $ref: '#/components/schemas/AutomationFetchDataStep'
+      - $ref: '#/components/schemas/AutomationInvokeStep'
+    AutomationSendListStep:
+      title: AutomationSendListStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - send-list
+        list:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+        brand:
+          type: string
+          nullable: true
+      required:
+      - action
+      - list
+    AutomationInvokeParams:
+      title: AutomationInvokeParams
+      type: object
+      properties:
+        brand:
+          type: string
+          nullable: true
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+        profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+        recipient:
+          type: string
+          nullable: true
+        template:
+          type: string
+          nullable: true
+      required:
+      - recipient
+    Automation:
+      title: Automation
+      type: object
+      properties:
+        cancelation_token:
+          type: string
+          nullable: true
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationStep'
+      required:
+      - steps
+    AutomationSendStep:
+      title: AutomationSendStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - send
+        template:
+          type: string
+          nullable: true
+        brand:
+          type: string
+          nullable: true
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+        profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+        recipient:
+          type: string
+          nullable: true
+      required:
+      - action
+    AutomationFetchDataStep:
+      title: AutomationFetchDataStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - fetch-data
+        webhook:
+          $ref: '#/components/schemas/AutomationWebhookParams'
+        merge_strategy:
+          type: string
+          enum:
+          - replace
+          - overwrite
+          - soft-merge
+          nullable: true
+      required:
+      - action
+      - webhook
+    AutomationAdHocInvokeParams:
+      title: AutomationAdHocInvokeParams
+      type: object
+      properties:
+        automation:
+          $ref: '#/components/schemas/Automation'
+        brand:
+          type: string
+          nullable: true
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+        profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+        recipient:
+          type: string
+          nullable: true
+        template:
+          type: string
+          nullable: true
+      required:
+      - automation
+    AutomationCancelStep:
+      title: AutomationCancelStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - cancel
+        cancelation_token:
+          type: string
+      required:
+      - action
+      - cancelation_token
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

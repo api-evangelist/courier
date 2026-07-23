@@ -1,0 +1,322 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Audiences
+paths:
+  /audiences/{audience_id}:
+    get:
+      description: Returns the specified audience by id.
+      operationId: audiences_get
+      tags:
+      - Audiences
+      parameters:
+      - name: audience_id
+        in: path
+        description: A unique identifier representing the audience_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audience'
+      summary: Get an audience
+      security:
+      - BearerAuth: []
+    put:
+      description: Creates or updates audience.
+      operationId: audiences_update
+      tags:
+      - Audiences
+      parameters:
+      - name: audience_id
+        in: path
+        description: A unique identifier representing the audience id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudienceUpdateResponse'
+      summary: Update an audience
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  nullable: true
+                  description: The name of the audience
+                description:
+                  type: string
+                  nullable: true
+                  description: A description of the audience
+                operator:
+                  $ref: '#/components/schemas/LogicalOperator'
+                  nullable: true
+                  description: The logical operator (AND/OR) for the top-level filter
+                filter:
+                  $ref: '#/components/schemas/AudienceFilterConfig'
+                  nullable: true
+    delete:
+      description: Deletes the specified audience.
+      operationId: audiences_delete
+      tags:
+      - Audiences
+      parameters:
+      - name: audience_id
+        in: path
+        description: A unique identifier representing the audience id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Delete an audience
+      security:
+      - BearerAuth: []
+  /audiences/{audience_id}/members:
+    get:
+      description: Get list of members of an audience.
+      operationId: audiences_listMembers
+      tags:
+      - Audiences
+      parameters:
+      - name: audience_id
+        in: path
+        description: A unique identifier representing the audience id
+        required: true
+        schema:
+          type: string
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of members
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudienceMemberListResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: List audience members
+      security:
+      - BearerAuth: []
+  /audiences:
+    get:
+      description: Get the audiences associated with the authorization token.
+      operationId: audiences_listAudiences
+      tags:
+      - Audiences
+      parameters:
+      - name: cursor
+        in: query
+        description: A unique identifier that allows for fetching the next set of audiences
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudienceListResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: List all audiences
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    AudienceMember:
+      title: AudienceMember
+      type: object
+      properties:
+        added_at:
+          type: string
+        audience_id:
+          type: string
+        audience_version:
+          type: integer
+        member_id:
+          type: string
+        reason:
+          type: string
+      required:
+      - added_at
+      - audience_id
+      - audience_version
+      - member_id
+      - reason
+    LogicalOperator:
+      title: LogicalOperator
+      type: string
+      enum:
+      - AND
+      - OR
+    AudienceFilterConfig:
+      title: AudienceFilterConfig
+      type: object
+      description: Filter configuration for audience membership containing an array of filter rules
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: Array of filter rules (single conditions or nested groups)
+      required:
+      - filters
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+        more:
+          type: boolean
+      required:
+      - more
+    AudienceListResponse:
+      title: AudienceListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Audience'
+      required:
+      - paging
+      - items
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    AudienceMemberListResponse:
+      title: AudienceMemberListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudienceMember'
+      required:
+      - paging
+      - items
+    FilterConfig:
+      title: FilterConfig
+      type: object
+      description: A filter rule that can be either a single condition (with path/value) or a  nested group (with filters array). Use comparison operators (EQ, GT, etc.)  for single conditions, and logical operators (AND, OR) for nested groups.
+      properties:
+        operator:
+          type: string
+          description: The operator for this filter. Use comparison operators (EQ, GT, LT, GTE, LTE,  NEQ, EXISTS, INCLUDES, STARTS_WITH, ENDS_WITH, IS_BEFORE, IS_AFTER, OMIT) for  single conditions, or logical operators (AND, OR) for nested filter groups.
+        path:
+          type: string
+          description: The attribute path from the user profile to filter on. Required for single  filter conditions, not used for nested filter groups.
+        value:
+          type: string
+          description: The value to compare against. Required for single filter conditions,  not used for nested filter groups.
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: Nested filter rules to combine with AND/OR. Required for nested filter groups, not used for single filter conditions.
+      required:
+      - operator
+    Audience:
+      title: Audience
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier representing the audience_id
+        name:
+          type: string
+          description: The name of the audience
+        description:
+          type: string
+          description: A description of the audience
+        operator:
+          $ref: '#/components/schemas/LogicalOperator'
+          description: The logical operator (AND/OR) for the top-level filter
+        filter:
+          $ref: '#/components/schemas/AudienceFilterConfig'
+          nullable: true
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - created_at
+      - updated_at
+    AudienceUpdateResponse:
+      title: AudienceUpdateResponse
+      type: object
+      properties:
+        audience:
+          $ref: '#/components/schemas/Audience'
+      required:
+      - audience
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

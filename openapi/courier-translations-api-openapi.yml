@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Translations API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Translations
+paths:
+  /translations/{domain}/{locale}:
+    get:
+      description: Get translations by locale
+      operationId: translations_get
+      tags:
+      - Translations
+      parameters:
+      - name: domain
+        in: path
+        description: The domain you want to retrieve translations for. Only `default` is supported at the moment
+        required: true
+        schema:
+          type: string
+      - name: locale
+        in: path
+        description: The locale you want to retrieve the translations for
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: .po file translation content
+          content:
+            application/json:
+              schema:
+                type: string
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Get a translation
+      security:
+      - BearerAuth: []
+    put:
+      description: Update a translation
+      operationId: translations_update
+      tags:
+      - Translations
+      parameters:
+      - name: domain
+        in: path
+        description: The domain you want to retrieve translations for. Only `default` is supported at the moment
+        required: true
+        schema:
+          type: string
+      - name: locale
+        in: path
+        description: The locale you want to retrieve the translations for
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+      summary: Update translations by locale
+      security:
+      - BearerAuth: []
+      requestBody:
+        description: .po file translation content
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+components:
+  schemas:
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

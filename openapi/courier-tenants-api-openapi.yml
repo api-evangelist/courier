@@ -1,0 +1,467 @@
+openapi: 3.0.1
+info:
+  title: Courier Audiences Tenants API
+  description: The Courier REST API.
+  version: ''
+servers:
+- url: https://api.courier.com
+  description: Production
+tags:
+- name: Tenants
+paths:
+  /tenants/{tenant_id}:
+    get:
+      operationId: tenants_get
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: A unique identifier representing the tenant to be returned.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get a Tenant
+      security:
+      - BearerAuth: []
+    put:
+      operationId: tenants_createOrReplace
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: A unique identifier representing the tenant to be returned.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tenant'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Create or Replace a Tenant
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the tenant.
+                parent_tenant_id:
+                  type: string
+                  nullable: true
+                  description: Tenant's parent id (if any).
+                default_preferences:
+                  $ref: '#/components/schemas/DefaultPreferences'
+                  nullable: true
+                  description: Defines the preferences used for the tenant when the user hasn't specified their own.
+                properties:
+                  type: object
+                  additionalProperties: true
+                  nullable: true
+                  description: Arbitrary properties accessible to a template.
+                user_profile:
+                  type: object
+                  additionalProperties: true
+                  nullable: true
+                  description: A user profile object merged with user profile on send.
+                brand_id:
+                  type: string
+                  nullable: true
+                  description: Brand to be used for the account when one is not specified by the send call.
+              required:
+              - name
+    delete:
+      operationId: tenants_delete
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: Id of the tenant to be deleted.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Delete a Tenant
+      security:
+      - BearerAuth: []
+  /tenants:
+    get:
+      operationId: tenants_list
+      tags:
+      - Tenants
+      parameters:
+      - name: parent_tenant_id
+        in: query
+        description: Filter the list of tenants by parent_id
+        required: false
+        schema:
+          type: string
+          nullable: true
+      - name: limit
+        in: query
+        description: "The number of tenants to return \n(defaults to 20, maximum value of 100)"
+        required: false
+        schema:
+          type: integer
+          nullable: true
+      - name: cursor
+        in: query
+        description: Continue the pagination with the next cursor
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TenantListResponse'
+      summary: Get a List of Tenants
+      security:
+      - BearerAuth: []
+  /tenants/{tenant_id}/users:
+    get:
+      operationId: tenants_getUsersByTenant
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: Id of the tenant for user membership.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+        required: false
+        schema:
+          type: integer
+          nullable: true
+      - name: cursor
+        in: query
+        description: Continue the pagination with the next cursor
+        required: false
+        schema:
+          type: string
+          nullable: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersForTenantResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get Users in Tenant
+      security:
+      - BearerAuth: []
+  /tenants/{tenant_id}/default_preferences/items/{topic_id}:
+    put:
+      operationId: tenants_createOrReplaceDefaultPreferencesForTopic
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: Id of the tenant to update the default preferences for.
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: tenantABC
+      - name: topic_id
+        in: path
+        description: Id of the subscription topic you want to have a default preference for.
+        required: true
+        schema:
+          type: string
+        examples:
+          Example1:
+            value: HB529N49MD4D5PMX9WR5P4JH78NA
+      responses:
+        '204':
+          description: ''
+      summary: Create or Replace Default Preferences For Topic
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionTopicNew'
+            examples:
+              Example1:
+                value:
+                  status: OPTED_IN
+                  has_custom_routing: true
+                  custom_routing:
+                  - inbox
+    delete:
+      operationId: tenants_removeDefaultPreferencesForTopic
+      tags:
+      - Tenants
+      parameters:
+      - name: tenant_id
+        in: path
+        description: Id of the tenant to update the default preferences for.
+        required: true
+        schema:
+          type: string
+      - name: topic_id
+        in: path
+        description: Id of the subscription topic you want to have a default preference for.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      summary: Remove Default Preferences For Topic
+      security:
+      - BearerAuth: []
+components:
+  schemas:
+    UserTenantAssociation:
+      title: UserTenantAssociation
+      type: object
+      properties:
+        user_id:
+          type: string
+          nullable: true
+          description: User ID for the association between tenant and user
+        type:
+          type: string
+          enum:
+          - user
+          nullable: true
+        tenant_id:
+          type: string
+          description: Tenant ID for the association between tenant and user
+        profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Additional metadata to be applied to a user profile when used in a tenant context
+      required:
+      - tenant_id
+    DefaultPreferences:
+      title: DefaultPreferences
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriptionTopic'
+          nullable: true
+    SubscriptionTopicStatus:
+      title: SubscriptionTopicStatus
+      type: string
+      enum:
+      - OPTED_OUT
+      - OPTED_IN
+      - REQUIRED
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    Tenant:
+      title: Tenant
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the tenant.
+        name:
+          type: string
+          description: Name of the tenant.
+        parent_tenant_id:
+          type: string
+          nullable: true
+          description: Tenant's parent id (if any).
+        default_preferences:
+          $ref: '#/components/schemas/DefaultPreferences'
+          nullable: true
+          description: Defines the preferences used for the account when the user hasn't specified their own.
+        properties:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: Arbitrary properties accessible to a template.
+        user_profile:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: A user profile object merged with user profile on send.
+        brand_id:
+          type: string
+          nullable: true
+          description: Brand to be used for the account when one is not specified by the send call.
+      required:
+      - id
+      - name
+    SubscriptionTopic:
+      title: SubscriptionTopic
+      type: object
+      properties:
+        id:
+          type: string
+          description: Topic ID
+      required:
+      - id
+      allOf:
+      - $ref: '#/components/schemas/SubscriptionTopicNew'
+    SubscriptionTopicNew:
+      title: SubscriptionTopicNew
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SubscriptionTopicStatus'
+        has_custom_routing:
+          type: boolean
+          nullable: true
+          description: Override channel routing with custom preferences. This will override any template preferences that are set, but a user can still customize their preferences
+        custom_routing:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelClassification'
+          nullable: true
+          description: The default channels to send to this tenant when has_custom_routing is enabled
+      required:
+      - status
+    TenantListResponse:
+      title: TenantListResponse
+      type: object
+      properties:
+        cursor:
+          type: string
+          nullable: true
+          description: A pointer to the next page of results. Defined only when has_more is set to true.
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tenant'
+          description: An array of Tenants
+        next_url:
+          type: string
+          nullable: true
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when has_more is set to true"
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to "list". Represents the type of this object.
+      required:
+      - has_more
+      - items
+      - url
+      - type
+    ListUsersForTenantResponse:
+      title: ListUsersForTenantResponse
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserTenantAssociation'
+          nullable: true
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        next_url:
+          type: string
+          nullable: true
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when `has_more` is set to true"
+        cursor:
+          type: string
+          nullable: true
+          description: "A pointer to the next page of results. Defined \nonly when `has_more` is set to true"
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to `list`. Represents the type of this object.
+      required:
+      - has_more
+      - url
+      - type
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
