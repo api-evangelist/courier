@@ -4,7 +4,20 @@ name: Courier
 kind: company
 description: Courier is a multi-channel notification API offering routing across email,
   SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/courier.png
 tags:
 - Notifications
 - Email
@@ -15,83 +28,10 @@ created: '2026-05-08'
 modified: '2026-05-29'
 specificationVersion: '0.19'
 apis:
-- name: Courier Send API
-  description: Send notifications across channels with templates and routing.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Send
-  - Multi-Channel
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
-  - url: graphql/courier-graphql.md
-    type: GraphQL
-- name: Courier User Profiles API
-  description: Manage recipient profile data and channel addresses.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Users
-  - Profiles
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
-- name: Courier Lists API
-  description: Manage subscription lists for broadcast notifications.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Lists
-  - Subscriptions
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
-- name: Courier Events API
-  description: Trigger notifications via mapped event types.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Events
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
-- name: Courier Brands API
-  description: Configure brand themes used across templates.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Brands
-  - Branding
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
-- name: Courier Authentication API
-  description: Issue JWTs for client-side and inbox authentication.
-  humanURL: https://www.courier.com/docs/reference
-  baseURL: https://api.courier.com
-  tags:
-  - Authentication
-  - JWT
-  properties:
-  - type: Documentation
-    url: https://www.courier.com/docs/reference
-  - type: OpenAPI
-    url: openapi/courier-openapi.yml
 - name: Courier Inbox Real-Time API
-  description: WebSocket service that delivers Inbox messages and message-state events
-    (read, unread, opened, archived, clicked, mark-all-read, archive-all, archive-read)
-    to authenticated users in real time.
+  description: >-
+    WebSocket service that delivers Inbox messages and message-state events (read, unread, opened, archived,
+    clicked, mark-all-read, archive-all, archive-read) to authenticated users in real time.
   humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
   baseURL: wss://realtime.courier.io
   tags:
@@ -106,6 +46,300 @@ apis:
     url: https://www.courier.com/docs/sdk-libraries/courier-js-web
   - type: AsyncAPI
     url: asyncapi/courier-asyncapi.yml
+- aid: courier:courier-audiences-api
+  name: Courier Audiences API
+  description: The Audiences API from Courier — 3 operation(s) for audiences.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Audiences
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-audiences-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-audit-events-api
+  name: Courier Audit Events API
+  description: The Audit Events API from Courier — 2 operation(s) for audit events.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Audit Events
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-audit-events-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-authentication-api
+  name: Courier Authentication API
+  description: The Authentication API from Courier — 1 operation(s) for authentication.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-automations-api
+  name: Courier Automations API
+  description: The Automations API from Courier — 3 operation(s) for automations.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Automations
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-automations-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-brands-api
+  name: Courier Brands API
+  description: The Brands API from Courier — 2 operation(s) for brands.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Brands
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-brands-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-bulk-api
+  name: Courier Bulk API
+  description: The Bulk API from Courier — 4 operation(s) for bulk.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Bulk
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-bulk-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-courier-create-api
+  name: Courier Courier Create API
+  description: The Courier Create API from Courier — 4 operation(s) for courier create.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Courier Create
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-courier-create-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-device-tokens-api
+  name: Courier Device Tokens API
+  description: The Device Tokens API from Courier — 2 operation(s) for device tokens.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Device Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-device-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-inbound-api
+  name: Courier Inbound API
+  description: The Inbound API from Courier — 1 operation(s) for inbound.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Inbound
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-inbound-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-journeys-api
+  name: Courier Journeys API
+  description: The Journeys API from Courier — 2 operation(s) for journeys.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Journeys
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-journeys-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-lists-api
+  name: Courier Lists API
+  description: The Lists API from Courier — 5 operation(s) for lists.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-lists-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-notification-templates-api
+  name: Courier Notification Templates API
+  description: The Notification Templates API from Courier — 8 operation(s) for notification templates.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Notification Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-notification-templates-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-providers-api
+  name: Courier Providers API
+  description: The Providers API from Courier — 3 operation(s) for providers.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Providers
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-providers-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-routing-strategies-api
+  name: Courier Routing Strategies API
+  description: The Routing Strategies API from Courier — 3 operation(s) for routing strategies.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Routing Strategies
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-routing-strategies-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-send-api
+  name: Courier Send API
+  description: The Send API from Courier — 1 operation(s) for send.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Send
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-send-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-sent-messages-api
+  name: Courier Sent Messages API
+  description: The Sent Messages API from Courier — 6 operation(s) for sent messages.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Sent Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-sent-messages-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-tenants-api
+  name: Courier Tenants API
+  description: The Tenants API from Courier — 4 operation(s) for tenants.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-translations-api
+  name: Courier Translations API
+  description: The Translations API from Courier — 1 operation(s) for translations.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - Translations
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-translations-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-user-preferences-api
+  name: Courier User Preferences API
+  description: The User Preferences API from Courier — 2 operation(s) for user preferences.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - User Preferences
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-user-preferences-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-user-profiles-api
+  name: Courier User Profiles API
+  description: The User Profiles API from Courier — 2 operation(s) for user profiles.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - User Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-user-profiles-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
+- aid: courier:courier-user-tenants-api
+  name: Courier User Tenants API
+  description: The User Tenants API from Courier — 2 operation(s) for user tenants.
+  humanURL: https://www.courier.com/docs/reference
+  baseURL: https://api.courier.com
+  tags:
+  - User Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/courier-user-tenants-api-openapi.yml
+  - type: Documentation
+    url: https://www.courier.com/docs/reference
+  - type: GraphQL
+    url: graphql/courier-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/courier-agentic-access.yml
