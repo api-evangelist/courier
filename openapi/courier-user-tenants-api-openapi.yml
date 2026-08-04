@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Courier Audiences User Tenants API
   description: The Courier REST API.
-  version: ''
+  version: "1.0"
 servers:
 - url: https://api.courier.com
   description: Production
