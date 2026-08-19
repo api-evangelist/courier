@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences User Profiles API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the specified user profile."
+        },
+        {
+          "info": {
+            "name": "Create a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Merge the supplied values with an existing profile or create a new profile if one doesn't already exist."
+        },
+        {
+          "info": {
+            "name": "Replace a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. \nAny key-value pairs that exist in the profile but fail to be included in the `PUT` request will be \nremoved from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, \nuse the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request."
+        },
+        {
+          "info": {
+            "name": "Update a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a profile"
+        },
+        {
+          "info": {
+            "name": "Delete a profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/profiles/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the specified user profile."
+        },
+        {
+          "info": {
+            "name": "Get list subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of message statuses."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the subscribed lists for a specified user."
+        },
+        {
+          "info": {
+            "name": "Subscribe to one or more lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested user profile."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes the given user to one or more lists. If the list does not exist, it will be created."
+        },
+        {
+          "info": {
+            "name": "Delete list subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/profiles/:user_id/lists",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the user associated with the requested profile."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes all list subscriptions for given user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

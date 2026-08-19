@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Journeys API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Journeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Journeys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/journeys",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of journeys to retrieve. Accepted values are published (for published journeys) or draft (for draft journeys). Defaults to published."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of journeys."
+        },
+        {
+          "info": {
+            "name": "Invoke a Journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/journeys/:templateId/invoke",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke a journey run from a journey template."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

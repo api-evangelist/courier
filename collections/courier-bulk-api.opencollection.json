@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Bulk API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bulk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a bulk job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates a new bulk job for sending messages to multiple recipients.\n\n**Required**: `message.event` (event ID or notification ID)\n\n**Optional (V2 format)**: `message.template` (notification ID) or `message.content` (Elemental content) \ncan be provided to override the notification associated with the event.\n"
+        },
+        {
+          "info": {
+            "name": "Get a Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/bulk/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a bulk job"
+        },
+        {
+          "info": {
+            "name": "Add users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk/:job_id",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Ingest user data into a Bulk Job. \n\n**Important**: For email-based bulk jobs, each user must include `profile.email` \nfor provider routing to work correctly. The `to.email` field is not sufficient \nfor email provider routing.\n"
+        },
+        {
+          "info": {
+            "name": "Run a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/bulk/:job_id/run",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Run a bulk job"
+        },
+        {
+          "info": {
+            "name": "Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/bulk/:job_id/users",
+            "params": [
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the bulk job"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of users added to the bulk job"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Bulk Job Users"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

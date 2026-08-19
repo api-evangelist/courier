@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences User Tenants API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get tenants associated with a given user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to retrieve all associated tenants for."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a paginated list of user tenant associations."
+        },
+        {
+          "info": {
+            "name": "Add a User to Multiple Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to add a user to\nmultiple tenants in one call.\nA custom profile can also be supplied for each tenant. \nThis profile will be merged with the user's main \nprofile when sending to the user with that tenant."
+        },
+        {
+          "info": {
+            "name": "Remove User From All Associated Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tenants",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be removed from the supplied tenant."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from any tenants they may have been associated with."
+        },
+        {
+          "info": {
+            "name": "Add a User to a Single Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be added to the supplied tenant."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant the user should be added to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used to add a single tenant.\n\nA custom profile can also be supplied with the tenant. \nThis profile will be merged with the user's main profile \nwhen sending to the user with that tenant."
+        },
+        {
+          "info": {
+            "name": "Remove User from a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the user to be removed from the supplied tenant."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant the user should be removed from."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Removes a user from the supplied tenant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

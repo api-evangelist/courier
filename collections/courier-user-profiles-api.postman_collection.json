@@ -1,0 +1,1332 @@
+{
+  "item": [
+    {
+      "id": "256af769-0ed2-479e-b88d-bf6eec861755",
+      "name": "User Profiles",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6736005c-a630-4a4e-8582-511e93248b75",
+          "name": "Get a profile",
+          "request": {
+            "name": "Get a profile",
+            "description": {
+              "content": "Returns the specified user profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "063826d8-3d9f-44bb-a8a4-995ef95c1e3d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": 7038,\n    \"key_2\": 6382\n  },\n  \"preferences\": {\n    \"categories\": {\n      \"key_0\": {\n        \"status\": \"OPTED_OUT\",\n        \"rules\": [\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"channel_preferences\": [\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    },\n    \"notifications\": {\n      \"key_0\": {\n        \"status\": \"OPTED_IN\",\n        \"rules\": [\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"channel_preferences\": [\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"key_1\": {\n        \"status\": \"OPTED_IN\",\n        \"rules\": [\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"channel_preferences\": [\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"key_2\": {\n        \"status\": \"OPTED_OUT\",\n        \"rules\": [\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"until\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"start\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"channel_preferences\": [\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"channel\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c860b06-cda2-4d50-9277-dec8ee5ba5cf",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1a57df45-d806-4417-bab2-4798ffa43721",
+          "name": "Create a profile",
+          "request": {
+            "name": "Create a profile",
+            "description": {
+              "content": "Merge the supplied values with an existing profile or create a new profile if one doesn't already exist.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profile\": {\n    \"key_0\": 4534,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "221b0eaa-d80e-471e-88e9-d08c0d5ec971",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa5894db-6ddd-41b6-9260-4affa51f2f0f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e14d7163-f097-4e6e-a0bd-858bf067b19f",
+          "name": "Replace a profile",
+          "request": {
+            "name": "Replace a profile",
+            "description": {
+              "content": "When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. \nAny key-value pairs that exist in the profile but fail to be included in the `PUT` request will be \nremoved from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, \nuse the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profile\": {\n    \"key_0\": 4534,\n    \"key_1\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4063e570-4c4b-4646-89ee-dcff6bf8a5e7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8aacd368-b0d2-46d0-b044-9643e6bce5f2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0248f8a4-2ffb-44be-8c14-ac5b3c5e8a1a",
+          "name": "Update a profile",
+          "request": {
+            "name": "Update a profile",
+            "description": {},
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patch\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a33094d5-26c3-43b1-9b1e-ceacc9809c30",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patch\": [\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"op\": \"<string>\",\n      \"path\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be410dcf-01bf-48d7-9ef8-1fa86c69a9fa",
+          "name": "Delete a profile",
+          "request": {
+            "name": "Delete a profile",
+            "description": {
+              "content": "Deletes the specified user profile.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "60941592-04d6-464f-8577-89132cd0e8a9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a1d79f8-20cd-4956-9d3d-6129c0666674",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ca1eb61-ea48-4cde-95f5-4a7ade5bcea4",
+          "name": "Get list subscriptions",
+          "request": {
+            "name": "Get list subscriptions",
+            "description": {
+              "content": "Returns the subscribed lists for a specified user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A unique identifier that allows for fetching the next set of message statuses."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aa4bb79f-321e-4a2e-bc2e-e1af1d2509a4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"created\": \"string\",\n      \"updated\": \"string\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"created\": \"string\",\n      \"updated\": \"string\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e459189b-f79c-4024-bd48-9403e1588313",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f48b1381-fd22-4cbf-9bcc-082b8500ef63",
+          "name": "Subscribe to one or more lists",
+          "request": {
+            "name": "Subscribe to one or more lists",
+            "description": {
+              "content": "Subscribes the given user to one or more lists. If the list does not exist, it will be created.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"lists\": [\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "77914abb-42f5-4ef4-84c3-72bca8567755",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lists\": [\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_3\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_4\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a508ab5c-b7ea-4e52-9ba0-30d1f4767486",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested user profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"lists\": [\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    {\n      \"listId\": \"<string>\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_3\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_4\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_2\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4509f54-054b-4c2f-974d-1324fb9cde69",
+          "name": "Delete list subscriptions",
+          "request": {
+            "name": "Delete list subscriptions",
+            "description": {
+              "content": "Removes all list subscriptions for given user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "profiles",
+                ":user_id",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a3a7618d-de7b-4a32-b749-39ba853b0ef0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"SUCCESS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83aadab0-a1d8-4d5f-80d7-af501b5b7436",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "profiles",
+                    ":user_id",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) A unique identifier representing the user associated with the requested profile."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "956a595d-7952-44fb-a843-6a67b7421bbd",
+    "name": "Courier Audiences User Profiles API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

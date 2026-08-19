@@ -1,0 +1,501 @@
+{
+  "item": [
+    {
+      "id": "947afc35-124c-4ca0-9ac9-f108da70428c",
+      "name": "Journeys",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45211ac5-73f7-49e7-bb0b-4d1e956fc155",
+          "name": "List Journeys",
+          "request": {
+            "name": "List Journeys",
+            "description": {
+              "content": "Get the list of journeys.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "journeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "published",
+                  "description": "The version of journeys to retrieve. Accepted values are published (for published journeys) or draft (for draft journeys). Defaults to published."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b695128c-d15b-4f1d-9671-a378cdfdcf3e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"templates\": [\n    {\n      \"name\": \"Welcome Journey\",\n      \"id\": \"abc-123-def-456\",\n      \"version\": \"published\",\n      \"createdAt\": \"2024-01-01T00:00:00Z\",\n      \"updatedAt\": \"2024-01-02T00:00:00Z\"\n    },\n    {\n      \"name\": \"Onboarding Flow\",\n      \"id\": \"xyz-789-ghi-012\",\n      \"version\": \"published\",\n      \"createdAt\": \"2024-01-03T00:00:00Z\",\n      \"updatedAt\": \"2024-01-04T00:00:00Z\"\n    }\n  ],\n  \"cursor\": \"eyJpZCI6InRlbXBsYXRlLTIifQ==\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "448b40f9-1e8f-4a92-bce6-3ca4a23a85c2",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Invalid version parameter \\\"invalid\\\". Accepted values are: published (for published templates) or draft (for draft templates)\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8fe948ec-7860-4059-9f52-eb2c33e614a6",
+          "name": "Invoke a Journey",
+          "request": {
+            "name": "Invoke a Journey",
+            "description": {
+              "content": "Invoke a journey run from a journey template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "journeys",
+                ":templateId",
+                "invoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "templateId",
+                  "description": "(Required) A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"profile\": {\n    \"key_0\": 4779.905698710304\n  },\n  \"data\": {\n    \"key_0\": 1093.8863390769127,\n    \"key_1\": 5896.13951928043,\n    \"key_2\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "49c474e1-c2fb-4e8f-8780-3442c213855a",
+              "name": "Journey invocation accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys",
+                    ":templateId",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user-123\",\n  \"data\": {\n    \"order_id\": \"order-456\",\n    \"amount\": 99.99\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runId\": \"1-65f240a0-47a6a120c8374de9bcf9f22c\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "961aceed-7d6c-4d19-88d5-5f5a73670670",
+              "name": "Bad Request - validation error, invalid version, or missing recipient",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys",
+                    ":templateId",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user-123\",\n  \"data\": {\n    \"order_id\": \"order-456\",\n    \"amount\": 99.99\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"templateId is required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0958b478-0fe3-41d9-b1f8-2f48632533bd",
+              "name": "Journey template not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys",
+                    ":templateId",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user-123\",\n  \"data\": {\n    \"order_id\": \"order-456\",\n    \"amount\": 99.99\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Automation template abc-123 not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13b5da85-f6ef-4687-80a2-8d7665f8125f",
+              "name": "Unprocessable Entity - trigger conditions failed, template archived or disabled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "journeys",
+                    ":templateId",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) A unique identifier representing the journey template to be invoked. This could be the Journey Template ID or the Journey Template Alias."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"user-123\",\n  \"data\": {\n    \"order_id\": \"order-456\",\n    \"amount\": 99.99\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Trigger conditions not met\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "01b94a88-683b-4545-a744-27c4b89f2ae2",
+    "name": "Courier Audiences Journeys API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

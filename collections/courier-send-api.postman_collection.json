@@ -1,0 +1,138 @@
+{
+  "item": [
+    {
+      "id": "21e47908-a741-455b-861b-1314c077147a",
+      "name": "Send",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ded05a63-a56c-4983-b0d9-a46165fb767f",
+          "name": "Send a message",
+          "request": {
+            "name": "Send a message",
+            "description": {
+              "content": "Send a message to one or more recipients.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": {\n    \"content\": {\n      \"title\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"body\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"template\": \"<string>\",\n    \"data\": {\n      \"key_0\": 6536,\n      \"key_1\": true,\n      \"key_2\": 1738.6069596973452\n    },\n    \"brand_id\": \"<string>\",\n    \"channels\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"context\": {\n      \"tenant_id\": \"<string>\"\n    },\n    \"metadata\": {\n      \"event\": \"<string>\",\n      \"tags\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"utm\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"trace_id\": \"<string>\"\n    },\n    \"preferences\": {\n      \"subscription_topic_id\": \"<string>\"\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_2\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"routing\": {\n      \"method\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"channels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"timeout\": {\n      \"provider\": {\n        \"key_0\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"channel\": {\n        \"key_0\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"key_1\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"message\": \"<integer>\",\n      \"escalation\": \"<integer>\",\n      \"criteria\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"delay\": {\n      \"duration\": \"<integer>\",\n      \"until\": \"<string>\",\n      \"timezone\": \"<string>\"\n    },\n    \"expiry\": {\n      \"expires_in\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"expires_at\": \"<string>\"\n    },\n    \"to\": {\n      \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f4420fc-7753-4015-a731-9864c0c596b3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": {\n    \"to\": {\n      \"user_id\": \"user_id\"\n    },\n    \"template\": \"template_id\",\n    \"data\": {\n      \"foo\": \"bar\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"1-65f240a0-47a6a120c8374de9bcf9f22a\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "223a43ed-239c-4820-ae67-6eec70810b2a",
+    "name": "Courier Audiences Send API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

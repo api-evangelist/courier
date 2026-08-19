@@ -1,0 +1,292 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Lists API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next page of lists."
+              },
+              {
+                "name": "pattern",
+                "value": "",
+                "type": "query",
+                "description": "\"A pattern used to filter the list items returned. Pattern types supported: exact match on `list_id` or a pattern of one or more pattern parts. you may replace a part with either: `*` to match all parts in that position, or `**` to signify a wildcard `endsWith` pattern match.\""
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all of the lists, with the ability to filter based on a pattern."
+        },
+        {
+          "info": {
+            "name": "Get a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns a list based on the list ID provided."
+        },
+        {
+          "info": {
+            "name": "Update a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or replace an existing list with the supplied values."
+        },
+        {
+          "info": {
+            "name": "Delete a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/lists/:list_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a list by list ID."
+        },
+        {
+          "info": {
+            "name": "Restore a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/restore",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restore a previously deleted list."
+        },
+        {
+          "info": {
+            "name": "Get the subscriptions for a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of list subscriptions"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list's subscriptions."
+        },
+        {
+          "info": {
+            "name": "Add subscribers to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes additional users to the list, without modifying existing subscriptions. If the list does not exist, it will be automatically created."
+        },
+        {
+          "info": {
+            "name": "Subscribe users to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribes the users to the list, overwriting existing subscriptions. If the list does not exist, it will be automatically created."
+        },
+        {
+          "info": {
+            "name": "Subscribe a single user profile to a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions/:user_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the recipient associated with the list"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Subscribe a user to an existing list (note: if the List does not exist, it will be automatically created)."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe a user profile from a list",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/lists/:list_id/subscriptions/:user_id",
+            "params": [
+              {
+                "name": "list_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the list you wish to retrieve."
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the recipient associated with the list"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a subscription to a list by list ID and user ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

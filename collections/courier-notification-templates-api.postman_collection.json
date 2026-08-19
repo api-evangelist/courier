@@ -1,0 +1,2735 @@
+{
+  "item": [
+    {
+      "id": "b6f7eb9d-4264-4b35-bc4d-bd10f9c0c95f",
+      "name": "Notification Templates",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "207dba46-0b60-44b6-a3ee-bf374af53175",
+          "name": "List Notification Templates",
+          "request": {
+            "name": "List Notification Templates",
+            "description": {
+              "content": "List notification templates in your workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "notes",
+                  "value": "<boolean>",
+                  "description": "Include template notes in the response. Only applies to legacy templates."
+                },
+                {
+                  "disabled": false,
+                  "key": "event_id",
+                  "value": "<string>",
+                  "description": "Filter to templates linked to this event map ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0a992687-9b1c-4afd-a97a-abaa9d77f35e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "notes",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "event_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": false,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"created_at\": 2038,\n      \"updated_at\": 1892,\n      \"id\": \"string\",\n      \"routing\": {\n        \"method\": \"single\",\n        \"channels\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"topic_id\": \"string\",\n      \"event_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tags\": {\n        \"data\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"title\": \"string\",\n      \"note\": \"string\"\n    },\n    {\n      \"created_at\": 209,\n      \"updated_at\": 722,\n      \"id\": \"string\",\n      \"routing\": {\n        \"method\": \"all\",\n        \"channels\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      \"topic_id\": \"string\",\n      \"event_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"tags\": {\n        \"data\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"title\": \"string\",\n      \"note\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "498acda0-007b-4da4-87fe-46e949be7485",
+          "name": "Create Notification Template",
+          "request": {
+            "name": "Create Notification Template",
+            "description": {
+              "content": "Create a notification template. Requires all fields in the notification object. Templates are created in draft state by default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notification\": {\n    \"name\": \"<string>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"brand\": {\n      \"id\": \"<string>\"\n    },\n    \"subscription\": {\n      \"topic_id\": \"<string>\"\n    },\n    \"routing\": {\n      \"strategy_id\": \"<string>\"\n    },\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  },\n  \"state\": \"DRAFT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a7a6c47d-da7f-4f0c-a3ac-6f115d887bf5",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notification\": {\n    \"name\": \"Welcome Email\",\n    \"tags\": [\n      \"onboarding\",\n      \"welcome\"\n    ],\n    \"brand\": {\n      \"id\": \"brand_abc\"\n    },\n    \"subscription\": {\n      \"topic_id\": \"marketing\"\n    },\n    \"routing\": {\n      \"strategy_id\": \"rs_123\"\n    },\n    \"content\": {\n      \"version\": \"2022-01-01\",\n      \"elements\": [\n        {\n          \"type\": \"channel\",\n          \"channel\": \"email\",\n          \"elements\": [\n            {\n              \"type\": \"meta\",\n              \"title\": \"Welcome!\"\n            },\n            {\n              \"type\": \"text\",\n              \"content\": \"Hello {{data.name}}.\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"name\": \"Welcome Email\",\n  \"tags\": [\n    \"onboarding\",\n    \"welcome\"\n  ],\n  \"brand\": {\n    \"id\": \"brand_abc\"\n  },\n  \"subscription\": {\n    \"topic_id\": \"marketing\"\n  },\n  \"routing\": {\n    \"strategy_id\": \"rs_123\"\n  },\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Welcome!\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Hello {{data.name}}.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"DRAFT\",\n  \"created\": 1710000000000,\n  \"creator\": \"user_abc\",\n  \"updated\": 1710000000000,\n  \"updater\": \"user_abc\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b8d898e-7f35-467f-91d3-a2e10f200e0e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notification\": {\n    \"name\": \"Welcome Email\",\n    \"tags\": [\n      \"onboarding\",\n      \"welcome\"\n    ],\n    \"brand\": {\n      \"id\": \"brand_abc\"\n    },\n    \"subscription\": {\n      \"topic_id\": \"marketing\"\n    },\n    \"routing\": {\n      \"strategy_id\": \"rs_123\"\n    },\n    \"content\": {\n      \"version\": \"2022-01-01\",\n      \"elements\": [\n        {\n          \"type\": \"channel\",\n          \"channel\": \"email\",\n          \"elements\": [\n            {\n              \"type\": \"meta\",\n              \"title\": \"Welcome!\"\n            },\n            {\n              \"type\": \"text\",\n              \"content\": \"Hello {{data.name}}.\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"notification.name: Required; notification.content: Required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87637b34-0c23-47ec-98e8-09adbe902f7a",
+          "name": "Get Notification Template",
+          "request": {
+            "name": "Get Notification Template",
+            "description": {
+              "content": "Retrieve a notification template by ID. Returns the published version by default. Pass version=draft to retrieve an unpublished template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Version to retrieve. One of \"draft\", \"published\", or a version string like \"v001\". Defaults to \"published\"."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Template ID (nt_ prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "63f8c767-0a59-4bf6-81e8-f96d58088cbc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"name\": \"Welcome Email\",\n  \"tags\": [\n    \"onboarding\"\n  ],\n  \"brand\": {\n    \"id\": \"brand_abc\"\n  },\n  \"subscription\": {\n    \"topic_id\": \"marketing\"\n  },\n  \"routing\": null,\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Welcome!\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Hello {{data.name}}.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"PUBLISHED\",\n  \"created\": 1710000000000,\n  \"creator\": \"user_abc\",\n  \"updated\": 1710000001000,\n  \"updater\": \"user_def\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f95a7af-3caf-47ad-be30-162e33cc505a",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69d6c56c-03a5-47fc-acda-3e96b9a1e487",
+          "name": "Replace Notification Template",
+          "request": {
+            "name": "Replace Notification Template",
+            "description": {
+              "content": "Replace a notification template. All fields are required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Template ID (nt_ prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notification\": {\n    \"name\": \"<string>\",\n    \"tags\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"brand\": {\n      \"id\": \"<string>\"\n    },\n    \"subscription\": {\n      \"topic_id\": \"<string>\"\n    },\n    \"routing\": {\n      \"strategy_id\": \"<string>\"\n    },\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    }\n  },\n  \"state\": \"DRAFT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "afc49455-520f-40e1-b8e3-e402244f8e43",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notification\": {\n    \"name\": \"Updated Name\",\n    \"tags\": [\n      \"updated\"\n    ],\n    \"brand\": null,\n    \"subscription\": null,\n    \"routing\": null,\n    \"content\": {\n      \"version\": \"2022-01-01\",\n      \"elements\": [\n        {\n          \"type\": \"channel\",\n          \"channel\": \"email\",\n          \"elements\": [\n            {\n              \"type\": \"meta\",\n              \"title\": \"Updated\"\n            },\n            {\n              \"type\": \"text\",\n              \"content\": \"Updated content.\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"state\": \"PUBLISHED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"name\": \"Updated Name\",\n  \"tags\": [\n    \"updated\"\n  ],\n  \"brand\": null,\n  \"subscription\": null,\n  \"routing\": null,\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Updated\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Updated content.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"PUBLISHED\",\n  \"created\": 1710000000000,\n  \"creator\": \"user_abc\",\n  \"updated\": 1710000001000,\n  \"updater\": \"user_def\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45da12c6-7369-4c81-b740-2e5da87778d5",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notification\": {\n    \"name\": \"Updated Name\",\n    \"tags\": [\n      \"updated\"\n    ],\n    \"brand\": null,\n    \"subscription\": null,\n    \"routing\": null,\n    \"content\": {\n      \"version\": \"2022-01-01\",\n      \"elements\": [\n        {\n          \"type\": \"channel\",\n          \"channel\": \"email\",\n          \"elements\": [\n            {\n              \"type\": \"meta\",\n              \"title\": \"Updated\"\n            },\n            {\n              \"type\": \"text\",\n              \"content\": \"Updated content.\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"state\": \"PUBLISHED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"notification.name: Required; notification.content: Required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60a20e10-c507-402e-acf0-f56f5b7d0270",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"notification\": {\n    \"name\": \"Updated Name\",\n    \"tags\": [\n      \"updated\"\n    ],\n    \"brand\": null,\n    \"subscription\": null,\n    \"routing\": null,\n    \"content\": {\n      \"version\": \"2022-01-01\",\n      \"elements\": [\n        {\n          \"type\": \"channel\",\n          \"channel\": \"email\",\n          \"elements\": [\n            {\n              \"type\": \"meta\",\n              \"title\": \"Updated\"\n            },\n            {\n              \"type\": \"text\",\n              \"content\": \"Updated content.\"\n            }\n          ]\n        }\n      ]\n    }\n  },\n  \"state\": \"PUBLISHED\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d94bb2bc-5af3-4461-998c-d368b9e01f7e",
+          "name": "Archive Notification Template",
+          "request": {
+            "name": "Archive Notification Template",
+            "description": {
+              "content": "Archive a notification template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Template ID (nt_ prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7a872010-994c-42bb-8710-90547aaf8907",
+              "name": "Successfully archived.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef429a49-8e58-478f-afbc-441ac67c460e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cec56670-5591-43c8-b5cb-fc3401a60db7",
+          "name": "List Notification Template Versions",
+          "request": {
+            "name": "List Notification Template Versions",
+            "description": {
+              "content": "List versions of a notification template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of versions to return per page. Default 10, max 10."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Template ID (nt_ prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a395cc5d-138c-4efa-999e-6c115d5f2366",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"versions\": [\n    {\n      \"version\": \"draft\",\n      \"created\": 1774037925522,\n      \"creator\": \"user_abc\",\n      \"has_changes\": true\n    },\n    {\n      \"version\": \"published:v003\",\n      \"created\": 1774037924446,\n      \"creator\": \"user_abc\"\n    },\n    {\n      \"version\": \"v002\",\n      \"created\": 1774037923967,\n      \"creator\": \"user_def\"\n    },\n    {\n      \"version\": \"v001\",\n      \"created\": 1774037922000,\n      \"creator\": \"user_def\"\n    }\n  ],\n  \"paging\": {\n    \"cursor\": null,\n    \"more\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "243ef9f0-1200-4555-88fa-9546d4b93aeb",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Invalid cursor format\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90ab2af1-81f8-4130-9664-e9a1da99e9e2",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "056f8cf7-7102-4b6e-8f4e-347d0835439e",
+          "name": "Publish Notification Template",
+          "request": {
+            "name": "Publish Notification Template",
+            "description": {
+              "content": "Publish a notification template. Publishes the current draft by default. Pass a version in the request body to publish a specific historical version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "publish"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Template ID (nt_ prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "13a4ff00-67fb-4883-a7fe-e75b03ece157",
+              "name": "Successfully published, or already published with no changes (idempotent).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c76cc05f-f266-4fb2-bd99-30a86465e452",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"version: Expected format: v001, v002, etc.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ffaa371-96ed-417b-8583-8b687327801d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Template ID (nt_ prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6226ebce-9b32-4481-8a91-36d1c11272fb",
+          "name": "Get Notification Content",
+          "request": {
+            "name": "Get Notification Content",
+            "description": {
+              "content": "Retrieve the content of a notification template. The response shape depends on whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use the `version` query parameter to select draft, published, or a specific historical version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults to `published`."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID (`nt_` prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d3e9d597-e4b7-4624-b8f2-b0f6a4af51b4",
+              "name": "Template content retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"2022-01-01\",\n  \"elements\": [\n    {\n      \"id\": \"elem_channel_1\",\n      \"type\": \"channel\",\n      \"checksum\": \"abc123def456\",\n      \"locales\": {\n        \"es\": {\n          \"checksum\": \"es_abc123\"\n        },\n        \"fr\": {\n          \"checksum\": \"fr_abc123\"\n        }\n      },\n      \"elements\": [\n        {\n          \"id\": \"elem_meta_1\",\n          \"type\": \"meta\",\n          \"checksum\": \"meta_abc123\"\n        },\n        {\n          \"id\": \"elem_text_1\",\n          \"type\": \"text\",\n          \"checksum\": \"text_abc123\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04ee5b2a-40db-4388-b1df-7c62b3c0b9ff",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "734ae7c3-596f-43db-9bca-d280cfb463f9",
+          "name": "Put Notification Content",
+          "request": {
+            "name": "Put Notification Content",
+            "description": {
+              "content": "Replace the elemental content of a notification template. Overwrites all elements in the template with the provided content. Only supported for V2 (elemental) templates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "content"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID (`nt_` prefix)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": {\n    \"elements\": [\n      \"<object>\",\n      \"<object>\"\n    ],\n    \"version\": \"<string>\"\n  },\n  \"state\": \"DRAFT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9f5bc1de-4189-4b6a-ab71-a3f7df9e16f4",
+              "name": "Content replaced.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Welcome!\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Hello {{data.name}}.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"version\": \"2022-01-01\",\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"checksum\": \"abc123\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"checksum\": \"def456\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a08cd349-2b27-4c6f-b1f9-42e50391b9d6",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Welcome!\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Hello {{data.name}}.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"content: Required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec35bca4-26c7-4525-ab42-7e725794533c",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "content"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": {\n    \"version\": \"2022-01-01\",\n    \"elements\": [\n      {\n        \"type\": \"channel\",\n        \"channel\": \"email\",\n        \"elements\": [\n          {\n            \"type\": \"meta\",\n            \"title\": \"Welcome!\"\n          },\n          {\n            \"type\": \"text\",\n            \"content\": \"Hello {{data.name}}.\"\n          }\n        ]\n      }\n    ]\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ddb8774-f798-47b3-b6c6-9ef3424e3218",
+          "name": "Put Notification Element",
+          "request": {
+            "name": "Put Notification Element",
+            "description": {
+              "content": "Update a single element within a notification template. Only supported for V2 (elemental) templates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "elements",
+                ":elementId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID (`nt_` prefix)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "elementId",
+                  "description": "(Required) Element ID within the template."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"channels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"data\": {\n    \"key_0\": 5503.864766969222\n  },\n  \"if\": \"<string>\",\n  \"loop\": \"<string>\",\n  \"ref\": \"<string>\",\n  \"state\": \"DRAFT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "849ac9bf-bc38-4ff5-829b-a128387d8c53",
+              "name": "Element updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "elements",
+                    ":elementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elementId",
+                      "description": "(Required) Element ID within the template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"text\",\n  \"data\": {\n    \"content\": \"Updated text content\"\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"version\": \"2022-01-01\",\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"checksum\": \"abc123\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"checksum\": \"def456\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "079f0273-444e-4efe-94cf-9225cd885e9d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "elements",
+                    ":elementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elementId",
+                      "description": "(Required) Element ID within the template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"text\",\n  \"data\": {\n    \"content\": \"Updated text content\"\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"type: Required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b15e1349-55a6-4da0-93c0-5d489148d4d5",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "elements",
+                    ":elementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "elementId",
+                      "description": "(Required) Element ID within the template."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"text\",\n  \"data\": {\n    \"content\": \"Updated text content\"\n  },\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "049fc521-da03-448d-8d08-4bbff0317e2e",
+          "name": "Put Notification Locale",
+          "request": {
+            "name": "Put Notification Locale",
+            "description": {
+              "content": "Set locale-specific content overrides for a notification template. Each element override must reference an existing element by ID. Only supported for V2 (elemental) templates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                "locales",
+                ":localeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID (`nt_` prefix)."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "localeId",
+                  "description": "(Required) Locale code (e.g., `es`, `fr`, `pt-BR`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"elements\": [\n    {\n      \"id\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8c4c2611-7b13-45a6-b22b-64338defaf0e",
+              "name": "Locale overrides applied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "locales",
+                    ":localeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "localeId",
+                      "description": "(Required) Locale code (e.g., `es`, `fr`, `pt-BR`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"content\": \"Hola {{data.name}}.\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"title\": \"Bienvenido!\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"nt_01abc123\",\n  \"version\": \"2022-01-01\",\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"checksum\": \"abc123\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"checksum\": \"def456\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36f2222e-6b70-48be-bb07-0728a7a7f9aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "locales",
+                    ":localeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "localeId",
+                      "description": "(Required) Locale code (e.g., `es`, `fr`, `pt-BR`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"content\": \"Hola {{data.name}}.\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"title\": \"Bienvenido!\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"elements: Required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31daf827-b607-489e-a150-9d6e7ad60593",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    "locales",
+                    ":localeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID (`nt_` prefix)."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "localeId",
+                      "description": "(Required) Locale code (e.g., `es`, `fr`, `pt-BR`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"elements\": [\n    {\n      \"id\": \"elem_1\",\n      \"content\": \"Hola {{data.name}}.\"\n    },\n    {\n      \"id\": \"elem_2\",\n      \"title\": \"Bienvenido!\"\n    }\n  ],\n  \"state\": \"DRAFT\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"invalid_request_error\",\n  \"message\": \"Notification template nt_nonexistent not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1eb7536-f567-4dbf-a27e-cb4861046592",
+          "name": "Get Submission Checks",
+          "request": {
+            "name": "Get Submission Checks",
+            "description": {
+              "content": "Retrieve the checks for a notification template submission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                ":submissionId",
+                "checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "submissionId",
+                  "description": "(Required) Submission ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e703f82c-ca1f-43fd-8d7a-e15633049cfc",
+              "name": "Submission checks retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    ":submissionId",
+                    "checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "submissionId",
+                      "description": "(Required) Submission ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checks\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"RESOLVED\",\n      \"type\": \"custom\",\n      \"updated\": 2799\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"RESOLVED\",\n      \"type\": \"custom\",\n      \"updated\": 7038\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b18400a7-2814-42ed-b860-27d22a03d759",
+          "name": "Replace Submission Checks",
+          "request": {
+            "name": "Replace Submission Checks",
+            "description": {
+              "content": "Replace the checks for a notification template submission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                ":submissionId",
+                "checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "submissionId",
+                  "description": "(Required) Submission ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"checks\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d6d47aa7-ed89-4184-b335-d9415e35f2ac",
+              "name": "Submission checks replaced.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    ":submissionId",
+                    "checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "submissionId",
+                      "description": "(Required) Submission ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checks\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checks\": [\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\",\n      \"updated\": 7545\n    },\n    {\n      \"id\": \"<string>\",\n      \"status\": \"<string>\",\n      \"type\": \"<string>\",\n      \"updated\": 1829\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09dcb6b8-84d8-4c4c-a4ec-157a5e0f967c",
+          "name": "Cancel Submission",
+          "request": {
+            "name": "Cancel Submission",
+            "description": {
+              "content": "Cancel a notification template submission.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications",
+                ":id",
+                ":submissionId",
+                "checks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Notification template ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "submissionId",
+                  "description": "(Required) Submission ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cc351fe1-d075-499d-83d0-9432768cd7e8",
+              "name": "Submission cancelled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications",
+                    ":id",
+                    ":submissionId",
+                    "checks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Notification template ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "submissionId",
+                      "description": "(Required) Submission ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "42471a7c-f254-4756-b34a-47ecd4a5eb99",
+    "name": "Courier Audiences Notification Templates API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

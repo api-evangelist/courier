@@ -1,0 +1,426 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Notification Templates API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Notification Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Notification Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "notes",
+                "value": "",
+                "type": "query",
+                "description": "Include template notes in the response. Only applies to legacy templates."
+              },
+              {
+                "name": "event_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to templates linked to this event map ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List notification templates in your workspace."
+        },
+        {
+          "info": {
+            "name": "Create Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/notifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a notification template. Requires all fields in the notification object. Templates are created in draft state by default."
+        },
+        {
+          "info": {
+            "name": "Get Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Version to retrieve. One of \"draft\", \"published\", or a version string like \"v001\". Defaults to \"published\"."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a notification template by ID. Returns the published version by default. Pass version=draft to retrieve an unpublished template."
+        },
+        {
+          "info": {
+            "name": "Replace Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace a notification template. All fields are required."
+        },
+        {
+          "info": {
+            "name": "Archive Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/notifications/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Archive a notification template."
+        },
+        {
+          "info": {
+            "name": "List Notification Template Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/versions",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of versions to return per page. Default 10, max 10."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List versions of a notification template."
+        },
+        {
+          "info": {
+            "name": "Publish Notification Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/notifications/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Template ID (nt_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Publish a notification template. Publishes the current draft by default. Pass a version in the request body to publish a specific historical version."
+        },
+        {
+          "info": {
+            "name": "Get Notification Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Accepts `draft`, `published`, or a version string (e.g., `v001`). Defaults to `published`."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the content of a notification template. The response shape depends on whether the template uses V1 (blocks/channels) or V2 (elemental) content. Use the `version` query parameter to select draft, published, or a specific historical version."
+        },
+        {
+          "info": {
+            "name": "Put Notification Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/content",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace the elemental content of a notification template. Overwrites all elements in the template with the provided content. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Put Notification Element",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/elements/:elementId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "elementId",
+                "value": "",
+                "type": "path",
+                "description": "Element ID within the template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a single element within a notification template. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Put Notification Locale",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/locales/:localeId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID (`nt_` prefix)."
+              },
+              {
+                "name": "localeId",
+                "value": "",
+                "type": "path",
+                "description": "Locale code (e.g., `es`, `fr`, `pt-BR`)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set locale-specific content overrides for a notification template. Each element override must reference an existing element by ID. Only supported for V2 (elemental) templates."
+        },
+        {
+          "info": {
+            "name": "Get Submission Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the checks for a notification template submission."
+        },
+        {
+          "info": {
+            "name": "Replace Submission Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace the checks for a notification template submission."
+        },
+        {
+          "info": {
+            "name": "Cancel Submission",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/notifications/:id/:submissionId/checks",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Notification template ID."
+              },
+              {
+                "name": "submissionId",
+                "value": "",
+                "type": "path",
+                "description": "Submission ID."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a notification template submission."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

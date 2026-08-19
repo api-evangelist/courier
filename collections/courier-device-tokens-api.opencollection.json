@@ -1,0 +1,188 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Device Tokens API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tokens",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets all tokens available for a :user_id"
+        },
+        {
+          "info": {
+            "name": "Add multiple tokens to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tokens",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds multiple tokens to a user and overwrites matching existing tokens."
+        },
+        {
+          "info": {
+            "name": "Get single token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get single token available for a `:token`"
+        },
+        {
+          "info": {
+            "name": "Add single token to user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Adds a single token to a user and overwrites a matching existing token."
+        },
+        {
+          "info": {
+            "name": "Update a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Apply a JSON Patch (RFC 6902) to the specified token."
+        },
+        {
+          "info": {
+            "name": "Delete User Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/users/:user_id/tokens/:token",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The user's ID. This can be any uniquely identifiable string."
+              },
+              {
+                "name": "token",
+                "value": "",
+                "type": "path",
+                "description": "The full token string."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete User Token"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

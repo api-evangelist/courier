@@ -1,0 +1,232 @@
+{
+  "item": [
+    {
+      "id": "cac3a108-f56f-4bc4-8d50-e7f1cad1743b",
+      "name": "Audit Events",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "83bbca4e-1980-4df0-93f0-f2d44617d390",
+          "name": "Get all audit events",
+          "request": {
+            "name": "Get all audit events",
+            "description": {
+              "content": "Fetch the list of audit events",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit-events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A unique identifier that allows for fetching the next set of audit events."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "99a42981-e1a1-4eb6-ab22-15197dfce287",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit-events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": false,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"auditEventId\": \"string\",\n      \"actor\": {\n        \"id\": \"string\",\n        \"email\": \"string\"\n      },\n      \"target\": \"string\",\n      \"source\": \"string\",\n      \"timestamp\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"auditEventId\": \"string\",\n      \"actor\": {\n        \"id\": \"string\",\n        \"email\": \"string\"\n      },\n      \"target\": \"string\",\n      \"source\": \"string\",\n      \"timestamp\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "774dc087-9bdf-4aa6-ad18-7328cc8a1f2e",
+          "name": "Get an audit event",
+          "request": {
+            "name": "Get an audit event",
+            "description": {
+              "content": "Fetch a specific audit event by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "audit-events",
+                ":audit-event-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "audit-event-id",
+                  "description": "(Required) A unique identifier associated with the audit event you wish to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ae058bb9-3625-4b01-ae05-40605b470cd8",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "audit-events",
+                    ":audit-event-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "audit-event-id",
+                      "description": "(Required) A unique identifier associated with the audit event you wish to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"auditEventId\": \"string\",\n  \"actor\": {\n    \"id\": \"string\",\n    \"email\": \"string\"\n  },\n  \"target\": \"string\",\n  \"source\": \"string\",\n  \"timestamp\": \"string\",\n  \"type\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "729d0468-e7e1-4894-9bc6-7c919bc8696a",
+    "name": "Courier Audiences Audit Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

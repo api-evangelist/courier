@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience_id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns the specified audience by id."
+        },
+        {
+          "info": {
+            "name": "Update an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates audience."
+        },
+        {
+          "info": {
+            "name": "Delete an audience",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/audiences/:audience_id",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Deletes the specified audience."
+        },
+        {
+          "info": {
+            "name": "List audience members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences/:audience_id/members",
+            "params": [
+              {
+                "name": "audience_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the audience id"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of members"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get list of members of an audience."
+        },
+        {
+          "info": {
+            "name": "List all audiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audiences",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of audiences"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the audiences associated with the authorization token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

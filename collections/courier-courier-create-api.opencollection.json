@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Courier Create API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Courier Create",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Template in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be retrieved."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Template in Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Update a Tenant Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to create or update the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be created or updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates or updates a notification template for a tenant.\n\nIf the template already exists for the tenant, it will be updated (200).\nOtherwise, a new template is created (201).\n\nOptionally publishes the template immediately if the `published` flag is set to true.\n"
+        },
+        {
+          "info": {
+            "name": "Publish a Tenant Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id/publish",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant that owns the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be published."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Publishes a specific version of a notification template for a tenant.\n\nThe template must already exist in the tenant's notification map.\nIf no version is specified, defaults to publishing the \"latest\" version.\n"
+        },
+        {
+          "info": {
+            "name": "Get a Specific Template Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates/:template_id/versions/:version",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the template."
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the template to be retrieved."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetches a specific version of a tenant template.\n\nSupports the following version formats:\n- `latest` - The most recent version of the template\n- `published` - The currently published version\n- `v{version}` - A specific version (e.g., \"v1\", \"v2\", \"v1.0.0\")\n"
+        },
+        {
+          "info": {
+            "name": "List Templates in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/templates",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for which to retrieve the templates."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of templates to return (defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Templates in Tenant"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Brands API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Brands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List brands",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/brands",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of brands."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of brands."
+        },
+        {
+          "info": {
+            "name": "Create a new brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/brands",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new brand"
+        },
+        {
+          "info": {
+            "name": "Get a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a specific brand by brand ID."
+        },
+        {
+          "info": {
+            "name": "Replace a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace an existing brand with the supplied values."
+        },
+        {
+          "info": {
+            "name": "Delete a brand",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/brands/:brand_id",
+            "params": [
+              {
+                "name": "brand_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the brand you wish to retrieve."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a brand by brand ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

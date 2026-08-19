@@ -1,0 +1,1378 @@
+{
+  "item": [
+    {
+      "id": "855829b2-b58e-43f3-b443-021ddc38e400",
+      "name": "Courier Create",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "30e45471-4524-4a57-862c-0d4e1706b6e8",
+          "name": "Get a Template in Tenant",
+          "request": {
+            "name": "Get a Template in Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "templates",
+                ":template_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant for which to retrieve the template."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "template_id",
+                  "description": "(Required) Id of the template to be retrieved."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "74d145d4-01e2-46f5-8381-7c3052f1ceb6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"string\",\n  \"data\": {\n    \"routing\": {\n      \"method\": \"single\",\n      \"channels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"content\": {\n      \"version\": \"string\",\n      \"elements\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  \"id\": \"string\",\n  \"published_at\": \"string\",\n  \"updated_at\": \"string\",\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "790dad21-fcb9-47df-ab60-95697f38d7b7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be retrieved."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69b9b2ef-47c8-453d-ad0f-d3ef27c3022b",
+          "name": "Create or Update a Tenant Template",
+          "request": {
+            "name": "Create or Update a Tenant Template",
+            "description": {
+              "content": "Creates or updates a notification template for a tenant.\n\nIf the template already exists for the tenant, it will be updated (200).\nOtherwise, a new template is created (201).\n\nOptionally publishes the template immediately if the `published` flag is set to true.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "templates",
+                ":template_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant for which to create or update the template."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "template_id",
+                  "description": "(Required) Id of the template to be created or updated."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        \"<object>\",\n        \"<object>\"\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 109.66692483144081,\n          \"key_1\": \"string\",\n          \"key_2\": 6791.282915349341,\n          \"key_3\": false,\n          \"key_4\": false\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": true\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"key_1\": {\n        \"override\": {\n          \"key_0\": 5989.165017065478,\n          \"key_1\": false\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "50050810-90fa-464b-80c5-5e66440bbbd3",
+              "name": "Template updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to create or update the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be created or updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 655.12673039821,\n          \"key_1\": true,\n          \"key_2\": 6333\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": 8378,\n          \"key_1\": 5771\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"version\": \"string\",\n  \"published_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba62a411-a125-495a-abfa-386e5a0d1409",
+              "name": "Template created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to create or update the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be created or updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 655.12673039821,\n          \"key_1\": true,\n          \"key_2\": 6333\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": 8378,\n          \"key_1\": 5771\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"version\": \"string\",\n  \"published_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39e247c5-5e84-4de5-be81-b9540c3e1177",
+              "name": "Bad request - validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to create or update the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be created or updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 655.12673039821,\n          \"key_1\": true,\n          \"key_2\": 6333\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": 8378,\n          \"key_1\": 5771\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebd1e387-3030-4d18-9656-6af2391b19c1",
+              "name": "Tenant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to create or update the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be created or updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 655.12673039821,\n          \"key_1\": true,\n          \"key_2\": 6333\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": 8378,\n          \"key_1\": 5771\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6403beff-de19-4e07-977c-ce83a9ef8365",
+              "name": "Payload too large - template size exceeds maximum allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to create or update the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be created or updated."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template\": {\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    \"channels\": {\n      \"key_0\": {\n        \"brand_id\": \"<string>\",\n        \"providers\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"routing_method\": \"<string>\",\n        \"if\": \"<string>\",\n        \"timeouts\": {\n          \"provider\": \"<integer>\",\n          \"channel\": \"<integer>\"\n        },\n        \"override\": {\n          \"key_0\": 655.12673039821,\n          \"key_1\": true,\n          \"key_2\": 6333\n        },\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"providers\": {\n      \"key_0\": {\n        \"override\": {\n          \"key_0\": 8378,\n          \"key_1\": 5771\n        },\n        \"if\": \"<string>\",\n        \"timeouts\": \"<integer>\",\n        \"metadata\": {\n          \"utm\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  },\n  \"published\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4184a38d-b12a-4dae-adaa-d996507c70cb",
+          "name": "Publish a Tenant Template",
+          "request": {
+            "name": "Publish a Tenant Template",
+            "description": {
+              "content": "Publishes a specific version of a notification template for a tenant.\n\nThe template must already exist in the tenant's notification map.\nIf no version is specified, defaults to publishing the \"latest\" version.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "templates",
+                ":template_id",
+                "publish"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant that owns the template."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "template_id",
+                  "description": "(Required) Id of the template to be published."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"version\": \"latest\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "605aa59f-a1f7-453c-ba98-2ce23db527a6",
+              "name": "Template published successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant that owns the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be published."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"latest\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"version\": \"string\",\n  \"published_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7677172-d0df-424d-9865-306d81d3379e",
+              "name": "Bad request - validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant that owns the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be published."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"latest\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb31fc02-98ac-401c-9c84-7b6381d9f47f",
+              "name": "Template or tenant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant that owns the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be published."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"version\": \"latest\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f0b662e-976a-472f-94ce-17c8c2625a0e",
+          "name": "Get a Specific Template Version",
+          "request": {
+            "name": "Get a Specific Template Version",
+            "description": {
+              "content": "Fetches a specific version of a tenant template.\n\nSupports the following version formats:\n- `latest` - The most recent version of the template\n- `published` - The currently published version\n- `v{version}` - A specific version (e.g., \"v1\", \"v2\", \"v1.0.0\")\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "templates",
+                ":template_id",
+                "versions",
+                ":version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant for which to retrieve the template."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "template_id",
+                  "description": "(Required) Id of the template to be retrieved."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "version",
+                  "description": "(Required) Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3089e918-f9a2-4639-9bf7-769844ef788a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "versions",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be retrieved."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"created_at\": \"string\",\n  \"data\": {\n    \"routing\": {\n      \"method\": \"<string>\",\n      \"channels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    },\n    \"content\": {\n      \"version\": \"<string>\",\n      \"elements\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ]\n    }\n  },\n  \"id\": \"string\",\n  \"published_at\": \"string\",\n  \"updated_at\": \"string\",\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "823c294a-f442-44b2-b49f-fda34f3b7db8",
+              "name": "Bad request - invalid version format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "versions",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be retrieved."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c781506-816a-4a46-bad5-0ab0c7ab8c72",
+              "name": "Template, version, or tenant not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates",
+                    ":template_id",
+                    "versions",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the template."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "template_id",
+                      "description": "(Required) Id of the template to be retrieved."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Version of the template to retrieve. Accepts \"latest\", \"published\", or a specific version string (e.g., \"v1\", \"v2\")."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28586bd6-962f-4860-bc2e-2ea5ecd9e94b",
+          "name": "List Templates in Tenant",
+          "request": {
+            "name": "List Templates in Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "templates"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of templates to return (defaults to 20, maximum value of 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Continue the pagination with the next cursor"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant for which to retrieve the templates."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3ff3442-2c97-4105-9561-78d150f2656b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the templates."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"has_more\": true,\n  \"url\": \"string\",\n  \"type\": \"list\",\n  \"items\": [\n    {\n      \"created_at\": \"string\",\n      \"data\": {\n        \"routing\": {\n          \"method\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"channels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"id\": \"string\",\n      \"published_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"version\": \"string\"\n    },\n    {\n      \"created_at\": \"string\",\n      \"data\": {\n        \"routing\": {\n          \"method\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"channels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      },\n      \"id\": \"string\",\n      \"published_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"version\": \"string\"\n    }\n  ],\n  \"next_url\": \"string\",\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de6423e5-83fd-4978-8c01-08ac2269742f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "templates"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for which to retrieve the templates."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f93bebba-7e3a-446e-a3ac-8b313264dad2",
+    "name": "Courier Audiences Courier Create API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

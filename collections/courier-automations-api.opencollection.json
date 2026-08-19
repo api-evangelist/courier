@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Automations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Automations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/automations",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "The version of templates to retrieve. Accepted values are published (for published templates) or draft (for draft templates). Defaults to published."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the list of automations."
+        },
+        {
+          "info": {
+            "name": "Invoke an Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/automations/:templateId/invoke",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke an automation run from an automation template."
+        },
+        {
+          "info": {
+            "name": "Invoke an Ad Hoc Automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/automations/invoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

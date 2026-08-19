@@ -1,0 +1,759 @@
+{
+  "item": [
+    {
+      "id": "1fda556a-a073-42f7-9324-38c171a74e1d",
+      "name": "Brands",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67c746f2-49d5-49bd-9fb9-24c73489f05c",
+          "name": "Create a new brand",
+          "request": {
+            "name": "Create a new brand",
+            "description": {},
+            "url": {
+              "path": [
+                "brands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c7b87700-b22d-4026-b1ab-9ef856ea8b90",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"created\": 8691,\n  \"updated\": 8209,\n  \"published\": 7946,\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\",\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fb4426d-acac-4040-b108-498aeb613fd1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7549ebb2-c673-4878-887c-4e55e3bc2e38",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"authorization_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20b1d876-72a4-45d0-b3f3-2f32d49e5f61",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c22d96e-44da-4a04-95d7-f4ecfba76002",
+          "name": "List brands",
+          "request": {
+            "name": "List brands",
+            "description": {
+              "content": "Get the list of brands.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A unique identifier that allows for fetching the next set of brands."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "579c8b73-bb54-4fbe-ad2c-c89e1363a1b2",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"created\": 5618,\n      \"updated\": 7022,\n      \"published\": 4758,\n      \"settings\": {\n        \"colors\": {\n          \"primary\": \"<string>\",\n          \"secondary\": \"<string>\",\n          \"key_0\": \"<string>\"\n        },\n        \"email\": {\n          \"templateOverride\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"content\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"footer\": {\n            \"content\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"header\": {\n            \"logo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"barColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"inapp\": {\n          \"widgetBackground\": {\n            \"topColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bottomColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"colors\": {\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"secondary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"icons\": {\n            \"bell\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"borderRadius\": \"<string>\",\n          \"disableMessageIcon\": \"<boolean>\",\n          \"fontFamily\": \"<string>\",\n          \"placement\": \"<string>\"\n        }\n      },\n      \"snippets\": {\n        \"items\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      \"version\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"created\": 8535,\n      \"updated\": 7381,\n      \"published\": 1042,\n      \"settings\": {\n        \"colors\": {\n          \"primary\": \"<string>\",\n          \"secondary\": \"<string>\",\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\"\n        },\n        \"email\": {\n          \"templateOverride\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"content\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"footer\": {\n            \"content\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"header\": {\n            \"logo\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"inheritDefault\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"barColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"inapp\": {\n          \"widgetBackground\": {\n            \"topColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"bottomColor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"colors\": {\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"secondary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"icons\": {\n            \"bell\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"message\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"borderRadius\": \"<string>\",\n          \"disableMessageIcon\": \"<boolean>\",\n          \"fontFamily\": \"<string>\",\n          \"placement\": \"<string>\"\n        }\n      },\n      \"snippets\": {\n        \"items\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      \"version\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7879a167-bd09-4a89-a731-db41cd96e6d1",
+          "name": "Get a brand",
+          "request": {
+            "name": "Get a brand",
+            "description": {
+              "content": "Fetch a specific brand by brand ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                ":brand_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "brand_id",
+                  "description": "(Required) A unique identifier associated with the brand you wish to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6bab03c0-415a-470b-a655-72456898f168",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    ":brand_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brand_id",
+                      "description": "(Required) A unique identifier associated with the brand you wish to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"created\": 8691,\n  \"updated\": 8209,\n  \"published\": 7946,\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\",\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d561a5e4-67ff-4bcc-99f5-483f61075aa6",
+          "name": "Replace a brand",
+          "request": {
+            "name": "Replace a brand",
+            "description": {
+              "content": "Replace an existing brand with the supplied values.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                ":brand_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "brand_id",
+                  "description": "(Required) A unique identifier associated with the brand you wish to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\",\n      \"key_0\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\",\n        \"key_0\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bb53d196-c983-4754-af8a-7284156a66ca",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    ":brand_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brand_id",
+                      "description": "(Required) A unique identifier associated with the brand you wish to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\",\n      \"key_0\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\",\n        \"key_0\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"created\": 8691,\n  \"updated\": 8209,\n  \"published\": 7946,\n  \"settings\": {\n    \"colors\": {\n      \"primary\": \"<string>\",\n      \"secondary\": \"<string>\",\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\",\n      \"key_3\": \"<string>\",\n      \"key_4\": \"<string>\"\n    },\n    \"email\": {\n      \"templateOverride\": {\n        \"enabled\": \"<boolean>\",\n        \"mjml\": {\n          \"enabled\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"backgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"blocksBackgroundColor\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"footer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"head\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"header\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"width\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"footerBackgroundColor\": \"<string>\",\n        \"footerFullWidth\": \"<boolean>\",\n        \"backgroundColor\": \"<string>\",\n        \"blocksBackgroundColor\": \"<string>\",\n        \"footer\": \"<string>\",\n        \"head\": \"<string>\",\n        \"header\": \"<string>\",\n        \"width\": \"<string>\"\n      },\n      \"head\": {\n        \"inheritDefault\": \"<boolean>\",\n        \"content\": \"<string>\"\n      },\n      \"footer\": {\n        \"content\": \"<string>\",\n        \"inheritDefault\": \"<boolean>\"\n      },\n      \"header\": {\n        \"logo\": {\n          \"href\": \"<string>\",\n          \"image\": \"<string>\"\n        },\n        \"inheritDefault\": \"<boolean>\",\n        \"barColor\": \"<string>\"\n      }\n    },\n    \"inapp\": {\n      \"widgetBackground\": {\n        \"topColor\": \"<string>\",\n        \"bottomColor\": \"<string>\"\n      },\n      \"colors\": {\n        \"primary\": \"<string>\",\n        \"secondary\": \"<string>\"\n      },\n      \"icons\": {\n        \"bell\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      \"borderRadius\": \"<string>\",\n      \"disableMessageIcon\": \"<boolean>\",\n      \"fontFamily\": \"<string>\",\n      \"placement\": \"<string>\"\n    }\n  },\n  \"snippets\": {\n    \"items\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"version\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "826a1312-8c24-4049-a929-d3a7a1f9adcf",
+          "name": "Delete a brand",
+          "request": {
+            "name": "Delete a brand",
+            "description": {
+              "content": "Delete a brand by brand ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brands",
+                ":brand_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "brand_id",
+                  "description": "(Required) A unique identifier associated with the brand you wish to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a0f4dbf0-0e8c-41d4-aeba-af23344b920d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    ":brand_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brand_id",
+                      "description": "(Required) A unique identifier associated with the brand you wish to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d45e320-8563-4b0f-beb9-65d1cff67882",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brands",
+                    ":brand_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brand_id",
+                      "description": "(Required) A unique identifier associated with the brand you wish to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "74d007e7-dd0a-43a7-8127-a13f04cbc2b6",
+    "name": "Courier Audiences Brands API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

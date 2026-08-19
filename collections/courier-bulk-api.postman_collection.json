@@ -1,0 +1,785 @@
+{
+  "item": [
+    {
+      "id": "5b5f4de6-e4df-4336-8e3b-beba3af42f19",
+      "name": "Bulk",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2108a757-507a-4a15-b5b8-9335392a9b54",
+          "name": "Create a bulk job",
+          "request": {
+            "name": "Create a bulk job",
+            "description": {
+              "content": "Creates a new bulk job for sending messages to multiple recipients.\n\n**Required**: `message.event` (event ID or notification ID)\n\n**Optional (V2 format)**: `message.template` (notification ID) or `message.content` (Elemental content) \ncan be provided to override the notification associated with the event.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": {\n    \"event\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"data\": {\n      \"key_0\": true,\n      \"key_1\": 2021,\n      \"key_2\": 9732.275627663754\n    },\n    \"template\": \"<string>\",\n    \"content\": {\n      \"title\": \"<string>\",\n      \"body\": \"<string>\"\n    },\n    \"locale\": {\n      \"key_0\": {\n        \"key_0\": \"string\"\n      },\n      \"key_1\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"override\": {\n      \"key_0\": 1755,\n      \"key_1\": 208,\n      \"key_2\": false\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be913acc-0d2c-4822-917c-ab04637a5f3a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": {\n    \"event\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"data\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5258\n    },\n    \"template\": \"<string>\",\n    \"content\": {\n      \"title\": \"<string>\",\n      \"body\": \"<string>\"\n    },\n    \"locale\": {\n      \"key_0\": {\n        \"key_0\": 3976.1740238063203\n      }\n    },\n    \"override\": {\n      \"key_0\": 5786.340387023707,\n      \"key_1\": 1732.603783311254,\n      \"key_2\": 443,\n      \"key_3\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ee5fa74-de3a-483d-befd-53131518ce69",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": {\n    \"event\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"data\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5258\n    },\n    \"template\": \"<string>\",\n    \"content\": {\n      \"title\": \"<string>\",\n      \"body\": \"<string>\"\n    },\n    \"locale\": {\n      \"key_0\": {\n        \"key_0\": 3976.1740238063203\n      }\n    },\n    \"override\": {\n      \"key_0\": 5786.340387023707,\n      \"key_1\": 1732.603783311254,\n      \"key_2\": 443,\n      \"key_3\": false\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a00c8d0-11a5-48e9-939d-007fb01c243f",
+          "name": "Add users",
+          "request": {
+            "name": "Add users",
+            "description": {
+              "content": "Ingest user data into a Bulk Job. \n\n**Important**: For email-based bulk jobs, each user must include `profile.email` \nfor provider routing to work correctly. The `to.email` field is not sufficient \nfor email provider routing.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) A unique identifier representing the bulk job"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"users\": [\n    {\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": 1739,\n        \"key_1\": false\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"tenant_id\": \"<string>\"\n        },\n        \"data\": {\n          \"key_0\": \"string\",\n          \"key_1\": 9821\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"notifications\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"categories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"templateId\": \"<string>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    },\n    {\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"tenant_id\": \"<string>\"\n        },\n        \"data\": {\n          \"key_0\": 4443.9325220575765\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"notifications\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"categories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"templateId\": \"<string>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "86eddb51-7580-412c-af69-0044918755d5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"users\": [\n    {\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": 4419\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"tenant_id\": \"<string>\"\n        },\n        \"data\": {\n          \"key_0\": 6531.228431084139,\n          \"key_1\": \"string\",\n          \"key_2\": 4608.125151312862,\n          \"key_3\": 2422\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"notifications\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"categories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"templateId\": \"<string>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    },\n    {\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"key_1\": {\n            \"status\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"rules\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"channel_preferences\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": 7859.751851757633\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"tenant_id\": \"<string>\"\n        },\n        \"data\": {\n          \"key_0\": true,\n          \"key_1\": false\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"notifications\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"categories\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"templateId\": \"<string>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9f3d38b0-0d7f-457d-b51a-3584bd6f7c52",
+          "name": "Get a Job",
+          "request": {
+            "name": "Get a Job",
+            "description": {
+              "content": "Get a bulk job",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) A unique identifier representing the bulk job"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "52d184e3-5ea9-427e-99b4-c7968949af57",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job\": {\n    \"definition\": {\n      \"event\": \"<string>\",\n      \"brand\": \"<string>\",\n      \"data\": {\n        \"key_0\": false,\n        \"key_1\": 4206.296046543923,\n        \"key_2\": 7896.573866342415\n      },\n      \"template\": \"<string>\",\n      \"content\": {\n        \"title\": \"<string>\",\n        \"body\": \"<string>\"\n      },\n      \"locale\": {\n        \"key_0\": {\n          \"key_0\": \"string\",\n          \"key_1\": 4342.070597463924,\n          \"key_2\": \"string\"\n        }\n      },\n      \"override\": {\n        \"key_0\": \"string\"\n      }\n    },\n    \"enqueued\": 6567,\n    \"failures\": 4866,\n    \"received\": 2738,\n    \"status\": \"ERROR\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05d6299a-2b3f-4a02-a4cf-7d676e2820dc",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a0edb1b2-71a3-4922-afb7-a9754a6032d8",
+          "name": "Run a job",
+          "request": {
+            "name": "Run a job",
+            "description": {
+              "content": "Run a bulk job",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                ":job_id",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) A unique identifier representing the bulk job"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2d77ef44-dab7-4a49-924b-5d279280199d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4d6eca0-3bc9-45bb-93b7-68ecd7b13fec",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc2cc64c-5e12-43b1-9615-b8dcec07d4bd",
+          "name": "Get users",
+          "request": {
+            "name": "Get users",
+            "description": {
+              "content": "Get Bulk Job Users",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                ":job_id",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A unique identifier that allows for fetching the next set of users added to the bulk job"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) A unique identifier representing the bulk job"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3e2dd060-f209-4054-b2f5-2143caa1c184",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"status\": \"PENDING\",\n      \"messageId\": \"string\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": 6649,\n        \"key_1\": \"string\"\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"data\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    },\n    {\n      \"status\": \"ENQUEUED\",\n      \"messageId\": \"string\",\n      \"preferences\": {\n        \"categories\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_2\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"key_3\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"notifications\": {\n          \"key_0\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"profile\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"recipient\": \"<string>\",\n      \"data\": {},\n      \"to\": {\n        \"user_id\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"context\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"data\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"email\": \"<string>\",\n        \"locale\": \"<string>\",\n        \"phone_number\": \"<string>\",\n        \"list_id\": \"<string>\",\n        \"preferences\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"tenant_id\": \"<string>\"\n      }\n    }\n  ],\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90d05aa5-9bd5-419a-909f-0823a43c9d7f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    ":job_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) A unique identifier representing the bulk job"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4dc5631e-e4b5-4597-963f-126de97ae45e",
+    "name": "Courier Audiences Bulk API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

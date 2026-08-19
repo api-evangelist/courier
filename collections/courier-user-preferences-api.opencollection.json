@@ -1,0 +1,121 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences User Preferences API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Preferences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user's preferences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/preferences",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Query the preferences of a user for this specific tenant context."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch all user preferences."
+        },
+        {
+          "info": {
+            "name": "Get user subscription topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/users/:user_id/preferences/:topic_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with a subscription topic."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Query the preferences of a user for this specific tenant context."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch user preferences for a specific subscription topic."
+        },
+        {
+          "info": {
+            "name": "Update or Create user preferences for a specific subscription topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/users/:user_id/preferences/:topic_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the user whose preferences you wish to retrieve."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with a subscription topic."
+              },
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Update the preferences of a user for this specific tenant context."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update or Create user preferences for a specific subscription topic."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

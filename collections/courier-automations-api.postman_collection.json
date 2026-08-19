@@ -1,0 +1,425 @@
+{
+  "item": [
+    {
+      "id": "a6db04ff-253a-4fe0-b0b6-2a1e60d19c1a",
+      "name": "Automations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9969e1b9-de47-4801-acdf-233e5aba8d0d",
+          "name": "List Automations",
+          "request": {
+            "name": "List Automations",
+            "description": {
+              "content": "Get the list of automations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A cursor token for pagination. Use the cursor from the previous response to fetch the next page of results."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "published",
+                  "description": "The version of templates to retrieve. Accepted values are published (for published templates) or draft (for draft templates). Defaults to published."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "052ca132-142a-4d29-a74b-16950427be4c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"templates\": [\n    {\n      \"name\": \"Welcome Email Automation\",\n      \"id\": \"abc-123-def-456\",\n      \"version\": \"published\",\n      \"createdAt\": \"2024-01-01T00:00:00Z\",\n      \"updatedAt\": \"2024-01-02T00:00:00Z\"\n    },\n    {\n      \"name\": \"Order Confirmation\",\n      \"id\": \"xyz-789-ghi-012\",\n      \"version\": \"published\",\n      \"createdAt\": \"2024-01-03T00:00:00Z\",\n      \"updatedAt\": \"2024-01-04T00:00:00Z\"\n    }\n  ],\n  \"cursor\": \"eyJpZCI6InRlbXBsYXRlLTIifQ==\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0c4cd08-1748-4ae3-a188-d6715debdf7b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "published"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid version parameter \\\"invalid\\\". Accepted values are: published (for published templates) or draft (for draft templates)\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75c833e0-fce9-4b78-834e-d9110c193840",
+          "name": "Invoke an Automation",
+          "request": {
+            "name": "Invoke an Automation",
+            "description": {
+              "content": "Invoke an automation run from an automation template.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                ":templateId",
+                "invoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "templateId",
+                  "description": "(Required) A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipient\": \"<string>\",\n  \"brand\": \"<string>\",\n  \"data\": {\n    \"key_0\": true,\n    \"key_1\": 2139,\n    \"key_2\": 8385.2700343168\n  },\n  \"profile\": {\n    \"key_0\": false\n  },\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe1babfe-9ba3-4945-89be-765dfbfeae9d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    ":templateId",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "templateId",
+                      "description": "(Required) A unique identifier representing the automation template to be invoked. This could be the Automation Template ID or the Automation Template Alias."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipient\": \"<string>\",\n  \"brand\": \"<string>\",\n  \"data\": {\n    \"key_0\": 8943,\n    \"key_1\": \"string\"\n  },\n  \"profile\": {\n    \"key_0\": \"string\",\n    \"key_1\": 593.0902084053557\n  },\n  \"template\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f79fb69-5327-46d9-8c02-53bf92e4ce5b",
+          "name": "Invoke an Ad Hoc Automation",
+          "request": {
+            "name": "Invoke an Ad Hoc Automation",
+            "description": {
+              "content": "Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "automations",
+                "invoke"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"automation\": {\n    \"steps\": [\n      {\n        \"action\": \"<string>\",\n        \"duration\": \"<string>\",\n        \"until\": \"<string>\"\n      },\n      {\n        \"action\": \"<string>\",\n        \"duration\": \"<string>\",\n        \"until\": \"<string>\"\n      }\n    ],\n    \"cancelation_token\": \"<string>\"\n  },\n  \"brand\": \"<string>\",\n  \"data\": {\n    \"key_0\": 4174\n  },\n  \"profile\": {\n    \"key_0\": true\n  },\n  \"recipient\": \"<string>\",\n  \"template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4255d4a9-7f2f-4014-85d8-d8121db763c5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "automations",
+                    "invoke"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"name\": \"Foo\"\n  },\n  \"profile\": {\n    \"tenant_id\": \"abc-123\"\n  },\n  \"recipient\": \"user-yes\",\n  \"automation\": {\n    \"cancelation_token\": \"delay-send--user-yes--abc-123\",\n    \"steps\": [\n      {\n        \"action\": \"delay\",\n        \"until\": \"20240408T080910.123\"\n      },\n      {\n        \"action\": \"send\",\n        \"template\": \"64TP5HKPFTM8VTK1Y75SJDQX9JK0\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"runId\": \"1-65f240a0-47a6a120c8374de9bcf9f22c\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4eaa3936-b24b-429b-ab3a-a9fae8113632",
+    "name": "Courier Audiences Automations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

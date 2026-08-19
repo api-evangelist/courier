@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Audit Events API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Audit Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all audit events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audit-events",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier that allows for fetching the next set of audit events."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch the list of audit events"
+        },
+        {
+          "info": {
+            "name": "Get an audit event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/audit-events/:audit-event-id",
+            "params": [
+              {
+                "name": "audit-event-id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier associated with the audit event you wish to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Fetch a specific audit event by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,952 @@
+{
+  "item": [
+    {
+      "id": "c0e32e7e-a5a1-4d48-80aa-7f41b4ee88c3",
+      "name": "Providers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d4e563e8-493c-4134-822f-ec358b1acb09",
+          "name": "List providers",
+          "request": {
+            "name": "List providers",
+            "description": {
+              "content": "List configured provider integrations for the current workspace. Supports cursor-based pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Opaque cursor for fetching the next page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fdaac1cd-a13e-4088-9ca9-0267216f65e4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"provider\": \"string\",\n      \"settings\": {\n        \"key_0\": 3992.706790616877,\n        \"key_1\": false\n      },\n      \"created\": 1569,\n      \"alias\": \"string\",\n      \"updated\": 3548\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"provider\": \"string\",\n      \"settings\": {\n        \"key_0\": 7389,\n        \"key_1\": false,\n        \"key_2\": \"string\"\n      },\n      \"created\": 437,\n      \"alias\": \"string\",\n      \"updated\": 8655\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ea745dc-3644-4bfd-a09f-e2252f01a8e5",
+          "name": "Create a provider",
+          "request": {
+            "name": "Create a provider",
+            "description": {
+              "content": "Create a new provider configuration. The `provider` field must be a known Courier provider key (see catalog).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 9543.60415689081,\n    \"key_1\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c1002a63-771b-4ebb-bbff-5bde47e44db9",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 3271,\n    \"key_1\": 6914\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"provider\": \"string\",\n  \"settings\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"created\": 1476,\n  \"alias\": \"string\",\n  \"updated\": 1630\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b32b7b71-37db-4bd1-bbbb-081a3a4ed0c3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 3271,\n    \"key_1\": 6914\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cea88dff-dbf4-43f0-8481-1badfc955808",
+          "name": "List available provider types",
+          "request": {
+            "name": "List available provider types",
+            "description": {
+              "content": "Returns the catalog of available provider types with their display names, descriptions, and configuration schema fields (snake_case, with `type` and `required`). Providers with no configurable schema return only `provider`, `name`, and `description`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                "catalog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "keys",
+                  "value": "<string>",
+                  "description": "Comma-separated provider keys to filter by (e.g. `sendgrid,twilio`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Case-insensitive substring match against the provider display name."
+                },
+                {
+                  "disabled": false,
+                  "key": "channel",
+                  "value": "<string>",
+                  "description": "Exact match (case-insensitive) against the provider channel taxonomy (e.g. `email`, `sms`, `push`)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "53574f45-ac26-47dd-8f2d-ae3e5482dd84",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    "catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "keys",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "channel",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"provider\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"channel\": \"string\",\n      \"settings\": {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"required\": true,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"required\": true,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    },\n    {\n      \"provider\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"channel\": \"string\",\n      \"settings\": {\n        \"key_0\": {\n          \"type\": \"string\",\n          \"required\": false,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        \"key_1\": {\n          \"type\": \"string\",\n          \"required\": true,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a3f8fdf-71ab-4c65-9a31-72501f94ed09",
+          "name": "Get a provider",
+          "request": {
+            "name": "Get a provider",
+            "description": {
+              "content": "Fetch a single provider configuration by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) A unique identifier of the provider configuration."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "77a7f92e-b66b-4277-8ebb-d0bbcb81c597",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"provider\": \"string\",\n  \"settings\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"created\": 1476,\n  \"alias\": \"string\",\n  \"updated\": 1630\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "551cc368-c7c2-4929-9bb8-0858cac1d247",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b0fe02e-4e47-49a7-a484-da6c52edaca2",
+          "name": "Update a provider",
+          "request": {
+            "name": "Update a provider",
+            "description": {
+              "content": "Replace an existing provider configuration. The `provider` key is required and determines which provider-specific settings schema is applied. All other fields are optional — omitted fields are cleared from the stored configuration (this is a full replacement, not a partial merge). Changing the provider type for an existing configuration is not supported.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) A unique identifier of the provider configuration to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f1599bb3-cfe3-47d4-bc09-d1afc68957d4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 6952,\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"provider\": \"string\",\n  \"settings\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"created\": 1476,\n  \"alias\": \"string\",\n  \"updated\": 1630\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c98fbd5-b9d5-4618-b087-7e76c82d5c5d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 6952,\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17b20273-2f4d-4016-a40e-1ff5aaaa9f1c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"<string>\",\n  \"title\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"settings\": {\n    \"key_0\": 6952,\n    \"key_1\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff59d02d-c4c4-4983-8964-2168495f9312",
+          "name": "Delete a provider",
+          "request": {
+            "name": "Delete a provider",
+            "description": {
+              "content": "Delete a provider configuration. Returns 409 if the provider is still referenced by routing or notifications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) A unique identifier of the provider configuration to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "84f3c19e-80cf-4392-b817-c5acf76a6c09",
+              "name": "Provider successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9dfb668-17b7-4b0c-b0b9-69e371f63a1a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) A unique identifier of the provider configuration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8c61362c-7118-4329-94aa-ef036092f4bd",
+    "name": "Courier Audiences Providers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

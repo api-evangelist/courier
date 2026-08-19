@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Routing Strategies API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Routing Strategies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Routing Strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies",
+            "params": [
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page. Default 20, max 100."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List routing strategies in your workspace. Returns metadata only (no routing/channels/providers content). Use GET /routing-strategies/{id} for full details."
+        },
+        {
+          "info": {
+            "name": "Create Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.courier.com/routing-strategies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a routing strategy. Requires a name and routing configuration at minimum. Channels and providers default to empty if omitted."
+        },
+        {
+          "info": {
+            "name": "Get Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a routing strategy by ID. Returns the full entity including routing content and metadata."
+        },
+        {
+          "info": {
+            "name": "Replace Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace a routing strategy. Full document replacement; the caller must send the complete desired state. Missing optional fields are cleared."
+        },
+        {
+          "info": {
+            "name": "Archive Routing Strategy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/routing-strategies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (rs_ prefix)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Archive a routing strategy. The strategy must not have associated notification templates. Unlink all templates before archiving."
+        },
+        {
+          "info": {
+            "name": "List Associated Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/routing-strategies/:id/notifications",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Routing strategy ID (`rs_` prefix)."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Opaque pagination cursor from a previous response. Omit for the first page."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results per page. Default 20, max 100."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List notification templates associated with a routing strategy. Includes template metadata only, not full content."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1128 @@
+{
+  "item": [
+    {
+      "id": "be4ff764-5dcb-440a-aeef-c0f0c9992bd8",
+      "name": "Sent Messages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9e0fcc39-3e44-4d5e-a8af-1e1892b7bc4f",
+          "name": "List messages",
+          "request": {
+            "name": "List messages",
+            "description": {
+              "content": "Fetch the statuses of messages you've previously sent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "archived",
+                  "value": "<boolean>",
+                  "description": "A boolean value that indicates whether archived messages should be included in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "A unique identifier that allows for fetching the next set of messages."
+                },
+                {
+                  "disabled": false,
+                  "key": "event",
+                  "value": "<string>",
+                  "description": "A unique identifier representing the event that was used to send the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "list",
+                  "value": "<string>",
+                  "description": "A unique identifier representing the list the message was sent to."
+                },
+                {
+                  "disabled": false,
+                  "key": "messageId",
+                  "value": "<string>",
+                  "description": "A unique identifier representing the message_id returned from either /send or /send/list."
+                },
+                {
+                  "disabled": false,
+                  "key": "notification",
+                  "value": "<string>",
+                  "description": "A unique identifier representing the notification that was used to send the event."
+                },
+                {
+                  "disabled": false,
+                  "key": "provider",
+                  "value": "<string>",
+                  "description": "The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "provider",
+                  "value": "<string>",
+                  "description": "The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "A unique identifier representing the recipient associated with the requested profile."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "An indicator of the current status of the message. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "An indicator of the current status of the message. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>",
+                  "description": "A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in."
+                },
+                {
+                  "disabled": false,
+                  "key": "tenant_id",
+                  "value": "<string>",
+                  "description": "Messages sent with the context of a Tenant"
+                },
+                {
+                  "disabled": false,
+                  "key": "enqueued_after",
+                  "value": "<string>",
+                  "description": "The enqueued datetime of a message to filter out messages received before."
+                },
+                {
+                  "disabled": false,
+                  "key": "traceId",
+                  "value": "<string>",
+                  "description": "The unique identifier used to trace the requests"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b2ae5abf-3097-4c2c-9e28-92c8e67409fe",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "event",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "list",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "messageId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "notification",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "provider",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "provider",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tenant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "enqueued_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "traceId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"more\": true,\n    \"cursor\": \"string\"\n  },\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"ROUTED\",\n      \"enqueued\": 1899,\n      \"recipient\": \"string\",\n      \"event\": \"string\",\n      \"notification\": \"string\",\n      \"sent\": 3011,\n      \"delivered\": 1776,\n      \"opened\": 4167,\n      \"clicked\": 6901,\n      \"error\": \"string\",\n      \"reason\": \"OPT_IN_REQUIRED\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"SIMULATED\",\n      \"enqueued\": 1041,\n      \"recipient\": \"string\",\n      \"event\": \"string\",\n      \"notification\": \"string\",\n      \"sent\": 7560,\n      \"delivered\": 5931,\n      \"opened\": 1734,\n      \"clicked\": 3319,\n      \"error\": \"string\",\n      \"reason\": \"NO_CHANNELS\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4144e091-970e-45ff-92cc-c0811c91573e",
+          "name": "Get message",
+          "request": {
+            "name": "Get message",
+            "description": {
+              "content": "Fetch the status of a message you've previously sent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                ":message_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_id",
+                  "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "53761608-ac66-49d3-af3e-347b9908289a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"UNMAPPED\",\n  \"enqueued\": 5493,\n  \"recipient\": \"string\",\n  \"event\": \"string\",\n  \"notification\": \"string\",\n  \"providers\": [\n    {\n      \"key_0\": 1567\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": 8259.637990807623,\n      \"key_3\": \"string\",\n      \"key_4\": \"string\"\n    }\n  ],\n  \"sent\": 2688,\n  \"delivered\": 6437,\n  \"opened\": 6481,\n  \"clicked\": 7817,\n  \"error\": \"string\",\n  \"reason\": \"OPT_IN_REQUIRED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a9d3411-7737-4f9e-84f0-fe9b8d9d6375",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84adc4aa-35c6-49bb-adef-911a72fee929",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79a721d6-8749-44fe-83e0-207c7a2e2ef8",
+          "name": "Cancel message",
+          "request": {
+            "name": "Cancel message",
+            "description": {
+              "content": "Cancel a message that is currently in the process of being delivered. A well-formatted API call to the cancel message API will return either `200` status code for a successful cancellation or `409` status code for an unsuccessful cancellation. Both cases will include the actual message record in the response body (see details below).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                ":message_id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_id",
+                  "description": "(Required) A unique identifier representing the message ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ffad90c-9ded-4f4b-a208-7e758e55d1a0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier representing the message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"DELAYED\",\n  \"enqueued\": 3200,\n  \"recipient\": \"string\",\n  \"event\": \"string\",\n  \"notification\": \"string\",\n  \"sent\": 8075,\n  \"delivered\": 8437,\n  \"opened\": 2057,\n  \"clicked\": 949,\n  \"error\": \"string\",\n  \"reason\": \"BOUNCED\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef21ba75-a276-4dff-a016-14b9ea1c404f",
+          "name": "Get message history",
+          "request": {
+            "name": "Get message history",
+            "description": {
+              "content": "Fetch the array of events of a message you've previously sent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "messages",
+                ":message_id",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "A supported Message History type that will filter the events returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_id",
+                  "description": "(Required) A unique identifier representing the message ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "216e4f1b-35ea-44eb-ac38-71656cf5cf6f",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier representing the message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 3411,\n      \"key_2\": \"string\",\n      \"key_3\": 9580\n    },\n    {\n      \"key_0\": 2373,\n      \"key_1\": 2249.9541455928397,\n      \"key_2\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b3e433c-a967-4e94-8174-59e383c6d0a5",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier representing the message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "010a2083-22fc-4291-9b45-513c578987f9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier representing the message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "812a8131-aac7-47b5-b095-568a986fe681",
+          "name": "Get message content",
+          "request": {
+            "name": "Get message content",
+            "description": {},
+            "url": {
+              "path": [
+                "messages",
+                ":message_id",
+                "output"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "message_id",
+                  "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "49508109-d970-4242-8118-9e8e67d9074c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "output"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"channel\": \"string\",\n      \"channel_id\": \"string\",\n      \"content\": {\n        \"html\": \"string\",\n        \"title\": \"string\",\n        \"body\": \"string\",\n        \"subject\": \"string\",\n        \"text\": \"string\",\n        \"blocks\": [\n          {\n            \"type\": \"string\",\n            \"text\": \"string\"\n          },\n          {\n            \"type\": \"string\",\n            \"text\": \"string\"\n          }\n        ]\n      }\n    },\n    {\n      \"channel\": \"string\",\n      \"channel_id\": \"string\",\n      \"content\": {\n        \"html\": \"string\",\n        \"title\": \"string\",\n        \"body\": \"string\",\n        \"subject\": \"string\",\n        \"text\": \"string\",\n        \"blocks\": [\n          {\n            \"type\": \"string\",\n            \"text\": \"string\"\n          },\n          {\n            \"type\": \"string\",\n            \"text\": \"string\"\n          }\n        ]\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7116bc8-1530-49ef-bd07-9a562591a22a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "output"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bc3071b-12ec-4201-b0b6-b3ed924d2dde",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "messages",
+                    ":message_id",
+                    "output"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "message_id",
+                      "description": "(Required) A unique identifier associated with the message you wish to retrieve (results from a send)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fdae21e-b23e-4d1b-946a-7cce6ed28a4c",
+          "name": "Archive message",
+          "request": {
+            "name": "Archive message",
+            "description": {},
+            "url": {
+              "path": [
+                "requests",
+                ":request_id",
+                "archive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "request_id",
+                  "description": "(Required) A unique identifier representing the request ID"
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "17cadfa8-dbf6-4736-bb70-9e64518282e1",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "requests",
+                    ":request_id",
+                    "archive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "request_id",
+                      "description": "(Required) A unique identifier representing the request ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1b60aae0-27cf-4325-a81b-2e8cc80c72fe",
+    "name": "Courier Audiences Sent Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

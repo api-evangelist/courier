@@ -1,0 +1,239 @@
+{
+  "item": [
+    {
+      "id": "d8bcf5c7-b067-46e9-a9a2-547dd6210451",
+      "name": "Inbound",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df18c88a-9dd7-4f13-8768-62aae2d363d8",
+          "name": "Courier Track Event",
+          "request": {
+            "name": "Courier Track Event",
+            "description": {},
+            "url": {
+              "path": [
+                "inbound",
+                "courier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"messageId\": \"<string>\",\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": 4802.433696395216\n  },\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "be2d9b0d-4502-422e-9de0-43bf7dbe8d50",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inbound",
+                    "courier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"New Order Placed\",\n  \"messageId\": \"4c62c457-b329-4bea-9bfc-17bba86c393f\",\n  \"userId\": \"1234\",\n  \"type\": \"track\",\n  \"properties\": {\n    \"order_id\": 123,\n    \"total_orders\": 5,\n    \"last_order_id\": 122\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": \"1-6952feeb-7fed6092da5363f2af38eb42\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49b1bac7-b055-43ef-82d8-49dfaf6ab84e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inbound",
+                    "courier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"New Order Placed\",\n  \"messageId\": \"4c62c457-b329-4bea-9bfc-17bba86c393f\",\n  \"userId\": \"1234\",\n  \"type\": \"track\",\n  \"properties\": {\n    \"order_id\": 123,\n    \"total_orders\": 5,\n    \"last_order_id\": 122\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda7b34c-7d46-4ab7-b3e3-1c9f78667d16",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "inbound",
+                    "courier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"New Order Placed\",\n  \"messageId\": \"4c62c457-b329-4bea-9bfc-17bba86c393f\",\n  \"userId\": \"1234\",\n  \"type\": \"track\",\n  \"properties\": {\n    \"order_id\": 123,\n    \"total_orders\": 5,\n    \"last_order_id\": 122\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c9b2040e-0831-43d8-8eac-760b3716575c",
+    "name": "Courier Audiences Inbound API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}

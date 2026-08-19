@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Tenants API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the tenant to be returned."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Replace a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier representing the tenant to be returned."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or Replace a Tenant"
+        },
+        {
+          "info": {
+            "name": "Delete a Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/tenants/:tenant_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to be deleted."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Tenant"
+        },
+        {
+          "info": {
+            "name": "Get a List of Tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants",
+            "params": [
+              {
+                "name": "parent_tenant_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter the list of tenants by parent_id"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of tenants to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a List of Tenants"
+        },
+        {
+          "info": {
+            "name": "Get Users in Tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/tenants/:tenant_id/users",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant for user membership."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Continue the pagination with the next cursor"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Users in Tenant"
+        },
+        {
+          "info": {
+            "name": "Create or Replace Default Preferences For Topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/tenants/:tenant_id/default_preferences/items/:topic_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to update the default preferences for."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the subscription topic you want to have a default preference for."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or Replace Default Preferences For Topic"
+        },
+        {
+          "info": {
+            "name": "Remove Default Preferences For Topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.courier.com/tenants/:tenant_id/default_preferences/items/:topic_id",
+            "params": [
+              {
+                "name": "tenant_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the tenant to update the default preferences for."
+              },
+              {
+                "name": "topic_id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the subscription topic you want to have a default preference for."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove Default Preferences For Topic"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

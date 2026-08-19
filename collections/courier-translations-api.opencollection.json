@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Courier Audiences Translations API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Translations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a translation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.courier.com/translations/:domain/:locale",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain you want to retrieve translations for. Only `default` is supported at the moment"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "path",
+                "description": "The locale you want to retrieve the translations for"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get translations by locale"
+        },
+        {
+          "info": {
+            "name": "Update translations by locale",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.courier.com/translations/:domain/:locale",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain you want to retrieve translations for. Only `default` is supported at the moment"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "path",
+                "description": "The locale you want to retrieve the translations for"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a translation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

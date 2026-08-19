@@ -1,0 +1,995 @@
+{
+  "item": [
+    {
+      "id": "0efb3393-9c6a-41a2-b44d-b7e6ccad3f03",
+      "name": "Tenants",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6ef7bed9-84e7-4ac2-8064-68f00e0fa5bf",
+          "name": "Get a Tenant",
+          "request": {
+            "name": "Get a Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) A unique identifier representing the tenant to be returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c6d49187-ecc9-4db2-8edc-063563be6767",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) A unique identifier representing the tenant to be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"parent_tenant_id\": \"string\",\n  \"default_preferences\": {\n    \"items\": [\n      {\n        \"id\": \"string\",\n        \"status\": \"OPTED_IN\",\n        \"has_custom_routing\": false,\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"status\": \"OPTED_IN\",\n        \"has_custom_routing\": false,\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"properties\": {\n    \"key_0\": 4503,\n    \"key_1\": false,\n    \"key_2\": \"string\",\n    \"key_3\": false\n  },\n  \"user_profile\": {\n    \"key_0\": 1056.7891682794893,\n    \"key_1\": 1498.1367103072353\n  },\n  \"brand_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0f94df5-dc60-47b8-ab3c-f8d631670b3b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) A unique identifier representing the tenant to be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9f026ff-9b64-473b-9b3e-7cf26b7f8cf8",
+          "name": "Create or Replace a Tenant",
+          "request": {
+            "name": "Create or Replace a Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) A unique identifier representing the tenant to be returned."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"parent_tenant_id\": \"<string>\",\n  \"default_preferences\": {\n    \"items\": [\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"properties\": {\n    \"key_0\": true,\n    \"key_1\": false,\n    \"key_2\": \"string\"\n  },\n  \"user_profile\": {\n    \"key_0\": 1314.2584547694903,\n    \"key_1\": true,\n    \"key_2\": 6445.739955156814\n  },\n  \"brand_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0dcf7beb-8338-49f1-aea6-14ab5669fe22",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) A unique identifier representing the tenant to be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"parent_tenant_id\": \"<string>\",\n  \"default_preferences\": {\n    \"items\": [\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 9239\n  },\n  \"user_profile\": {\n    \"key_0\": 1144,\n    \"key_1\": \"string\"\n  },\n  \"brand_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"parent_tenant_id\": \"string\",\n  \"default_preferences\": {\n    \"items\": [\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"properties\": {\n    \"key_0\": 197,\n    \"key_1\": true,\n    \"key_2\": \"string\",\n    \"key_3\": 5696.86704422524\n  },\n  \"user_profile\": {\n    \"key_0\": false,\n    \"key_1\": false\n  },\n  \"brand_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0298c38c-c52e-4ddc-a020-cb1484956467",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) A unique identifier representing the tenant to be returned."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"parent_tenant_id\": \"<string>\",\n  \"default_preferences\": {\n    \"items\": [\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"status\": \"<string>\",\n        \"has_custom_routing\": \"<boolean>\",\n        \"custom_routing\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ]\n  },\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": 9239\n  },\n  \"user_profile\": {\n    \"key_0\": 1144,\n    \"key_1\": \"string\"\n  },\n  \"brand_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9aef3a8-bbec-4489-8b09-6fcd40823361",
+          "name": "Delete a Tenant",
+          "request": {
+            "name": "Delete a Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant to be deleted."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "379511b5-3ea7-415d-b9ca-75a16b56c2b0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant to be deleted."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d214b84-8bbc-4e39-81ec-aad0efc142f6",
+          "name": "Get a List of Tenants",
+          "request": {
+            "name": "Get a List of Tenants",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "parent_tenant_id",
+                  "value": "<string>",
+                  "description": "Filter the list of tenants by parent_id"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of tenants to return \n(defaults to 20, maximum value of 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Continue the pagination with the next cursor"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3ceaeff-323c-47b8-9956-95e85ee94a2b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "parent_tenant_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"has_more\": true,\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parent_tenant_id\": \"string\",\n      \"default_preferences\": {\n        \"items\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"properties\": {\n        \"key_0\": 212.60683416894798\n      },\n      \"user_profile\": {\n        \"key_0\": 6654.376181143962,\n        \"key_1\": 50\n      },\n      \"brand_id\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"parent_tenant_id\": \"string\",\n      \"default_preferences\": {\n        \"items\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"properties\": {\n        \"key_0\": false\n      },\n      \"user_profile\": {\n        \"key_0\": 5063,\n        \"key_1\": false\n      },\n      \"brand_id\": \"string\"\n    }\n  ],\n  \"url\": \"string\",\n  \"type\": \"list\",\n  \"cursor\": \"string\",\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d0da091-406a-4cf2-944d-a3f4b79d9baa",
+          "name": "Get Users in Tenant",
+          "request": {
+            "name": "Get Users in Tenant",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of accounts to return \n(defaults to 20, maximum value of 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Continue the pagination with the next cursor"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant for user membership."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1ec8f0ec-7446-4cf1-b6c9-bc494821d506",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for user membership."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"has_more\": false,\n  \"url\": \"string\",\n  \"type\": \"list\",\n  \"items\": [\n    {\n      \"tenant_id\": \"string\",\n      \"user_id\": \"string\",\n      \"type\": \"user\",\n      \"profile\": {\n        \"key_0\": true,\n        \"key_1\": false\n      }\n    },\n    {\n      \"tenant_id\": \"string\",\n      \"user_id\": \"string\",\n      \"type\": \"user\",\n      \"profile\": {\n        \"key_0\": 4084.9673583946033,\n        \"key_1\": 186\n      }\n    }\n  ],\n  \"next_url\": \"string\",\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9284d7b-e03d-4408-b801-d3f615e68c49",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant for user membership."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"type\": \"invalid_request_error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ce3d8c5-8a7a-4f89-80fb-8eb87a891f69",
+          "name": "Create or Replace Default Preferences For Topic",
+          "request": {
+            "name": "Create or Replace Default Preferences For Topic",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "default_preferences",
+                "items",
+                ":topic_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant to update the default preferences for."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "topic_id",
+                  "description": "(Required) Id of the subscription topic you want to have a default preference for."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\",\n  \"has_custom_routing\": \"<boolean>\",\n  \"custom_routing\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f4224f93-ec88-4968-a594-68ac7666d97b",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "default_preferences",
+                    "items",
+                    ":topic_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant to update the default preferences for."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "topic_id",
+                      "description": "(Required) Id of the subscription topic you want to have a default preference for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"OPTED_IN\",\n  \"has_custom_routing\": true,\n  \"custom_routing\": [\n    \"inbox\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e31082c7-939f-4626-b951-4cc76d61a0b2",
+          "name": "Remove Default Preferences For Topic",
+          "request": {
+            "name": "Remove Default Preferences For Topic",
+            "description": {},
+            "url": {
+              "path": [
+                "tenants",
+                ":tenant_id",
+                "default_preferences",
+                "items",
+                ":topic_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tenant_id",
+                  "description": "(Required) Id of the tenant to update the default preferences for."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "topic_id",
+                  "description": "(Required) Id of the subscription topic you want to have a default preference for."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a5617b26-8a78-416d-93cd-90429075e2aa",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tenants",
+                    ":tenant_id",
+                    "default_preferences",
+                    "items",
+                    ":topic_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tenant_id",
+                      "description": "(Required) Id of the tenant to update the default preferences for."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "topic_id",
+                      "description": "(Required) Id of the subscription topic you want to have a default preference for."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.courier.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "eafc029d-09c7-4b7c-ae84-c82851efe795",
+    "name": "Courier Audiences Tenants API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Courier REST API.",
+      "type": "text/plain"
+    }
+  }
+}
