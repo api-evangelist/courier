@@ -19,6 +19,11 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/courier.png
 tags:
+- Notification
+- Email
+- SMS
+- Push
+tags_raw:
 - Notifications
 - Email
 - SMS
@@ -35,6 +40,11 @@ apis:
   humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
   baseURL: wss://realtime.courier.io
   tags:
+  - Inbox
+  - WebSocket
+  - Real-Time
+  - Event
+  tags_raw:
   - Inbox
   - WebSocket
   - Real-Time
@@ -192,6 +202,8 @@ apis:
   humanURL: https://www.courier.com/docs/reference
   baseURL: https://api.courier.com
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
