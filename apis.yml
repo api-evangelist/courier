@@ -4,6 +4,18 @@ name: Courier
 kind: company
 description: Courier is a multi-channel notification API offering routing across email,
   SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
