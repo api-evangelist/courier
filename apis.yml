@@ -365,6 +365,9 @@ apis:
   - type: GraphQL
     url: graphql/courier-graphql.md
 common:
+- type: CapabilityMap
+  url: capabilities/courier-capability-edges.yml
+  name: Courier Business Capability Map
 - type: AgenticAccess
   url: agentic-access/courier-agentic-access.yml
 - type: TrustCenter

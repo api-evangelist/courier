@@ -1,0 +1,36 @@
+slug: courier
+provider: Courier
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Audiences
+  spec_file: courier-audiences-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.78
+  evidence: GET /audiences/{audience_id}/members  audiences_listMembers  List audience members; schemas
+    AudienceFilterConfig, FilterConfig, LogicalOperator
+  reason: Audiences are rule-based membership groups (filter configs with logical operators) used to target
+    notifications — customer segmentation for messaging. Slight ambiguity vs demand-generation targeting.
+- tag: Tenants
+  spec_file: courier-tenants-api-openapi.yml
+  capability_id: BC-4230
+  capability_id_l1: BC-4230
+  capability_name: SaaS Tenant Management
+  confidence: 0.75
+  evidence: PUT /tenants/{tenant_id} 'Create or Replace a Tenant'; 'Get a List of Tenants'; 'Get Users
+    in Tenant'; 'Create or Replace Default Preferences For Topic'
+  reason: CRUD over tenants plus tenant-scoped user listing and tenant default configuration is multi-tenant
+    tenant lifecycle and configuration management (BC-4230). Evidence spans both provisioning/lifecycle
+    and per-tenant configuration, so no single L2 is named cleanly.
