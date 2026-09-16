@@ -2,8 +2,8 @@ aid: courier
 url: https://raw.githubusercontent.com/api-evangelist/courier/refs/heads/main/apis.yml
 name: Courier
 kind: company
-description: Courier is a multi-channel notification API offering routing across email,
-  SMS, push, chat, and in-app, with templates, preferences, and a no-code studio.
+description: Courier is a multi-channel notification API offering routing across email, SMS, push, chat,
+  and in-app, with templates, preferences, and a no-code studio.
 deliveryModel:
   model: saas
   open_source: false
@@ -43,13 +43,13 @@ tags_raw:
 - Push
 - API
 created: '2026-05-08'
-modified: '2026-05-29'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - name: Courier Inbox Real-Time API
-  description: >-
-    WebSocket service that delivers Inbox messages and message-state events (read, unread, opened, archived,
-    clicked, mark-all-read, archive-all, archive-read) to authenticated users in real time.
+  description: WebSocket service that delivers Inbox messages and message-state events (read, unread,
+    opened, archived, clicked, mark-all-read, archive-all, archive-read) to authenticated users in real
+    time.
   humanURL: https://www.courier.com/docs/platform/inbox/inbox-overview
   baseURL: wss://realtime.courier.io
   tags:
@@ -154,7 +154,7 @@ apis:
   - type: GraphQL
     url: graphql/courier-graphql.md
 - aid: courier:courier-courier-create-api
-  name: Courier Courier Create API
+  name: Courier Create API
   description: The Courier Create API from Courier — 4 operation(s) for courier create.
   humanURL: https://www.courier.com/docs/reference
   baseURL: https://api.courier.com
