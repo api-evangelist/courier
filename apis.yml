@@ -117,6 +117,8 @@ apis:
   humanURL: https://www.courier.com/docs/reference
   baseURL: https://api.courier.com
   tags:
+  - Automation
+  tags_raw:
   - Automations
   properties:
   - type: OpenAPI
@@ -315,6 +317,8 @@ apis:
   humanURL: https://www.courier.com/docs/reference
   baseURL: https://api.courier.com
   tags:
+  - Translation
+  tags_raw:
   - Translations
   properties:
   - type: OpenAPI
