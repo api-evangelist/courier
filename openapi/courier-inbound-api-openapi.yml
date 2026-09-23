@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Inbound API
+  title: Courier Inbound API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -60,18 +60,8 @@ paths:
                     last_order_id: 122
 components:
   schemas:
-    TrackAcceptedResponse:
-      title: TrackAcceptedResponse
-      type: object
-      properties:
-        messageId:
-          type: string
-          description: A successful call returns a `202` status code along with a `requestId` in the response body.
-          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
-      required:
-      - messageId
-    Conflict:
-      title: Conflict
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         type:
@@ -82,6 +72,16 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
+    TrackAcceptedResponse:
+      title: TrackAcceptedResponse
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: A successful call returns a `202` status code along with a `requestId` in the response body.
+          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
+      required:
+      - messageId
     BaseError:
       title: BaseError
       type: object
@@ -91,8 +91,8 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
-    BadRequest:
-      title: BadRequest
+    Conflict:
+      title: Conflict
       type: object
       properties:
         type:
@@ -123,8 +123,9 @@ components:
           enum:
           - track
         userId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The user id associated with the track
       required:
       - event

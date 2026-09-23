@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Providers API
+  title: Courier Providers API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -190,6 +190,53 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Provider:
+      title: Provider
+      type: object
+      description: A configured provider in the workspace.
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the provider configuration.
+        title:
+          type: string
+          description: Display title. Defaults to "Default Configuration" when not explicitly set.
+        provider:
+          type: string
+          description: The provider key (e.g. "sendgrid", "twilio", "slack").
+        alias:
+          type: string
+          description: Optional alias for this configuration.
+        settings:
+          type: object
+          description: Provider-specific settings (snake_case keys on the wire).
+          additionalProperties: true
+        created:
+          type: integer
+          description: Unix timestamp (ms) of when the provider was created.
+        updated:
+          type:
+          - integer
+          - 'null'
+          description: Unix timestamp (ms) of when the provider was last updated.
+      required:
+      - id
+      - title
+      - provider
+      - settings
+      - created
     ProvidersCatalogResponse:
       title: ProvidersCatalogResponse
       type: object
@@ -230,58 +277,6 @@ components:
       required:
       - paging
       - results
-    ProvidersCatalogEntry:
-      title: ProvidersCatalogEntry
-      type: object
-      description: A provider type from the catalog. Contains the key, display name, description, and a `settings` object describing configuration schema fields.
-      properties:
-        provider:
-          type: string
-          description: The provider key (e.g. "sendgrid", "twilio").
-        name:
-          type: string
-          description: Human-readable display name.
-        description:
-          type: string
-          description: Short description of the provider.
-        channel:
-          type: string
-          description: Courier taxonomy channel (e.g. email, push, sms, direct_message, inbox, webhook).
-        settings:
-          type: object
-          description: Map of setting field names (snake_case) to their schema descriptors. Each descriptor has `type` and `required`. Empty when the provider has no configurable schema.
-          additionalProperties:
-            $ref: '#/components/schemas/ProviderSchemaField'
-      required:
-      - provider
-      - name
-      - description
-      - channel
-      - settings
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
     BaseError:
       title: BaseError
       type: object
@@ -333,6 +328,58 @@ components:
           additionalProperties: true
       required:
       - provider
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
+    ProvidersCatalogEntry:
+      title: ProvidersCatalogEntry
+      type: object
+      description: A provider type from the catalog. Contains the key, display name, description, and a `settings` object describing configuration schema fields.
+      properties:
+        provider:
+          type: string
+          description: The provider key (e.g. "sendgrid", "twilio").
+        name:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+          description: Short description of the provider.
+        channel:
+          type: string
+          description: Courier taxonomy channel (e.g. email, push, sms, direct_message, inbox, webhook).
+        settings:
+          type: object
+          description: Map of setting field names (snake_case) to their schema descriptors. Each descriptor has `type` and `required`. Empty when the provider has no configurable schema.
+          additionalProperties:
+            $ref: '#/components/schemas/ProviderSchemaField'
+      required:
+      - provider
+      - name
+      - description
+      - channel
+      - settings
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     ProviderSchemaField:
       title: ProviderSchemaField
       type: object
@@ -352,51 +399,6 @@ components:
       required:
       - type
       - required
-    Provider:
-      title: Provider
-      type: object
-      description: A configured provider in the workspace.
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the provider configuration.
-        title:
-          type: string
-          description: Display title. Defaults to "Default Configuration" when not explicitly set.
-        provider:
-          type: string
-          description: The provider key (e.g. "sendgrid", "twilio", "slack").
-        alias:
-          type: string
-          description: Optional alias for this configuration.
-        settings:
-          type: object
-          description: Provider-specific settings (snake_case keys on the wire).
-          additionalProperties: true
-        created:
-          type: integer
-          description: Unix timestamp (ms) of when the provider was created.
-        updated:
-          type: integer
-          nullable: true
-          description: Unix timestamp (ms) of when the provider was last updated.
-      required:
-      - id
-      - title
-      - provider
-      - settings
-      - created
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type: string
-          nullable: true
-        more:
-          type: boolean
-      required:
-      - more
   securitySchemes:
     BearerAuth:
       type: http

@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Translations API
+  title: Courier Translations API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -83,15 +83,6 @@ paths:
               type: string
 components:
   schemas:
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
     NotFound:
       title: NotFound
       type: object
@@ -104,6 +95,15 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
   securitySchemes:
     BearerAuth:
       type: http

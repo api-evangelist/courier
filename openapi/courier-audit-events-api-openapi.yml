@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Audit Events API
+  title: Courier Audit Events API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -21,8 +21,9 @@ paths:
         description: A unique identifier that allows for fetching the next set of audit events.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -81,24 +82,14 @@ components:
       - source
       - timestamp
       - type
-    Actor:
-      title: Actor
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type: string
-          nullable: true
-      required:
-      - id
     Paging:
       title: Paging
       type: object
       properties:
         cursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         more:
           type: boolean
       required:
@@ -116,6 +107,18 @@ components:
       required:
       - paging
       - results
+    Actor:
+      title: Actor
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
   securitySchemes:
     BearerAuth:
       type: http

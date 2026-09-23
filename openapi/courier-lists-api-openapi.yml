@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Lists API
+  title: Courier Lists API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -21,15 +21,17 @@ paths:
         description: A unique identifier that allows for fetching the next page of lists.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: pattern
         in: query
         description: '"A pattern used to filter the list items returned. Pattern types supported: exact match on `list_id` or a pattern of one or more pattern parts. you may replace a part with either: `*` to match all parts in that position, or `**` to signify a wildcard `endsWith` pattern match."'
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -161,8 +163,9 @@ paths:
         description: A unique identifier that allows for fetching the next set of list subscriptions
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -291,7 +294,6 @@ paths:
               properties:
                 preferences:
                   $ref: '#/components/schemas/RecipientPreferences'
-                  nullable: true
     delete:
       description: Delete a subscription to a list by list ID and user ID.
       operationId: lists_unsubscribe
@@ -324,6 +326,66 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    SubscriptionList:
+      title: SubscriptionList
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        created:
+          type:
+          - string
+          - 'null'
+        updated:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - name
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
+          type: string
+      required:
+      - until
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
     ListGetAllResponse:
       title: ListGetAllResponse
       type: object
@@ -337,21 +399,41 @@ components:
       required:
       - paging
       - items
-    PreferenceStatus:
-      title: PreferenceStatus
-      type: string
-      enum:
-      - OPTED_IN
-      - OPTED_OUT
-      - REQUIRED
-    ChannelPreference:
-      title: ChannelPreference
+    NotificationPreferenceDetails:
+      title: NotificationPreferenceDetails
       type: object
       properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Rule'
+        channel_preferences:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
       required:
-      - channel
+      - status
+    ListPutParams:
+      title: ListPutParams
+      type: object
+      properties:
+        name:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - name
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
     NotFound:
       title: NotFound
       type: object
@@ -364,119 +446,26 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    NotificationPreferenceDetails:
-      title: NotificationPreferenceDetails
+    ChannelPreference:
+      title: ChannelPreference
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rule'
-          nullable: true
-        channel_preferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelPreference'
-          nullable: true
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
       required:
-      - status
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    SubscriptionList:
-      title: SubscriptionList
+      - channel
+    Paging:
+      title: Paging
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        created:
-          type: string
-          nullable: true
-        updated:
-          type: string
-          nullable: true
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
       required:
-      - id
-      - name
-    ListSubscriptionRecipient:
-      title: ListSubscriptionRecipient
-      type: object
-      properties:
-        recipientId:
-          type: string
-        created:
-          type: string
-          nullable: true
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
-      required:
-      - recipientId
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    ListPutParams:
-      title: ListPutParams
-      type: object
-      properties:
-        name:
-          type: string
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
-      required:
-      - name
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type: string
-          nullable: true
-        until:
-          type: string
-      required:
-      - until
-    PutSubscriptionsRecipient:
-      title: PutSubscriptionsRecipient
-      type: object
-      properties:
-        recipientId:
-          type: string
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
-      required:
-      - recipientId
+      - more
     ListGetSubscriptionsResponse:
       title: ListGetSubscriptionsResponse
       type: object
@@ -490,32 +479,47 @@ components:
       required:
       - paging
       - items
-    NotificationPreferences:
-      title: NotificationPreferences
+    ListSubscriptionRecipient:
+      title: ListSubscriptionRecipient
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/NotificationPreferenceDetails'
+      properties:
+        recipientId:
+          type: string
+        created:
+          type:
+          - string
+          - 'null'
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - recipientId
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    PutSubscriptionsRecipient:
+      title: PutSubscriptionsRecipient
+      type: object
+      properties:
+        recipientId:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - recipientId
     RecipientPreferences:
       title: RecipientPreferences
       type: object
       properties:
         categories:
           $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
         notifications:
           $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type: string
-          nullable: true
-        more:
-          type: boolean
-      required:
-      - more
   securitySchemes:
     BearerAuth:
       type: http

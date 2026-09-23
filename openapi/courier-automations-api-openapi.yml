@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Automations API
+  title: Courier Automations API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -104,7 +104,7 @@ paths:
               $ref: '#/components/schemas/AutomationInvokeParams'
   /automations/invoke:
     post:
-      description: Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide [here](https://www.courier.com/docs/automations/steps/).
+      description: Invoke an ad hoc automation run. This endpoint accepts a JSON payload with a series of automation steps. For information about what steps are available, checkout the ad hoc automation guide here.
       operationId: automations_invokeAdHocAutomation
       tags:
       - Automations
@@ -146,6 +146,24 @@ paths:
                       template: 64TP5HKPFTM8VTK1Y75SJDQX9JK0
 components:
   schemas:
+    AutomationDelayStep:
+      title: AutomationDelayStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - delay
+        duration:
+          type:
+          - string
+          - 'null'
+        until:
+          type:
+          - string
+          - 'null'
+      required:
+      - action
     AutomationWebhookParams:
       title: AutomationWebhookParams
       type: object
@@ -161,16 +179,39 @@ components:
           - PATCH
           - DELETE
         headers:
-          type: object
+          type:
+          - object
+          - 'null'
           additionalProperties:
             type: string
-          nullable: true
         body:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       required:
       - url
       - method
+    AutomationCancelStep:
+      title: AutomationCancelStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - cancel
+        cancelation_token:
+          type: string
+      required:
+      - action
+      - cancelation_token
+    AutomationInvokeResponse:
+      title: AutomationInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+      required:
+      - runId
     AutomationInvokeStep:
       title: AutomationInvokeStep
       type: object
@@ -184,41 +225,6 @@ components:
       required:
       - action
       - template
-    AutomationDelayStep:
-      title: AutomationDelayStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - delay
-        duration:
-          type: string
-          nullable: true
-        until:
-          type: string
-          nullable: true
-      required:
-      - action
-    AutomationInvokeResponse:
-      title: AutomationInvokeResponse
-      type: object
-      properties:
-        runId:
-          type: string
-      required:
-      - runId
-    AutomationTemplateListResponse:
-      title: AutomationTemplateListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationTemplate'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
     AutomationTemplate:
       title: AutomationTemplate
       type: object
@@ -247,6 +253,164 @@ components:
       - name
       - id
       - version
+    AutomationFetchDataStep:
+      title: AutomationFetchDataStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - fetch-data
+        webhook:
+          $ref: '#/components/schemas/AutomationWebhookParams'
+        merge_strategy:
+          type:
+          - string
+          - 'null'
+          enum:
+          - replace
+          - overwrite
+          - soft-merge
+      required:
+      - action
+      - webhook
+    AutomationSendListStep:
+      title: AutomationSendListStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - send-list
+        list:
+          type: string
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        brand:
+          type:
+          - string
+          - 'null'
+      required:
+      - action
+      - list
+    AutomationInvokeParams:
+      title: AutomationInvokeParams
+      type: object
+      properties:
+        brand:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        recipient:
+          type:
+          - string
+          - 'null'
+        template:
+          type:
+          - string
+          - 'null'
+      required:
+      - recipient
+    AutomationTemplateListResponse:
+      title: AutomationTemplateListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationTemplate'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    Automation:
+      title: Automation
+      type: object
+      properties:
+        cancelation_token:
+          type:
+          - string
+          - 'null'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationStep'
+      required:
+      - steps
+    AutomationSendStep:
+      title: AutomationSendStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - send
+        template:
+          type:
+          - string
+          - 'null'
+        brand:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        recipient:
+          type:
+          - string
+          - 'null'
+      required:
+      - action
+    AutomationAdHocInvokeParams:
+      title: AutomationAdHocInvokeParams
+      type: object
+      properties:
+        automation:
+          $ref: '#/components/schemas/Automation'
+        brand:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        recipient:
+          type:
+          - string
+          - 'null'
+        template:
+          type:
+          - string
+          - 'null'
+      required:
+      - automation
     AutomationUpdateProfileStep:
       title: AutomationUpdateProfileStep
       type: object
@@ -256,16 +420,18 @@ components:
           enum:
           - update-profile
         recipient_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         merge:
-          type: string
+          type:
+          - string
+          - 'null'
           enum:
           - none
           - overwrite
           - soft-merge
           - replace
-          nullable: true
         profile:
           type: object
           additionalProperties: true
@@ -282,147 +448,6 @@ components:
       - $ref: '#/components/schemas/AutomationCancelStep'
       - $ref: '#/components/schemas/AutomationFetchDataStep'
       - $ref: '#/components/schemas/AutomationInvokeStep'
-    AutomationSendListStep:
-      title: AutomationSendListStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - send-list
-        list:
-          type: string
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-        brand:
-          type: string
-          nullable: true
-      required:
-      - action
-      - list
-    AutomationInvokeParams:
-      title: AutomationInvokeParams
-      type: object
-      properties:
-        brand:
-          type: string
-          nullable: true
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-        profile:
-          type: object
-          additionalProperties: true
-          nullable: true
-        recipient:
-          type: string
-          nullable: true
-        template:
-          type: string
-          nullable: true
-      required:
-      - recipient
-    Automation:
-      title: Automation
-      type: object
-      properties:
-        cancelation_token:
-          type: string
-          nullable: true
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationStep'
-      required:
-      - steps
-    AutomationSendStep:
-      title: AutomationSendStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - send
-        template:
-          type: string
-          nullable: true
-        brand:
-          type: string
-          nullable: true
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-        profile:
-          type: object
-          additionalProperties: true
-          nullable: true
-        recipient:
-          type: string
-          nullable: true
-      required:
-      - action
-    AutomationFetchDataStep:
-      title: AutomationFetchDataStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - fetch-data
-        webhook:
-          $ref: '#/components/schemas/AutomationWebhookParams'
-        merge_strategy:
-          type: string
-          enum:
-          - replace
-          - overwrite
-          - soft-merge
-          nullable: true
-      required:
-      - action
-      - webhook
-    AutomationAdHocInvokeParams:
-      title: AutomationAdHocInvokeParams
-      type: object
-      properties:
-        automation:
-          $ref: '#/components/schemas/Automation'
-        brand:
-          type: string
-          nullable: true
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-        profile:
-          type: object
-          additionalProperties: true
-          nullable: true
-        recipient:
-          type: string
-          nullable: true
-        template:
-          type: string
-          nullable: true
-      required:
-      - automation
-    AutomationCancelStep:
-      title: AutomationCancelStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - cancel
-        cancelation_token:
-          type: string
-      required:
-      - action
-      - cancelation_token
   securitySchemes:
     BearerAuth:
       type: http

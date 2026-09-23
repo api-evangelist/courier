@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences User Tenants API
+  title: Courier User Tenants API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -27,15 +27,17 @@ paths:
         description: "The number of accounts to return \n(defaults to 20, maximum value of 100)"
         required: false
         schema:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       - name: cursor
         in: query
         description: Continue the pagination with the next cursor
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -47,7 +49,15 @@ paths:
       security:
       - BearerAuth: []
     put:
-      description: "This endpoint is used to add a user to\nmultiple tenants in one call.\nA custom profile can also be supplied for each tenant. \nThis profile will be merged with the user's main \nprofile when sending to the user with that tenant."
+      description: 'This endpoint is used to add a user to
+
+        multiple tenants in one call.
+
+        A custom profile can also be supplied for each tenant.
+
+        This profile will be merged with the user''s main
+
+        profile when sending to the user with that tenant.'
       operationId: users_tenants_addMultiple
       tags:
       - User Tenants
@@ -97,7 +107,14 @@ paths:
       - BearerAuth: []
   /users/{user_id}/tenants/{tenant_id}:
     put:
-      description: "This endpoint is used to add a single tenant.\n\nA custom profile can also be supplied with the tenant. \nThis profile will be merged with the user's main profile \nwhen sending to the user with that tenant."
+      description: 'This endpoint is used to add a single tenant.
+
+
+        A custom profile can also be supplied with the tenant.
+
+        This profile will be merged with the user''s main profile
+
+        when sending to the user with that tenant.'
       operationId: users_tenants_add
       tags:
       - User Tenants
@@ -128,9 +145,10 @@ paths:
               type: object
               properties:
                 profile:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   additionalProperties: true
-                  nullable: true
     delete:
       description: Removes a user from the supplied tenant.
       operationId: users_tenants_remove
@@ -162,10 +180,11 @@ components:
       type: object
       properties:
         items:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/UserTenantAssociation'
-          nullable: true
         has_more:
           type: boolean
           description: Set to true when there are more pages that can be retrieved.
@@ -173,12 +192,14 @@ components:
           type: string
           description: A url that may be used to generate these results.
         next_url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: "A url that may be used to generate fetch the next set of results. \nDefined only when `has_more` is set to true"
         cursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: "A pointer to the next page of results. Defined \nonly when `has_more` is set to true"
         type:
           type: string
@@ -194,21 +215,24 @@ components:
       type: object
       properties:
         user_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: User ID for the association between tenant and user
         type:
-          type: string
+          type:
+          - string
+          - 'null'
           enum:
           - user
-          nullable: true
         tenant_id:
           type: string
           description: Tenant ID for the association between tenant and user
         profile:
-          type: object
+          type:
+          - object
+          - 'null'
           additionalProperties: true
-          nullable: true
           description: Additional metadata to be applied to a user profile when used in a tenant context
       required:
       - tenant_id

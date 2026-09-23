@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Journeys API
+  title: Courier Journeys API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -190,6 +190,38 @@ paths:
                     report_date: '2024-01-15'
 components:
   schemas:
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    JourneysListResponse:
+      title: JourneysListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Journey'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+          description: A unique identifier for the journey run that was created.
+      required:
+      - runId
     UnprocessableEntity:
       title: UnprocessableEntity
       type: object
@@ -202,40 +234,37 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    JourneysInvokeResponse:
-      title: JourneysInvokeResponse
+    Journey:
+      title: Journey
       type: object
+      description: A journey template representing an automation workflow.
       properties:
-        runId:
+        name:
           type: string
-          description: A unique identifier for the journey run that was created.
+          description: The name of the journey.
+        id:
+          type: string
+          description: The unique identifier of the journey.
+        version:
+          type: string
+          description: The version of the journey (published or draft).
+          enum:
+          - published
+          - draft
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the journey was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the journey was last updated.
       required:
-      - runId
-    JourneysListResponse:
-      title: JourneysListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Journey'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
+      - name
+      - id
+      - version
     NotFound:
       title: NotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BadRequest:
-      title: BadRequest
       type: object
       properties:
         type:
@@ -271,35 +300,6 @@ components:
           type: object
           additionalProperties: true
           description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
-    Journey:
-      title: Journey
-      type: object
-      description: A journey template representing an automation workflow.
-      properties:
-        name:
-          type: string
-          description: The name of the journey.
-        id:
-          type: string
-          description: The unique identifier of the journey.
-        version:
-          type: string
-          description: The version of the journey (published or draft).
-          enum:
-          - published
-          - draft
-        createdAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the journey was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the journey was last updated.
-      required:
-      - name
-      - id
-      - version
   securitySchemes:
     BearerAuth:
       type: http

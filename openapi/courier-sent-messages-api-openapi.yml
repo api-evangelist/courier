@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Sent Messages API
+  title: Courier Sent Messages API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -21,43 +21,49 @@ paths:
         description: A boolean value that indicates whether archived messages should be included in the response.
         required: false
         schema:
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
       - name: cursor
         in: query
         description: A unique identifier that allows for fetching the next set of messages.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: event
         in: query
         description: A unique identifier representing the event that was used to send the event.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: list
         in: query
         description: A unique identifier representing the list the message was sent to.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: messageId
         in: query
         description: A unique identifier representing the message_id returned from either /send or /send/list.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: notification
         in: query
         description: A unique identifier representing the notification that was used to send the event.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: provider
         in: query
         description: The key assocated to the provider you want to filter on. E.g., sendgrid, inbox, twilio, slack, msteams, etc. Allows multiple values to be set in query parameters.
@@ -65,15 +71,17 @@ paths:
         schema:
           type: array
           items:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
       - name: recipient
         in: query
         description: A unique identifier representing the recipient associated with the requested profile.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: status
         in: query
         description: An indicator of the current status of the message. Allows multiple values to be set in query parameters.
@@ -81,8 +89,9 @@ paths:
         schema:
           type: array
           items:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
       - name: tag
         in: query
         description: A tag placed in the metadata.tags during a notification send. Allows multiple values to be set in query parameters.
@@ -90,36 +99,41 @@ paths:
         schema:
           type: array
           items:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
       - name: tags
         in: query
         description: A comma delimited list of 'tags'. Messages will be returned if they match any of the tags passed in.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: tenant_id
         in: query
         description: Messages sent with the context of a Tenant
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: enqueued_after
         in: query
         description: The enqueued datetime of a message to filter out messages received before.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       - name: traceId
         in: query
         description: The unique identifier used to trace the requests
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -206,8 +220,9 @@ paths:
         description: A supported Message History type that will filter the events returned.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -284,73 +299,18 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    RenderOutputResponse:
-      title: RenderOutputResponse
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RenderOutput'
-          description: An array of render output of a previously sent message.
+        type:
+          type: string
+          enum:
+          - invalid_request_error
       required:
-      - results
-    MessageDetailsExtended:
-      title: MessageDetailsExtended
-      type: object
-      properties:
-        providers:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-          nullable: true
+      - type
       allOf:
-      - $ref: '#/components/schemas/MessageDetails'
-    RenderedMessageContent:
-      title: RenderedMessageContent
-      type: object
-      properties:
-        html:
-          type: string
-          description: The html content of the rendered message.
-        title:
-          type: string
-          description: The title of the rendered message.
-        body:
-          type: string
-          description: The body of the rendered message.
-        subject:
-          type: string
-          description: The subject of the rendered message.
-        text:
-          type: string
-          description: The text of the rendered message.
-        blocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/RenderedMessageBlock'
-          description: The blocks of the rendered message.
-      required:
-      - html
-      - title
-      - body
-      - subject
-      - text
-      - blocks
-    Reason:
-      title: Reason
-      type: string
-      enum:
-      - BOUNCED
-      - FAILED
-      - FILTERED
-      - NO_CHANNELS
-      - NO_PROVIDERS
-      - OPT_IN_REQUIRED
-      - PROVIDER_ERROR
-      - UNPUBLISHED
-      - UNSUBSCRIBED
+      - $ref: '#/components/schemas/BaseError'
     RenderOutput:
       title: RenderOutput
       type: object
@@ -368,54 +328,6 @@ components:
       - channel
       - channel_id
       - content
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    ListMessagesResponse:
-      title: ListMessagesResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-          description: Paging information for the result set.
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageDetails'
-          description: An array of messages with their details.
-      required:
-      - paging
-      - results
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    MessageNotFound:
-      title: MessageNotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
     RenderedMessageBlock:
       title: RenderedMessageBlock
       type: object
@@ -448,17 +360,110 @@ components:
       - UNDELIVERABLE
       - UNMAPPED
       - UNROUTABLE
-    MessageHistoryResponse:
-      title: MessageHistoryResponse
+    MessageDetailsExtended:
+      title: MessageDetailsExtended
+      type: object
+      properties:
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/MessageDetails'
+    Reason:
+      title: Reason
+      type: string
+      enum:
+      - BOUNCED
+      - FAILED
+      - FILTERED
+      - NO_CHANNELS
+      - NO_PROVIDERS
+      - OPT_IN_REQUIRED
+      - PROVIDER_ERROR
+      - UNPUBLISHED
+      - UNSUBSCRIBED
+    RenderedMessageContent:
+      title: RenderedMessageContent
+      type: object
+      properties:
+        html:
+          type: string
+          description: The html content of the rendered message.
+        title:
+          type: string
+          description: The title of the rendered message.
+        body:
+          type: string
+          description: The body of the rendered message.
+        subject:
+          type: string
+          description: The subject of the rendered message.
+        text:
+          type: string
+          description: The text of the rendered message.
+        blocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderedMessageBlock'
+          description: The blocks of the rendered message.
+      required:
+      - html
+      - title
+      - body
+      - subject
+      - text
+      - blocks
+    RenderOutputResponse:
+      title: RenderOutputResponse
       type: object
       properties:
         results:
           type: array
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/RenderOutput'
+          description: An array of render output of a previously sent message.
       required:
       - results
+    MessageNotFound:
+      title: MessageNotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    ListMessagesResponse:
+      title: ListMessagesResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+          description: Paging information for the result set.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageDetails'
+          description: An array of messages with their details.
+      required:
+      - paging
+      - results
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     MessageDetails:
       title: MessageDetails
       type: object
@@ -499,12 +504,12 @@ components:
           type: string
           description: A unique identifier associated with the notification of the delivered message.
         error:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A message describing the error that occurred.
         reason:
           $ref: '#/components/schemas/Reason'
-          nullable: true
           description: The reason for the current status of the message.
       required:
       - id
@@ -518,12 +523,24 @@ components:
       type: object
       properties:
         cursor:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         more:
           type: boolean
       required:
       - more
+    MessageHistoryResponse:
+      title: MessageHistoryResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+      - results
   securitySchemes:
     BearerAuth:
       type: http

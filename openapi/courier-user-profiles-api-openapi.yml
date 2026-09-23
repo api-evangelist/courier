@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences User Profiles API
+  title: Courier User Profiles API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -79,7 +79,13 @@ paths:
               required:
               - profile
     put:
-      description: "When using `PUT`, be sure to include all the key-value pairs required by the recipient's profile. \nAny key-value pairs that exist in the profile but fail to be included in the `PUT` request will be \nremoved from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates, \nuse the [Patch](https://www.courier.com/docs/reference/profiles/patch/) request."
+      description: 'When using `PUT`, be sure to include all the key-value pairs required by the recipient''s profile.
+
+        Any key-value pairs that exist in the profile but fail to be included in the `PUT` request will be
+
+        removed from the profile. Remember, a `PUT` update is a full replacement of the data. For partial updates,
+
+        use the Patch request.'
       operationId: profiles_replace
       tags:
       - User Profiles
@@ -183,8 +189,9 @@ paths:
         description: A unique identifier that allows for fetching the next set of message statuses.
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -265,84 +272,18 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    ChannelPreference:
-      title: ChannelPreference
+    Rule:
+      title: Rule
       type: object
       properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
-      required:
-      - channel
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
           type: string
-          enum:
-          - invalid_request_error
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    GetListSubscriptionsItem:
-      title: GetListSubscriptionsItem
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: List name
-        created:
-          type: string
-          description: The date/time of when the list was created. Represented as a string in ISO format.
-        updated:
-          type: string
-          description: The date/time of when the list was updated. Represented as a string in ISO format.
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
-      required:
-      - id
-      - name
-      - created
-      - updated
-    PreferenceStatus:
-      title: PreferenceStatus
-      type: string
-      enum:
-      - OPTED_IN
-      - OPTED_OUT
-      - REQUIRED
-    SubscribeToListsRequest:
-      title: SubscribeToListsRequest
-      type: object
-      properties:
-        lists:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscribeToListsRequestItem'
-      required:
-      - lists
-    NotificationPreferenceDetails:
-      title: NotificationPreferenceDetails
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rule'
-          nullable: true
-        channel_preferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelPreference'
-          nullable: true
-      required:
-      - status
+      - until
     ChannelClassification:
       title: ChannelClassification
       type: string
@@ -353,83 +294,37 @@ components:
       - sms
       - webhook
       - inbox
-    BaseError:
-      title: BaseError
+    ProfileGetResponse:
+      title: ProfileGetResponse
       type: object
       properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type: string
-          nullable: true
-        until:
-          type: string
-      required:
-      - until
-    ProfileUpdateRequest:
-      title: ProfileUpdateRequest
-      type: object
-      properties:
-        patch:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserProfilePatch'
-          description: List of patch operations to apply to the profile.
-      required:
-      - patch
-    NotificationPreferences:
-      title: NotificationPreferences
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/NotificationPreferenceDetails'
-    SubscribeToListsRequestItem:
-      title: SubscribeToListsRequestItem
-      type: object
-      properties:
-        listId:
-          type: string
+        profile:
+          type: object
+          additionalProperties: true
         preferences:
           $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
       required:
-      - listId
-    MergeProfileResponse:
-      title: MergeProfileResponse
+      - profile
+    NotificationPreferenceDetails:
+      title: NotificationPreferenceDetails
       type: object
       properties:
         status:
-          type: string
-          enum:
-          - SUCCESS
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Rule'
+        channel_preferences:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
       required:
       - status
-    ReplaceProfileResponse:
-      title: ReplaceProfileResponse
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
-      required:
-      - status
-    RecipientPreferences:
-      title: RecipientPreferences
-      type: object
-      properties:
-        categories:
-          $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
-        notifications:
-          $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
     UserProfilePatch:
       title: UserProfilePatch
       type: object
@@ -447,18 +342,87 @@ components:
       - op
       - path
       - value
-    ProfileGetResponse:
-      title: ProfileGetResponse
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    MergeProfileResponse:
+      title: MergeProfileResponse
       type: object
       properties:
-        profile:
-          type: object
-          additionalProperties: true
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
+        status:
+          type: string
+          enum:
+          - SUCCESS
       required:
-      - profile
+      - status
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    SubscribeToListsRequest:
+      title: SubscribeToListsRequest
+      type: object
+      properties:
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscribeToListsRequestItem'
+      required:
+      - lists
+    RecipientPreferences:
+      title: RecipientPreferences
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/NotificationPreferences'
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
     SubscribeToListsResponse:
       title: SubscribeToListsResponse
       type: object
@@ -469,8 +433,61 @@ components:
           - SUCCESS
       required:
       - status
+    SubscribeToListsRequestItem:
+      title: SubscribeToListsRequestItem
+      type: object
+      properties:
+        listId:
+          type: string
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - listId
+    ProfileUpdateRequest:
+      title: ProfileUpdateRequest
+      type: object
+      properties:
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfilePatch'
+          description: List of patch operations to apply to the profile.
+      required:
+      - patch
     DeleteListSubscriptionResponse:
       title: DeleteListSubscriptionResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    GetListSubscriptionsItem:
+      title: GetListSubscriptionsItem
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: List name
+        created:
+          type: string
+          description: The date/time of when the list was created. Represented as a string in ISO format.
+        updated:
+          type: string
+          description: The date/time of when the list was updated. Represented as a string in ISO format.
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - id
+      - name
+      - created
+      - updated
+    ReplaceProfileResponse:
+      title: ReplaceProfileResponse
       type: object
       properties:
         status:
@@ -493,17 +510,6 @@ components:
       required:
       - paging
       - results
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type: string
-          nullable: true
-        more:
-          type: boolean
-      required:
-      - more
   securitySchemes:
     BearerAuth:
       type: http

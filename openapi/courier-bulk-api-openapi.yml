@@ -1,8 +1,8 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Courier Audiences Bulk API
+  title: Courier Bulk API
   description: The Courier REST API.
-  version: "1.0"
+  version: ''
 servers:
 - url: https://api.courier.com
   description: Production
@@ -14,7 +14,15 @@ paths:
       operationId: bulk_createJob
       tags:
       - Bulk
-      description: "Creates a new bulk job for sending messages to multiple recipients.\n\n**Required**: `message.event` (event ID or notification ID)\n\n**Optional (V2 format)**: `message.template` (notification ID) or `message.content` (Elemental content) \ncan be provided to override the notification associated with the event.\n"
+      description: 'Creates a new bulk job for sending messages to multiple recipients.
+
+
+        **Required**: `message.event` (event ID or notification ID)
+
+
+        **Optional (V2 format)**: `message.template` (notification ID) or `message.content` (Elemental content)
+
+        can be provided to override the notification associated with the event.'
       parameters: []
       responses:
         '200':
@@ -45,7 +53,14 @@ paths:
               - message
   /bulk/{job_id}:
     post:
-      description: "Ingest user data into a Bulk Job. \n\n**Important**: For email-based bulk jobs, each user must include `profile.email` \nfor provider routing to work correctly. The `to.email` field is not sufficient \nfor email provider routing.\n"
+      description: 'Ingest user data into a Bulk Job.
+
+
+        **Important**: For email-based bulk jobs, each user must include `profile.email`
+
+        for provider routing to work correctly. The `to.email` field is not sufficient
+
+        for email provider routing.'
       operationId: bulk_ingestUsers
       tags:
       - Bulk
@@ -139,8 +154,9 @@ paths:
         description: A unique identifier that allows for fetching the next set of users added to the bulk job
         required: false
         schema:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       responses:
         '200':
           description: ''
@@ -159,6 +175,117 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    UserRecipient:
+      title: User Recipient
+      description: Send to a specific user by user_id, email, phone_number, or list_id
+      type: object
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: The user's unique identifier. Typically, this will match the user id of a user in your system.
+        account_id:
+          type:
+          - string
+          - 'null'
+          description: Deprecated - Use `tenant_id` instead.
+        context:
+          $ref: '#/components/schemas/MessageContext'
+          description: Context such as tenant_id to send the notification with.
+        data:
+          $ref: '#/components/schemas/MessageData'
+        email:
+          type:
+          - string
+          - 'null'
+          description: The user's email address.
+        locale:
+          type:
+          - string
+          - 'null'
+          description: The user's preferred ISO 639-1 language code.
+        phone_number:
+          type:
+          - string
+          - 'null'
+          description: The user's phone number.
+        list_id:
+          type:
+          - string
+          - 'null'
+          description: The id of the list to send the message to.
+        preferences:
+          $ref: '#/components/schemas/ProfilePreferences'
+        tenant_id:
+          type:
+          - string
+          - 'null'
+          description: The id of the tenant the user is associated with.
+      allOf:
+      - $ref: '#/components/schemas/UserRecipientType'
+    MessageContext:
+      title: MessageContext
+      type: object
+      properties:
+        tenant_id:
+          type:
+          - string
+          - 'null'
+          description: Tenant id used to load brand/default preferences/context.
+    IActionButtonStyle:
+      title: IActionButtonStyle
+      type: string
+      enum:
+      - button
+      - link
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
+          type: string
+      required:
+      - until
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    NotificationPreferenceDetails:
+      title: NotificationPreferenceDetails
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Rule'
+        channel_preferences:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
+      required:
+      - status
+    Content:
+      title: Content
+      oneOf:
+      - $ref: '#/components/schemas/ElementalContentSugar'
+      - $ref: '#/components/schemas/ElementalContent'
     ElementalImageNode:
       title: ElementalImageNode
       type: object
@@ -168,148 +295,27 @@ components:
           type: string
           description: The source of the image.
         href:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A URL to link to when the image is clicked.
         align:
           $ref: '#/components/schemas/IAlignment'
-          nullable: true
           description: The alignment of the image.
         altText:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Alternate text for the image.
         width:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: CSS width properties to apply to the image. For example, 50px
       required:
       - src
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    ChannelPreference:
-      title: ChannelPreference
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
-      required:
-      - channel
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BulkIngestUsersParams:
-      title: BulkIngestUsersParams
-      type: object
-      properties:
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/InboundBulkMessageUser'
-      required:
-      - users
-    Locale:
-      title: Locale
-      type: object
-      properties:
-        content:
-          type: string
-      required:
-      - content
-    BulkJobUserStatus:
-      title: BulkJobUserStatus
-      type: string
-      enum:
-      - PENDING
-      - ENQUEUED
-      - ERROR
-    Preference:
-      title: Preference
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rule'
-          nullable: true
-        channel_preferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelPreference'
-          nullable: true
-        source:
-          $ref: '#/components/schemas/ChannelSource'
-          nullable: true
-      required:
-      - status
-    ElementalMetaNode:
-      title: ElementalMetaNode
-      type: object
-      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
-      properties:
-        title:
-          type: string
-          nullable: true
-          description: The title to be displayed by supported channels. For example, the email subject.
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    UserRecipientType:
-      title: UserRecipientType
-      type: object
-      properties: {}
-    InboundBulkMessageUser:
-      title: InboundBulkMessageUser
-      type: object
-      properties:
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-          nullable: true
-        profile:
-          type: object
-          nullable: true
-          description: "User profile information. For email-based bulk jobs, `profile.email` is required \nfor provider routing to determine if the message can be delivered. The email \naddress should be provided here rather than in `to.email`.\n"
-          additionalProperties: true
-        recipient:
-          type: string
-          nullable: true
-          description: User ID (legacy field, use profile or to.user_id instead)
-        data:
-          nullable: true
-          description: User-specific data that will be merged with message.data
-        to:
-          $ref: '#/components/schemas/UserRecipient'
-          nullable: true
-          description: "Optional recipient information. Note: For email provider routing, use \n`profile.email` instead of `to.email`. The `to` field is primarily used \nfor recipient identification and data merging.\n"
-    ElementalDividerNode:
-      title: ElementalDividerNode
-      type: object
-      description: Renders a dividing line between elements.
-      properties:
-        color:
-          type: string
-          nullable: true
-          description: The CSS color to render the line with. For example, `#fff`
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    TextStyle:
-      title: TextStyle
-      type: string
-      enum:
-      - text
-      - h1
-      - h2
-      - subtext
     ElementalChannelNode:
       title: ElementalChannelNode
       type: object
@@ -322,10 +328,60 @@ components:
 
             `push`, `direct_message`, `sms` or a provider such as slack'
         raw:
-          type: object
+          type:
+          - object
+          - 'null'
           additionalProperties: true
-          nullable: true
           description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    Preference:
+      title: Preference
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Rule'
+        channel_preferences:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
+        source:
+          $ref: '#/components/schemas/ChannelSource'
+      required:
+      - status
+    ElementalQuoteNode:
+      title: ElementalQuoteNode
+      type: object
+      description: Renders a quote block.
+      properties:
+        content:
+          type: string
+          description: The text value of the quote.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: Alignment of the quote.
+        borderColor:
+          type:
+          - string
+          - 'null'
+          description: CSS border color property. For example, `#fff`
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      - text_style
+      - locales
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
     PreferenceStatus:
@@ -335,48 +391,136 @@ components:
       - OPTED_IN
       - OPTED_OUT
       - REQUIRED
-    IActionButtonStyle:
-      title: IActionButtonStyle
-      type: string
-      enum:
-      - button
-      - link
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    MessageContext:
-      title: MessageContext
+    InboundBulkMessage:
+      title: InboundBulkMessage
+      type: object
+      description: 'Bulk message definition. Supports two formats:
+
+        - V1 format: Requires `event` field (event ID or notification ID)
+
+        - V2 format: Optionally use `template` (notification ID) or `content` (Elemental content) in addition to `event`
+
+        '
+      properties:
+        brand:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        event:
+          type: string
+          description: "Event ID or Notification ID (required). Can be either a \nNotification ID (e.g., \"FRH3QXM9E34W4RKP7MRC8NZ1T8V8\") or a custom Event ID \n(e.g., \"welcome-email\") mapped to a notification.\n"
+        template:
+          type:
+          - string
+          - 'null'
+          description: "Notification ID or template ID (optional, for V2 format). When provided, \nthis will be used instead of the notification associated with the `event` field.\n"
+        content:
+          $ref: '#/components/schemas/Content'
+          description: "Elemental content (optional, for V2 format). When provided, this will be used \ninstead of the notification associated with the `event` field.\n"
+        locale:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: object
+            additionalProperties: true
+        override:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+      required:
+      - event
+    BulkIngestUsersParams:
+      title: BulkIngestUsersParams
       type: object
       properties:
-        tenant_id:
-          type: string
-          nullable: true
-          description: Tenant id used to load brand/default preferences/context.
-    NotificationPreferenceDetails:
-      title: NotificationPreferenceDetails
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/InboundBulkMessageUser'
+      required:
+      - users
+    ChannelSource:
+      title: ChannelSource
+      type: string
+      enum:
+      - subscription
+      - list
+      - recipient
+    BulkGetJobResponse:
+      title: BulkGetJobResponse
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/JobDetails'
+      required:
+      - job
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    InboundBulkMessageUser:
+      title: InboundBulkMessageUser
+      type: object
+      properties:
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+        profile:
+          type:
+          - object
+          - 'null'
+          description: "User profile information. For email-based bulk jobs, `profile.email` is required \nfor provider routing to determine if the message can be delivered. The email \naddress should be provided here rather than in `to.email`.\n"
+          additionalProperties: true
+        recipient:
+          type:
+          - string
+          - 'null'
+          description: User ID (legacy field, use profile or to.user_id instead)
+        data:
+          description: User-specific data that will be merged with message.data
+        to:
+          $ref: '#/components/schemas/UserRecipient'
+          description: "Optional recipient information. Note: For email provider routing, use \n`profile.email` instead of `to.email`. The `to` field is primarily used \nfor recipient identification and data merging.\n"
+    UserRecipientType:
+      title: UserRecipientType
+      type: object
+      properties: {}
+    BulkMessageUserResponse:
+      title: BulkMessageUserResponse
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rule'
-          nullable: true
-        channel_preferences:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelPreference'
-          nullable: true
+          $ref: '#/components/schemas/BulkJobUserStatus'
+        messageId:
+          type:
+          - string
+          - 'null'
       required:
       - status
+      allOf:
+      - $ref: '#/components/schemas/InboundBulkMessageUser'
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
     BaseError:
       title: BaseError
       type: object
@@ -386,120 +530,34 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
-    BulkMessageUserResponse:
-      title: BulkMessageUserResponse
+    IAlignment:
+      title: IAlignment
+      type: string
+      enum:
+      - center
+      - left
+      - right
+      - full
+    RecipientPreferences:
+      title: RecipientPreferences
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/BulkJobUserStatus'
-        messageId:
-          type: string
-          nullable: true
-      required:
-      - status
-      allOf:
-      - $ref: '#/components/schemas/InboundBulkMessageUser'
-    ElementalTextNode:
-      title: ElementalTextNode
+        categories:
+          $ref: '#/components/schemas/NotificationPreferences'
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+    BadRequest:
+      title: BadRequest
       type: object
-      description: Represents a body of text to be rendered inside of the notification.
       properties:
-        content:
-          type: string
-          description: 'The text content displayed in the notification. Either this
-
-            field must be specified, or the elements field'
-        align:
-          $ref: '#/components/schemas/TextAlign'
-          description: Text alignment.
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-          nullable: true
-          description: Allows the text to be rendered as a heading level.
-        color:
-          type: string
-          nullable: true
-          description: Specifies the color of text. Can be any valid css color value
-        bold:
-          type: string
-          nullable: true
-          description: Apply bold to the text
-        italic:
-          type: string
-          nullable: true
-          description: Apply italics to the text
-        strikethrough:
-          type: string
-          nullable: true
-          description: Apply a strike through the text
-        underline:
-          type: string
-          nullable: true
-          description: Apply an underline to the text
-        locales:
-          $ref: '#/components/schemas/Locales'
-          nullable: true
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-        format:
+        type:
           type: string
           enum:
-          - markdown
-          nullable: true
+          - invalid_request_error
       required:
-      - content
-      - align
+      - type
       allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalHtmlNode:
-      title: ElementalHtmlNode
-      type: object
-      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
-      properties:
-        content:
-          type: string
-          description: Raw HTML string to render inside the notification.
-        locales:
-          $ref: '#/components/schemas/Locales'
-          nullable: true
-          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type: string
-          nullable: true
-        until:
-          type: string
-      required:
-      - until
-    MessageData:
-      title: MessageData
-      type: object
-      additionalProperties: true
-    NotificationPreferences:
-      title: NotificationPreferences
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/NotificationPreferenceDetails'
-    ElementalContent:
-      title: ElementalContent
-      type: object
-      properties:
-        version:
-          type: string
-          description: For example, "2022-01-01"
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementalNode'
-      required:
-      - version
-      - elements
+      - $ref: '#/components/schemas/BaseError'
     ElementalActionNode:
       title: ElementalActionNode
       type: object
@@ -512,20 +570,20 @@ components:
           type: string
           description: The target URL of the action.
         action_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: A unique id used to identify the action when it is executed.
         align:
-          nullable: true
           description: The alignment of the action button. Defaults to "center".
           allOf:
           - $ref: '#/components/schemas/IAlignment'
         background_color:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: The background color of the action button.
         style:
-          nullable: true
           description: Defaults to `button`.
           allOf:
           - $ref: '#/components/schemas/IActionButtonStyle'
@@ -539,14 +597,78 @@ components:
       - locales
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    BulkGetJobResponse:
-      title: BulkGetJobResponse
+    ProfilePreferences:
+      title: ProfilePreferences
       type: object
       properties:
-        job:
-          $ref: '#/components/schemas/JobDetails'
+        categories:
+          $ref: '#/components/schemas/Preferences'
+        notifications:
+          $ref: '#/components/schemas/Preferences'
+        templateId:
+          type:
+          - string
+          - 'null'
       required:
-      - job
+      - notifications
+    Locale:
+      title: Locale
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+      - content
+    BulkCreateJobResponse:
+      title: BulkCreateJobResponse
+      type: object
+      properties:
+        jobId:
+          type: string
+      required:
+      - jobId
+    ElementalHtmlNode:
+      title: ElementalHtmlNode
+      type: object
+      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
+      properties:
+        content:
+          type: string
+          description: Raw HTML string to render inside the notification.
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
+    ElementalBaseNode:
+      title: ElementalBaseNode
+      type: object
+      properties:
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        ref:
+          type:
+          - string
+          - 'null'
+        if:
+          type:
+          - string
+          - 'null'
+        loop:
+          type:
+          - string
+          - 'null'
     ElementalNode:
       title: ElementalNode
       oneOf:
@@ -639,6 +761,60 @@ components:
         - $ref: '#/components/schemas/ElementalHtmlNode'
         required:
         - type
+    ElementalContentSugar:
+      title: ElementalContentSugar
+      type: object
+      description: Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+      properties:
+        title:
+          type: string
+          description: Title/subject displayed by supported channels.
+        body:
+          type: string
+          description: The text content displayed in the notification.
+      required:
+      - title
+      - body
+    ElementalContent:
+      title: ElementalContent
+      type: object
+      properties:
+        version:
+          type: string
+          description: For example, "2022-01-01"
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementalNode'
+      required:
+      - version
+      - elements
+    Preferences:
+      title: Preferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Preference'
+    BulkGetJobUsersResponse:
+      title: BulkGetJobUsersResponse
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/BulkMessageUserResponse'
+        paging:
+          $ref: '#/components/schemas/Paging'
+      required:
+      - items
+      - paging
+    TextStyle:
+      title: TextStyle
+      type: string
+      enum:
+      - text
+      - h1
+      - h2
+      - subtext
     BulkJobStatus:
       title: BulkJobStatus
       type: string
@@ -647,75 +823,110 @@ components:
       - PROCESSING
       - COMPLETED
       - ERROR
-    Locales:
-      title: Locales
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Locale'
-      nullable: true
-    InboundBulkMessage:
-      title: InboundBulkMessage
-      type: object
-      description: 'Bulk message definition. Supports two formats:
-
-        - V1 format: Requires `event` field (event ID or notification ID)
-
-        - V2 format: Optionally use `template` (notification ID) or `content` (Elemental content) in addition to `event`
-
-        '
-      properties:
-        brand:
-          type: string
-          nullable: true
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-        event:
-          type: string
-          description: "Event ID or Notification ID (required). Can be either a \nNotification ID (e.g., \"FRH3QXM9E34W4RKP7MRC8NZ1T8V8\") or a custom Event ID \n(e.g., \"welcome-email\") mapped to a notification.\n"
-        template:
-          type: string
-          nullable: true
-          description: "Notification ID or template ID (optional, for V2 format). When provided, \nthis will be used instead of the notification associated with the `event` field.\n"
-        content:
-          $ref: '#/components/schemas/Content'
-          nullable: true
-          description: "Elemental content (optional, for V2 format). When provided, this will be used \ninstead of the notification associated with the `event` field.\n"
-        locale:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: true
-          nullable: true
-        override:
-          type: object
-          additionalProperties: true
-          nullable: true
-      required:
-      - event
-    ChannelSource:
-      title: ChannelSource
+    TextAlign:
+      title: TextAlign
       type: string
       enum:
-      - subscription
-      - list
-      - recipient
-    Preferences:
-      title: Preferences
+      - left
+      - center
+      - right
+    ElementalTextNode:
+      title: ElementalTextNode
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Preference'
-    RecipientPreferences:
-      title: RecipientPreferences
-      type: object
+      description: Represents a body of text to be rendered inside of the notification.
       properties:
-        categories:
-          $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
-        notifications:
-          $ref: '#/components/schemas/NotificationPreferences'
-          nullable: true
+        content:
+          type: string
+          description: 'The text content displayed in the notification. Either this
+
+            field must be specified, or the elements field'
+        align:
+          $ref: '#/components/schemas/TextAlign'
+          description: Text alignment.
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+          description: Allows the text to be rendered as a heading level.
+        color:
+          type:
+          - string
+          - 'null'
+          description: Specifies the color of text. Can be any valid css color value
+        bold:
+          type:
+          - string
+          - 'null'
+          description: Apply bold to the text
+        italic:
+          type:
+          - string
+          - 'null'
+          description: Apply italics to the text
+        strikethrough:
+          type:
+          - string
+          - 'null'
+          description: Apply a strike through the text
+        underline:
+          type:
+          - string
+          - 'null'
+          description: Apply an underline to the text
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - markdown
+      required:
+      - content
+      - align
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    MessageData:
+      title: MessageData
+      type: object
+      additionalProperties: true
+    ElementalMetaNode:
+      title: ElementalMetaNode
+      type: object
+      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          description: The title to be displayed by supported channels. For example, the email subject.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ElementalDividerNode:
+      title: ElementalDividerNode
+      type: object
+      description: Renders a dividing line between elements.
+      properties:
+        color:
+          type:
+          - string
+          - 'null'
+          description: The CSS color to render the line with. For example, `#fff`
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    Locales:
+      title: Locales
+      type:
+      - object
+      - 'null'
+      additionalProperties:
+        $ref: '#/components/schemas/Locale'
+    BulkJobUserStatus:
+      title: BulkJobUserStatus
+      type: string
+      enum:
+      - PENDING
+      - ENQUEUED
+      - ERROR
     JobDetails:
       title: JobDetails
       type: object
@@ -736,176 +947,6 @@ components:
       - failures
       - received
       - status
-    BulkGetJobUsersResponse:
-      title: BulkGetJobUsersResponse
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/BulkMessageUserResponse'
-        paging:
-          $ref: '#/components/schemas/Paging'
-      required:
-      - items
-      - paging
-    TextAlign:
-      title: TextAlign
-      type: string
-      enum:
-      - left
-      - center
-      - right
-    Content:
-      title: Content
-      oneOf:
-      - $ref: '#/components/schemas/ElementalContentSugar'
-      - $ref: '#/components/schemas/ElementalContent'
-    ElementalQuoteNode:
-      title: ElementalQuoteNode
-      type: object
-      description: Renders a quote block.
-      properties:
-        content:
-          type: string
-          description: The text value of the quote.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          nullable: true
-          description: Alignment of the quote.
-        borderColor:
-          type: string
-          nullable: true
-          description: CSS border color property. For example, `#fff`
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      - text_style
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    BulkCreateJobResponse:
-      title: BulkCreateJobResponse
-      type: object
-      properties:
-        jobId:
-          type: string
-      required:
-      - jobId
-    ElementalContentSugar:
-      title: ElementalContentSugar
-      type: object
-      description: Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-      properties:
-        title:
-          type: string
-          description: Title/subject displayed by supported channels.
-        body:
-          type: string
-          description: The text content displayed in the notification.
-      required:
-      - title
-      - body
-    ElementalBaseNode:
-      title: ElementalBaseNode
-      type: object
-      properties:
-        channels:
-          type: array
-          items:
-            type: string
-          nullable: true
-        ref:
-          type: string
-          nullable: true
-        if:
-          type: string
-          nullable: true
-        loop:
-          type: string
-          nullable: true
-    IAlignment:
-      title: IAlignment
-      type: string
-      enum:
-      - center
-      - left
-      - right
-      - full
-    UserRecipient:
-      title: User Recipient
-      description: Send to a specific user by user_id, email, phone_number, or list_id
-      type: object
-      properties:
-        user_id:
-          type: string
-          nullable: true
-          description: The user's unique identifier. Typically, this will match the user id of a user in your system.
-        account_id:
-          type: string
-          nullable: true
-          description: Deprecated - Use `tenant_id` instead.
-        context:
-          $ref: '#/components/schemas/MessageContext'
-          nullable: true
-          description: Context such as tenant_id to send the notification with.
-        data:
-          $ref: '#/components/schemas/MessageData'
-          nullable: true
-        email:
-          type: string
-          nullable: true
-          description: The user's email address.
-        locale:
-          type: string
-          nullable: true
-          description: The user's preferred ISO 639-1 language code.
-        phone_number:
-          type: string
-          nullable: true
-          description: The user's phone number.
-        list_id:
-          type: string
-          nullable: true
-          description: The id of the list to send the message to.
-        preferences:
-          $ref: '#/components/schemas/ProfilePreferences'
-          nullable: true
-        tenant_id:
-          type: string
-          nullable: true
-          description: The id of the tenant the user is associated with.
-      allOf:
-      - $ref: '#/components/schemas/UserRecipientType'
-    ProfilePreferences:
-      title: ProfilePreferences
-      type: object
-      properties:
-        categories:
-          $ref: '#/components/schemas/Preferences'
-          nullable: true
-        notifications:
-          $ref: '#/components/schemas/Preferences'
-        templateId:
-          type: string
-          nullable: true
-      required:
-      - notifications
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type: string
-          nullable: true
-        more:
-          type: boolean
-      required:
-      - more
   securitySchemes:
     BearerAuth:
       type: http
