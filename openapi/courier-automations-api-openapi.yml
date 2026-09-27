@@ -146,6 +146,56 @@ paths:
                       template: 64TP5HKPFTM8VTK1Y75SJDQX9JK0
 components:
   schemas:
+    AutomationCancelStep:
+      title: AutomationCancelStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - cancel
+        cancelation_token:
+          type: string
+      required:
+      - action
+      - cancelation_token
+    AutomationStep:
+      title: AutomationStep
+      oneOf:
+      - $ref: '#/components/schemas/AutomationDelayStep'
+      - $ref: '#/components/schemas/AutomationSendStep'
+      - $ref: '#/components/schemas/AutomationSendListStep'
+      - $ref: '#/components/schemas/AutomationUpdateProfileStep'
+      - $ref: '#/components/schemas/AutomationCancelStep'
+      - $ref: '#/components/schemas/AutomationFetchDataStep'
+      - $ref: '#/components/schemas/AutomationInvokeStep'
+    AutomationUpdateProfileStep:
+      title: AutomationUpdateProfileStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - update-profile
+        recipient_id:
+          type:
+          - string
+          - 'null'
+        merge:
+          type:
+          - string
+          - 'null'
+          enum:
+          - none
+          - overwrite
+          - soft-merge
+          - replace
+        profile:
+          type: object
+          additionalProperties: true
+      required:
+      - action
+      - profile
     AutomationDelayStep:
       title: AutomationDelayStep
       type: object
@@ -164,54 +214,39 @@ components:
           - 'null'
       required:
       - action
-    AutomationWebhookParams:
-      title: AutomationWebhookParams
-      type: object
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-          - DELETE
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        body:
-          type:
-          - string
-          - 'null'
-      required:
-      - url
-      - method
-    AutomationCancelStep:
-      title: AutomationCancelStep
+    AutomationSendListStep:
+      title: AutomationSendListStep
       type: object
       properties:
         action:
           type: string
           enum:
-          - cancel
-        cancelation_token:
+          - send-list
+        list:
           type: string
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        brand:
+          type:
+          - string
+          - 'null'
       required:
       - action
-      - cancelation_token
-    AutomationInvokeResponse:
-      title: AutomationInvokeResponse
+      - list
+    AutomationTemplateListResponse:
+      title: AutomationTemplateListResponse
       type: object
       properties:
-        runId:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationTemplate'
+        cursor:
           type: string
-      required:
-      - runId
+          description: A cursor token for pagination. Present when there are more results available.
     AutomationInvokeStep:
       title: AutomationInvokeStep
       type: object
@@ -253,6 +288,47 @@ components:
       - name
       - id
       - version
+    Automation:
+      title: Automation
+      type: object
+      properties:
+        cancelation_token:
+          type:
+          - string
+          - 'null'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationStep'
+      required:
+      - steps
+    AutomationWebhookParams:
+      title: AutomationWebhookParams
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        body:
+          type:
+          - string
+          - 'null'
+      required:
+      - url
+      - method
     AutomationFetchDataStep:
       title: AutomationFetchDataStep
       type: object
@@ -274,32 +350,20 @@ components:
       required:
       - action
       - webhook
-    AutomationSendListStep:
-      title: AutomationSendListStep
+    AutomationInvokeResponse:
+      title: AutomationInvokeResponse
       type: object
       properties:
-        action:
+        runId:
           type: string
-          enum:
-          - send-list
-        list:
-          type: string
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        brand:
-          type:
-          - string
-          - 'null'
       required:
-      - action
-      - list
-    AutomationInvokeParams:
-      title: AutomationInvokeParams
+      - runId
+    AutomationAdHocInvokeParams:
+      title: AutomationAdHocInvokeParams
       type: object
       properties:
+        automation:
+          $ref: '#/components/schemas/Automation'
         brand:
           type:
           - string
@@ -323,32 +387,7 @@ components:
           - string
           - 'null'
       required:
-      - recipient
-    AutomationTemplateListResponse:
-      title: AutomationTemplateListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationTemplate'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
-    Automation:
-      title: Automation
-      type: object
-      properties:
-        cancelation_token:
-          type:
-          - string
-          - 'null'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationStep'
-      required:
-      - steps
+      - automation
     AutomationSendStep:
       title: AutomationSendStep
       type: object
@@ -381,12 +420,10 @@ components:
           - 'null'
       required:
       - action
-    AutomationAdHocInvokeParams:
-      title: AutomationAdHocInvokeParams
+    AutomationInvokeParams:
+      title: AutomationInvokeParams
       type: object
       properties:
-        automation:
-          $ref: '#/components/schemas/Automation'
         brand:
           type:
           - string
@@ -410,44 +447,7 @@ components:
           - string
           - 'null'
       required:
-      - automation
-    AutomationUpdateProfileStep:
-      title: AutomationUpdateProfileStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - update-profile
-        recipient_id:
-          type:
-          - string
-          - 'null'
-        merge:
-          type:
-          - string
-          - 'null'
-          enum:
-          - none
-          - overwrite
-          - soft-merge
-          - replace
-        profile:
-          type: object
-          additionalProperties: true
-      required:
-      - action
-      - profile
-    AutomationStep:
-      title: AutomationStep
-      oneOf:
-      - $ref: '#/components/schemas/AutomationDelayStep'
-      - $ref: '#/components/schemas/AutomationSendStep'
-      - $ref: '#/components/schemas/AutomationSendListStep'
-      - $ref: '#/components/schemas/AutomationUpdateProfileStep'
-      - $ref: '#/components/schemas/AutomationCancelStep'
-      - $ref: '#/components/schemas/AutomationFetchDataStep'
-      - $ref: '#/components/schemas/AutomationInvokeStep'
+      - recipient
   securitySchemes:
     BearerAuth:
       type: http

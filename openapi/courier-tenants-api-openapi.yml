@@ -270,107 +270,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    SubscriptionTopicStatus:
-      title: SubscriptionTopicStatus
-      type: string
-      enum:
-      - OPTED_OUT
-      - OPTED_IN
-      - REQUIRED
-    SubscriptionTopic:
-      title: SubscriptionTopic
-      type: object
-      properties:
-        id:
-          type: string
-          description: Topic ID
-      required:
-      - id
-      allOf:
-      - $ref: '#/components/schemas/SubscriptionTopicNew'
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    UserTenantAssociation:
-      title: UserTenantAssociation
-      type: object
-      properties:
-        user_id:
-          type:
-          - string
-          - 'null'
-          description: User ID for the association between tenant and user
-        type:
-          type:
-          - string
-          - 'null'
-          enum:
-          - user
-        tenant_id:
-          type: string
-          description: Tenant ID for the association between tenant and user
-        profile:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Additional metadata to be applied to a user profile when used in a tenant context
-      required:
-      - tenant_id
-    TenantListResponse:
-      title: TenantListResponse
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: A pointer to the next page of results. Defined only when has_more is set to true.
-        has_more:
-          type: boolean
-          description: Set to true when there are more pages that can be retrieved.
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tenant'
-          description: An array of Tenants
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: "A url that may be used to generate fetch the next set of results. \nDefined only when has_more is set to true"
-        url:
-          type: string
-          description: A url that may be used to generate these results.
-        type:
-          type: string
-          enum:
-          - list
-          description: Always set to "list". Represents the type of this object.
-      required:
-      - has_more
-      - items
-      - url
-      - type
     ListUsersForTenantResponse:
       title: ListUsersForTenantResponse
       type: object
@@ -404,6 +303,146 @@ components:
           description: Always set to `list`. Represents the type of this object.
       required:
       - has_more
+      - url
+      - type
+    DefaultPreferences:
+      title: DefaultPreferences
+      type: object
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SubscriptionTopic'
+    SubscriptionTopic:
+      title: SubscriptionTopic
+      type: object
+      properties:
+        id:
+          type: string
+          description: Topic ID
+      required:
+      - id
+      allOf:
+      - $ref: '#/components/schemas/SubscriptionTopicNew'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    UserTenantAssociation:
+      title: UserTenantAssociation
+      type: object
+      properties:
+        user_id:
+          type:
+          - string
+          - 'null'
+          description: User ID for the association between tenant and user
+        type:
+          type:
+          - string
+          - 'null'
+          enum:
+          - user
+        tenant_id:
+          type: string
+          description: Tenant ID for the association between tenant and user
+        profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Additional metadata to be applied to a user profile when used in a tenant context
+      required:
+      - tenant_id
+    SubscriptionTopicNew:
+      title: SubscriptionTopicNew
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SubscriptionTopicStatus'
+        has_custom_routing:
+          type:
+          - boolean
+          - 'null'
+          description: Override channel routing with custom preferences. This will override any template preferences that are set, but a user can still customize their preferences
+        custom_routing:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelClassification'
+          description: The default channels to send to this tenant when has_custom_routing is enabled
+      required:
+      - status
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    SubscriptionTopicStatus:
+      title: SubscriptionTopicStatus
+      type: string
+      enum:
+      - OPTED_OUT
+      - OPTED_IN
+      - REQUIRED
+    TenantListResponse:
+      title: TenantListResponse
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: A pointer to the next page of results. Defined only when has_more is set to true.
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tenant'
+          description: An array of Tenants
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when has_more is set to true"
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to "list". Represents the type of this object.
+      required:
+      - has_more
+      - items
       - url
       - type
     Tenant:
@@ -444,45 +483,6 @@ components:
       required:
       - id
       - name
-    DefaultPreferences:
-      title: DefaultPreferences
-      type: object
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SubscriptionTopic'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    SubscriptionTopicNew:
-      title: SubscriptionTopicNew
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/SubscriptionTopicStatus'
-        has_custom_routing:
-          type:
-          - boolean
-          - 'null'
-          description: Override channel routing with custom preferences. This will override any template preferences that are set, but a user can still customize their preferences
-        custom_routing:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChannelClassification'
-          description: The default channels to send to this tenant when has_custom_routing is enabled
-      required:
-      - status
   securitySchemes:
     BearerAuth:
       type: http

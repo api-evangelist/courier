@@ -190,38 +190,6 @@ paths:
                     report_date: '2024-01-15'
 components:
   schemas:
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    JourneysListResponse:
-      title: JourneysListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Journey'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
-    JourneysInvokeResponse:
-      title: JourneysInvokeResponse
-      type: object
-      properties:
-        runId:
-          type: string
-          description: A unique identifier for the journey run that was created.
-      required:
-      - runId
     UnprocessableEntity:
       title: UnprocessableEntity
       type: object
@@ -234,6 +202,27 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     Journey:
       title: Journey
       type: object
@@ -263,8 +252,19 @@ components:
       - name
       - id
       - version
-    NotFound:
-      title: NotFound
+    JourneysListResponse:
+      title: JourneysListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Journey'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         type:
@@ -275,15 +275,15 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
       type: object
       properties:
-        message:
+        runId:
           type: string
-          description: A message describing the error that occurred.
+          description: A unique identifier for the journey run that was created.
       required:
-      - message
+      - runId
     JourneysInvokeRequest:
       title: JourneysInvokeRequest
       type: object

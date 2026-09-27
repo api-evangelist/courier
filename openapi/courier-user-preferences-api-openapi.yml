@@ -163,6 +163,81 @@ paths:
                     - email
 components:
   schemas:
+    UsersUserPreferencesListResponse:
+      title: UsersUserPreferencesListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+          description: Deprecated - Paging not implemented on this endpoint
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersTopicPreference'
+          description: The Preferences associated with the user_id.
+      required:
+      - paging
+      - items
+    UsersTopicPreferenceUpdate:
+      title: UsersTopicPreferenceUpdate
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        custom_routing:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelClassification'
+          description: The Channels a user has chosen to receive notifications through for this topic
+        has_custom_routing:
+          type:
+          - boolean
+          - 'null'
+      required:
+      - status
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    UsersUserPreferencesGetResponse:
+      title: UsersUserPreferencesGetResponse
+      type: object
+      properties:
+        topic:
+          $ref: '#/components/schemas/UsersTopicPreference'
+      required:
+      - topic
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     UsersTopicPreference:
       title: UsersTopicPreference
       type: object
@@ -191,6 +266,16 @@ components:
       - status
       - topic_id
       - topic_name
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
     BadRequest:
       title: BadRequest
       type: object
@@ -210,71 +295,6 @@ components:
       - OPTED_IN
       - OPTED_OUT
       - REQUIRED
-    UsersTopicPreferenceUpdate:
-      title: UsersTopicPreferenceUpdate
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        custom_routing:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChannelClassification'
-          description: The Channels a user has chosen to receive notifications through for this topic
-        has_custom_routing:
-          type:
-          - boolean
-          - 'null'
-      required:
-      - status
-    UsersUserPreferencesListResponse:
-      title: UsersUserPreferencesListResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-          description: Deprecated - Paging not implemented on this endpoint
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersTopicPreference'
-          description: The Preferences associated with the user_id.
-      required:
-      - paging
-      - items
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
     UsersUserPreferencesUpdateResponse:
       title: UsersUserPreferencesUpdateResponse
       type: object
@@ -284,26 +304,6 @@ components:
           example: success
       required:
       - message
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
-    UsersUserPreferencesGetResponse:
-      title: UsersUserPreferencesGetResponse
-      type: object
-      properties:
-        topic:
-          $ref: '#/components/schemas/UsersTopicPreference'
-      required:
-      - topic
   securitySchemes:
     BearerAuth:
       type: http

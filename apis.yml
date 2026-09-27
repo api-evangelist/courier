@@ -36,12 +36,14 @@ tags:
 - Email
 - SMS
 - Push
+- Real-Time
 tags_raw:
 - Notifications
 - Email
 - SMS
 - Push
 - API
+- Real-Time
 created: '2026-05-08'
 modified: '2026-09-16'
 specificationVersion: '0.23'

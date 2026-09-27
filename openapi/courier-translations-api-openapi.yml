@@ -83,6 +83,15 @@ paths:
               type: string
 components:
   schemas:
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     NotFound:
       title: NotFound
       type: object
@@ -95,15 +104,6 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
   securitySchemes:
     BearerAuth:
       type: http

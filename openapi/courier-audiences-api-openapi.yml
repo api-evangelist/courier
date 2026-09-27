@@ -164,70 +164,40 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    AudienceMember:
+      title: AudienceMember
+      type: object
+      properties:
+        added_at:
+          type: string
+        audience_id:
+          type: string
+        audience_version:
+          type: integer
+        member_id:
+          type: string
+        reason:
+          type: string
+      required:
+      - added_at
+      - audience_id
+      - audience_version
+      - member_id
+      - reason
+    AudienceUpdateResponse:
+      title: AudienceUpdateResponse
+      type: object
+      properties:
+        audience:
+          $ref: '#/components/schemas/Audience'
+      required:
+      - audience
     LogicalOperator:
       title: LogicalOperator
       type: string
       enum:
       - AND
       - OR
-    FilterConfig:
-      title: FilterConfig
-      type: object
-      description: A filter rule that can be either a single condition (with path/value) or a  nested group (with filters array). Use comparison operators (EQ, GT, etc.)  for single conditions, and logical operators (AND, OR) for nested groups.
-      properties:
-        operator:
-          type: string
-          description: The operator for this filter. Use comparison operators (EQ, GT, LT, GTE, LTE,  NEQ, EXISTS, INCLUDES, STARTS_WITH, ENDS_WITH, IS_BEFORE, IS_AFTER, OMIT) for  single conditions, or logical operators (AND, OR) for nested filter groups.
-        path:
-          type: string
-          description: The attribute path from the user profile to filter on. Required for single  filter conditions, not used for nested filter groups.
-        value:
-          type: string
-          description: The value to compare against. Required for single filter conditions,  not used for nested filter groups.
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FilterConfig'
-          description: Nested filter rules to combine with AND/OR. Required for nested filter groups, not used for single filter conditions.
-      required:
-      - operator
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    AudienceListResponse:
-      title: AudienceListResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Audience'
-      required:
-      - paging
-      - items
-    AudienceFilterConfig:
-      title: AudienceFilterConfig
-      type: object
-      description: Filter configuration for audience membership containing an array of filter rules
-      properties:
-        filters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FilterConfig'
-          description: Array of filter rules (single conditions or nested groups)
-      required:
-      - filters
     Audience:
       title: Audience
       type: object
@@ -256,14 +226,61 @@ components:
       - description
       - created_at
       - updated_at
-    AudienceUpdateResponse:
-      title: AudienceUpdateResponse
+    BaseError:
+      title: BaseError
       type: object
       properties:
-        audience:
-          $ref: '#/components/schemas/Audience'
+        message:
+          type: string
+          description: A message describing the error that occurred.
       required:
-      - audience
+      - message
+    AudienceMemberListResponse:
+      title: AudienceMemberListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AudienceMember'
+      required:
+      - paging
+      - items
+    FilterConfig:
+      title: FilterConfig
+      type: object
+      description: A filter rule that can be either a single condition (with path/value) or a  nested group (with filters array). Use comparison operators (EQ, GT, etc.)  for single conditions, and logical operators (AND, OR) for nested groups.
+      properties:
+        operator:
+          type: string
+          description: The operator for this filter. Use comparison operators (EQ, GT, LT, GTE, LTE,  NEQ, EXISTS, INCLUDES, STARTS_WITH, ENDS_WITH, IS_BEFORE, IS_AFTER, OMIT) for  single conditions, or logical operators (AND, OR) for nested filter groups.
+        path:
+          type: string
+          description: The attribute path from the user profile to filter on. Required for single  filter conditions, not used for nested filter groups.
+        value:
+          type: string
+          description: The value to compare against. Required for single filter conditions,  not used for nested filter groups.
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: Nested filter rules to combine with AND/OR. Required for nested filter groups, not used for single filter conditions.
+      required:
+      - operator
+    AudienceFilterConfig:
+      title: AudienceFilterConfig
+      type: object
+      description: Filter configuration for audience membership containing an array of filter rules
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: Array of filter rules (single conditions or nested groups)
+      required:
+      - filters
     Paging:
       title: Paging
       type: object
@@ -276,37 +293,20 @@ components:
           type: boolean
       required:
       - more
-    BaseError:
-      title: BaseError
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
-        message:
+        type:
           type: string
-          description: A message describing the error that occurred.
+          enum:
+          - invalid_request_error
       required:
-      - message
-    AudienceMember:
-      title: AudienceMember
-      type: object
-      properties:
-        added_at:
-          type: string
-        audience_id:
-          type: string
-        audience_version:
-          type: integer
-        member_id:
-          type: string
-        reason:
-          type: string
-      required:
-      - added_at
-      - audience_id
-      - audience_version
-      - member_id
-      - reason
-    AudienceMemberListResponse:
-      title: AudienceMemberListResponse
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    AudienceListResponse:
+      title: AudienceListResponse
       type: object
       properties:
         paging:
@@ -314,7 +314,7 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/AudienceMember'
+            $ref: '#/components/schemas/Audience'
       required:
       - paging
       - items

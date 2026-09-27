@@ -198,65 +198,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    UsersTracking:
-      title: usersTracking
-      type: object
-      properties:
-        os_version:
-          type:
-          - string
-          - 'null'
-          description: The operating system version
-        ip:
-          type:
-          - string
-          - 'null'
-          description: The IP address of the device
-        lat:
-          type:
-          - string
-          - 'null'
-          description: The latitude of the device
-        long:
-          type:
-          - string
-          - 'null'
-          description: The longitude of the device
-    UsersExpiryDate:
-      title: UsersExpiryDate
-      oneOf:
-      - type: string
-      - type: boolean
-    UsersPatchUserTokenOpts:
-      title: UsersPatchUserTokenOpts
-      type: object
-      properties:
-        patch:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersPatchOperation'
-      required:
-      - patch
-    UsersTokenStatus:
-      title: UsersTokenStatus
-      type: string
-      enum:
-      - active
-      - unknown
-      - failed
-      - revoked
     UsersDevice:
       title: UsersDevice
       type: object
@@ -291,6 +232,115 @@ components:
           - string
           - 'null'
           description: The device model
+    UsersAddSingleTokenBody:
+      title: UsersAddSingleTokenBody
+      type: object
+      description: Request body for adding a single token. The token value itself is provided via the path parameter, so it is omitted from the body.
+      properties:
+        provider_key:
+          $ref: '#/components/schemas/UsersProviderKey'
+        expiry_date:
+          $ref: '#/components/schemas/UsersExpiryDate'
+          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
+        properties:
+          description: Properties about the token.
+        device:
+          $ref: '#/components/schemas/UsersDevice'
+          description: Information about the device the token came from.
+        tracking:
+          $ref: '#/components/schemas/UsersTracking'
+          description: Tracking information about the device the token came from.
+      required:
+      - provider_key
+    UsersExpiryDate:
+      title: UsersExpiryDate
+      oneOf:
+      - type: string
+      - type: boolean
+    UsersGetUserTokenResponse:
+      title: UsersGetUserTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UsersTokenStatus'
+        status_reason:
+          type:
+          - string
+          - 'null'
+          description: The reason for the token status.
+      allOf:
+      - $ref: '#/components/schemas/UsersUserToken'
+    UsersTokenStatus:
+      title: UsersTokenStatus
+      type: string
+      enum:
+      - active
+      - unknown
+      - failed
+      - revoked
+    UsersPatchUserTokenOpts:
+      title: UsersPatchUserTokenOpts
+      type: object
+      properties:
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersPatchOperation'
+      required:
+      - patch
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    UsersTracking:
+      title: usersTracking
+      type: object
+      properties:
+        os_version:
+          type:
+          - string
+          - 'null'
+          description: The operating system version
+        ip:
+          type:
+          - string
+          - 'null'
+          description: The IP address of the device
+        lat:
+          type:
+          - string
+          - 'null'
+          description: The latitude of the device
+        long:
+          type:
+          - string
+          - 'null'
+          description: The longitude of the device
+    UsersProviderKey:
+      title: UsersProviderKey
+      type: string
+      enum:
+      - firebase-fcm
+      - apn
+      - expo
+      - onesignal
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     UsersPatchOperation:
       title: UsersPatchOperation
       type: object
@@ -320,43 +370,6 @@ components:
       required:
       - tokens
       description: A list of tokens registered with the user.
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    UsersProviderKey:
-      title: UsersProviderKey
-      type: string
-      enum:
-      - firebase-fcm
-      - apn
-      - expo
-      - onesignal
-    UsersAddSingleTokenBody:
-      title: UsersAddSingleTokenBody
-      type: object
-      description: Request body for adding a single token. The token value itself is provided via the path parameter, so it is omitted from the body.
-      properties:
-        provider_key:
-          $ref: '#/components/schemas/UsersProviderKey'
-        expiry_date:
-          $ref: '#/components/schemas/UsersExpiryDate'
-          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
-        properties:
-          description: Properties about the token.
-        device:
-          $ref: '#/components/schemas/UsersDevice'
-          description: Information about the device the token came from.
-        tracking:
-          $ref: '#/components/schemas/UsersTracking'
-          description: Tracking information about the device the token came from.
-      required:
-      - provider_key
     UsersUserToken:
       title: UsersUserToken
       type: object
@@ -380,19 +393,6 @@ components:
       required:
       - provider_key
       - token
-    UsersGetUserTokenResponse:
-      title: UsersGetUserTokenResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/UsersTokenStatus'
-        status_reason:
-          type:
-          - string
-          - 'null'
-          description: The reason for the token status.
-      allOf:
-      - $ref: '#/components/schemas/UsersUserToken'
   securitySchemes:
     BearerAuth:
       type: http
