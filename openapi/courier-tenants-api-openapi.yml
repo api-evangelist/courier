@@ -270,6 +270,41 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    TenantListResponse:
+      title: TenantListResponse
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: A pointer to the next page of results. Defined only when has_more is set to true.
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tenant'
+          description: An array of Tenants
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when has_more is set to true"
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to "list". Represents the type of this object.
+      required:
+      - has_more
+      - items
+      - url
+      - type
     ListUsersForTenantResponse:
       title: ListUsersForTenantResponse
       type: object
@@ -305,16 +340,6 @@ components:
       - has_more
       - url
       - type
-    DefaultPreferences:
-      title: DefaultPreferences
-      type: object
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SubscriptionTopic'
     SubscriptionTopic:
       title: SubscriptionTopic
       type: object
@@ -326,15 +351,56 @@ components:
       - id
       allOf:
       - $ref: '#/components/schemas/SubscriptionTopicNew'
-    BaseError:
-      title: BaseError
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
-        message:
+        type:
           type: string
-          description: A message describing the error that occurred.
+          enum:
+          - invalid_request_error
       required:
-      - message
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Tenant:
+      title: Tenant
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the tenant.
+        name:
+          type: string
+          description: Name of the tenant.
+        parent_tenant_id:
+          type:
+          - string
+          - 'null'
+          description: Tenant's parent id (if any).
+        default_preferences:
+          $ref: '#/components/schemas/DefaultPreferences'
+          description: Defines the preferences used for the account when the user hasn't specified their own.
+        properties:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Arbitrary properties accessible to a template.
+        user_profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: A user profile object merged with user profile on send.
+        brand_id:
+          type:
+          - string
+          - 'null'
+          description: Brand to be used for the account when one is not specified by the send call.
+      required:
+      - id
+      - name
     UserTenantAssociation:
       title: UserTenantAssociation
       type: object
@@ -381,6 +447,22 @@ components:
           description: The default channels to send to this tenant when has_custom_routing is enabled
       required:
       - status
+    SubscriptionTopicStatus:
+      title: SubscriptionTopicStatus
+      type: string
+      enum:
+      - OPTED_OUT
+      - OPTED_IN
+      - REQUIRED
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     ChannelClassification:
       title: ChannelClassification
       type: string
@@ -391,98 +473,16 @@ components:
       - sms
       - webhook
       - inbox
-    BadRequest:
-      title: BadRequest
+    DefaultPreferences:
+      title: DefaultPreferences
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    SubscriptionTopicStatus:
-      title: SubscriptionTopicStatus
-      type: string
-      enum:
-      - OPTED_OUT
-      - OPTED_IN
-      - REQUIRED
-    TenantListResponse:
-      title: TenantListResponse
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: A pointer to the next page of results. Defined only when has_more is set to true.
-        has_more:
-          type: boolean
-          description: Set to true when there are more pages that can be retrieved.
         items:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/Tenant'
-          description: An array of Tenants
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: "A url that may be used to generate fetch the next set of results. \nDefined only when has_more is set to true"
-        url:
-          type: string
-          description: A url that may be used to generate these results.
-        type:
-          type: string
-          enum:
-          - list
-          description: Always set to "list". Represents the type of this object.
-      required:
-      - has_more
-      - items
-      - url
-      - type
-    Tenant:
-      title: Tenant
-      type: object
-      properties:
-        id:
-          type: string
-          description: Id of the tenant.
-        name:
-          type: string
-          description: Name of the tenant.
-        parent_tenant_id:
-          type:
-          - string
-          - 'null'
-          description: Tenant's parent id (if any).
-        default_preferences:
-          $ref: '#/components/schemas/DefaultPreferences'
-          description: Defines the preferences used for the account when the user hasn't specified their own.
-        properties:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Arbitrary properties accessible to a template.
-        user_profile:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: A user profile object merged with user profile on send.
-        brand_id:
-          type:
-          - string
-          - 'null'
-          description: Brand to be used for the account when one is not specified by the send call.
-      required:
-      - id
-      - name
+            $ref: '#/components/schemas/SubscriptionTopic'
   securitySchemes:
     BearerAuth:
       type: http

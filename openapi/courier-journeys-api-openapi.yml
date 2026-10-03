@@ -190,39 +190,42 @@ paths:
                     report_date: '2024-01-15'
 components:
   schemas:
-    UnprocessableEntity:
-      title: UnprocessableEntity
+    JourneysInvokeRequest:
+      title: JourneysInvokeRequest
+      type: object
+      description: Request body for invoking a journey. Requires either a user identifier or a profile with contact information. User identifiers can be provided via user_id field, or resolved from profile/data objects (user_id, userId, or anonymousId fields).
+      properties:
+        user_id:
+          type: string
+          description: A unique identifier for the user. If not provided, the system will attempt to resolve the user identifier from profile or data objects.
+        profile:
+          type: object
+          additionalProperties: true
+          description: Profile data for the user. Can contain contact information (email, phone_number), user identifiers (user_id, userId, anonymousId), or any custom profile fields. Profile fields are merged with any existing stored profile for the user. Include context.tenant_id to load a tenant-scoped profile for multi-tenant scenarios.
+        data:
+          type: object
+          additionalProperties: true
+          description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
       type: object
       properties:
-        type:
+        runId:
           type: string
-          enum:
-          - invalid_request_error
+          description: A unique identifier for the journey run that was created.
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    NotFound:
-      title: NotFound
+      - runId
+    JourneysListResponse:
+      title: JourneysListResponse
       type: object
       properties:
-        type:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Journey'
+        cursor:
           type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
+          description: A cursor token for pagination. Present when there are more results available.
     Journey:
       title: Journey
       type: object
@@ -252,17 +255,30 @@ components:
       - name
       - id
       - version
-    JourneysListResponse:
-      title: JourneysListResponse
+    NotFound:
+      title: NotFound
       type: object
       properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Journey'
-        cursor:
+        type:
           type: string
-          description: A cursor token for pagination. Present when there are more results available.
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    UnprocessableEntity:
+      title: UnprocessableEntity
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     BadRequest:
       title: BadRequest
       type: object
@@ -275,31 +291,15 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    JourneysInvokeResponse:
-      title: JourneysInvokeResponse
+    BaseError:
+      title: BaseError
       type: object
       properties:
-        runId:
+        message:
           type: string
-          description: A unique identifier for the journey run that was created.
+          description: A message describing the error that occurred.
       required:
-      - runId
-    JourneysInvokeRequest:
-      title: JourneysInvokeRequest
-      type: object
-      description: Request body for invoking a journey. Requires either a user identifier or a profile with contact information. User identifiers can be provided via user_id field, or resolved from profile/data objects (user_id, userId, or anonymousId fields).
-      properties:
-        user_id:
-          type: string
-          description: A unique identifier for the user. If not provided, the system will attempt to resolve the user identifier from profile or data objects.
-        profile:
-          type: object
-          additionalProperties: true
-          description: Profile data for the user. Can contain contact information (email, phone_number), user identifiers (user_id, userId, anonymousId), or any custom profile fields. Profile fields are merged with any existing stored profile for the user. Include context.tenant_id to load a tenant-scoped profile for multi-tenant scenarios.
-        data:
-          type: object
-          additionalProperties: true
-          description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
+      - message
   securitySchemes:
     BearerAuth:
       type: http

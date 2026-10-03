@@ -925,219 +925,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    NotificationTemplatePayload:
-      title: NotificationTemplatePayload
-      type: object
-      description: Core template fields used in POST and PUT request bodies (nested under a `notification` key) and returned at the top level in responses.
-      properties:
-        name:
-          type: string
-          description: Display name for the template.
-        tags:
-          type: array
-          items:
-            type: string
-          description: Tags for categorization. Send empty array for none.
-        brand:
-          type:
-          - object
-          - 'null'
-          description: Brand reference, or null for no brand.
-          properties:
-            id:
-              type: string
-          required:
-          - id
-        subscription:
-          type:
-          - object
-          - 'null'
-          description: Subscription topic reference, or null for none.
-          properties:
-            topic_id:
-              type: string
-          required:
-          - topic_id
-        routing:
-          type:
-          - object
-          - 'null'
-          description: Routing strategy reference, or null for none.
-          properties:
-            strategy_id:
-              type: string
-          required:
-          - strategy_id
-        content:
-          $ref: '#/components/schemas/ElementalContent'
-          description: Elemental content definition.
-      required:
-      - name
-      - tags
-      - brand
-      - subscription
-      - routing
-      - content
-    ElementalQuoteNode:
-      title: ElementalQuoteNode
-      type: object
-      description: Renders a quote block.
-      properties:
-        content:
-          type: string
-          description: The text value of the quote.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          description: Alignment of the quote.
-        borderColor:
-          type:
-          - string
-          - 'null'
-          description: CSS border color property. For example, `#fff`
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      - text_style
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalActionNode:
-      title: ElementalActionNode
-      type: object
-      description: Allows the user to execute an action. Can be a button or a link.
-      properties:
-        content:
-          type: string
-          description: The text content of the action shown to the user.
-        href:
-          type: string
-          description: The target URL of the action.
-        action_id:
-          type:
-          - string
-          - 'null'
-          description: A unique id used to identify the action when it is executed.
-        align:
-          description: The alignment of the action button. Defaults to "center".
-          allOf:
-          - $ref: '#/components/schemas/IAlignment'
-        background_color:
-          type:
-          - string
-          - 'null'
-          description: The background color of the action button.
-        style:
-          description: Defaults to `button`.
-          allOf:
-          - $ref: '#/components/schemas/IActionButtonStyle'
-        locales:
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-          allOf:
-          - $ref: '#/components/schemas/Locales'
-      required:
-      - content
-      - href
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    NotificationTemplateState:
-      title: NotificationTemplateState
-      type: string
-      description: Template state. Defaults to `DRAFT`.
-      enum:
-      - DRAFT
-      - PUBLISHED
-      default: DRAFT
-    NotificationTemplateCreateRequest:
-      title: NotificationTemplateCreateRequest
-      type: object
-      description: Request body for creating a notification template.
-      properties:
-        notification:
-          $ref: '#/components/schemas/NotificationTemplatePayload'
-        state:
-          type: string
-          description: Template state after creation. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
-          enum:
-          - DRAFT
-          - PUBLISHED
-          default: DRAFT
-      required:
-      - notification
-    NotificationTag:
-      title: NotificationTag
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/NotificationTagData'
-      required:
-      - data
-    Locales:
-      title: Locales
-      type:
-      - object
-      - 'null'
-      additionalProperties:
-        $ref: '#/components/schemas/Locale'
-    TextStyle:
-      title: TextStyle
-      type: string
-      enum:
-      - text
-      - h1
-      - h2
-      - subtext
-    SubmissionChecksGetResponse:
-      title: SubmissionChecksGetResponse
-      type: object
-      properties:
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Check'
-      required:
-      - checks
-    NotificationElementPutRequest:
-      title: NotificationElementPutRequest
-      type: object
-      description: Request body for updating a single element. Additional type-specific fields are allowed.
-      properties:
-        type:
-          type: string
-          description: Element type (text, meta, action, image, etc.).
-        channels:
-          type: array
-          items:
-            type: string
-        data:
-          type: object
-          additionalProperties: true
-        if:
-          type: string
-        loop:
-          type: string
-        ref:
-          type: string
-        state:
-          $ref: '#/components/schemas/NotificationTemplateState'
-      required:
-      - type
-      additionalProperties: true
-    NotificationTemplatePublishRequest:
-      title: NotificationTemplatePublishRequest
-      type: object
-      description: Optional request body for publishing a notification template. Omit or send an empty object to publish the current draft.
-      properties:
-        version:
-          type: string
-          pattern: ^v\d+$
-          description: Historical version to publish (e.g. "v001"). Omit to publish the current draft.
     ElementalNode:
       title: ElementalNode
       oneOf:
@@ -1230,76 +1017,6 @@ components:
         - $ref: '#/components/schemas/ElementalHtmlNode'
         required:
         - type
-    NotificationContentHierarchy:
-      title: NotificationContentHierarchy
-      type: object
-      properties:
-        parent:
-          type:
-          - string
-          - 'null'
-        children:
-          type:
-          - string
-          - 'null'
-    Notification:
-      title: Notification
-      type: object
-      properties:
-        created_at:
-          type: integer
-          format: int64
-        updated_at:
-          type: integer
-          format: int64
-        id:
-          type: string
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
-        tags:
-          $ref: '#/components/schemas/NotificationTag'
-        title:
-          type:
-          - string
-          - 'null'
-        topic_id:
-          type: string
-        note:
-          type: string
-        event_ids:
-          type: array
-          items:
-            type: string
-          description: Array of event IDs associated with this notification
-      required:
-      - created_at
-      - updated_at
-      - id
-      - routing
-      - topic_id
-      - event_ids
-    NotificationContentPutRequest:
-      title: NotificationContentPutRequest
-      type: object
-      description: Request body for replacing the elemental content of a notification template.
-      properties:
-        content:
-          type: object
-          description: Elemental content payload. The server defaults `version` when omitted.
-          properties:
-            version:
-              type: string
-              description: Content version identifier (e.g., `2022-01-01`). Optional; server defaults when omitted.
-            elements:
-              type: array
-              items:
-                $ref: '#/components/schemas/ElementalNode'
-          required:
-          - elements
-        state:
-          $ref: '#/components/schemas/NotificationTemplateState'
-      required:
-      - content
     NotificationTagData:
       title: NotificationTagData
       type: object
@@ -1311,131 +1028,53 @@ components:
       required:
       - id
       - name
-    ElementalBaseNode:
-      title: ElementalBaseNode
+    Locale:
+      title: Locale
       type: object
-      properties:
-        channels:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        ref:
-          type:
-          - string
-          - 'null'
-        if:
-          type:
-          - string
-          - 'null'
-        loop:
-          type:
-          - string
-          - 'null'
-    ElementalHtmlNode:
-      title: ElementalHtmlNode
-      type: object
-      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
       properties:
         content:
           type: string
-          description: Raw HTML string to render inside the notification.
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
       required:
       - content
+    ElementalActionNode:
+      title: ElementalActionNode
+      type: object
+      description: Allows the user to execute an action. Can be a button or a link.
+      properties:
+        content:
+          type: string
+          description: The text content of the action shown to the user.
+        href:
+          type: string
+          description: The target URL of the action.
+        action_id:
+          type:
+          - string
+          - 'null'
+          description: A unique id used to identify the action when it is executed.
+        align:
+          description: The alignment of the action button. Defaults to "center".
+          allOf:
+          - $ref: '#/components/schemas/IAlignment'
+        background_color:
+          type:
+          - string
+          - 'null'
+          description: The background color of the action button.
+        style:
+          description: Defaults to `button`.
+          allOf:
+          - $ref: '#/components/schemas/IActionButtonStyle'
+        locales:
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+          allOf:
+          - $ref: '#/components/schemas/Locales'
+      required:
+      - content
+      - href
+      - locales
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    MessageRoutingMethod:
-      title: MessageRoutingMethod
-      type: string
-      enum:
-      - all
-      - single
-    BaseCheck:
-      title: BaseCheck
-      type: object
-      properties:
-        id:
-          type: string
-        status:
-          $ref: '#/components/schemas/CheckStatus'
-        type:
-          type: string
-          enum:
-          - custom
-      required:
-      - id
-      - status
-      - type
-    SubmissionChecksReplaceResponse:
-      title: SubmissionChecksReplaceResponse
-      type: object
-      properties:
-        checks:
-          type: array
-          items:
-            $ref: '#/components/schemas/Check'
-      required:
-      - checks
-    CheckStatus:
-      title: CheckStatus
-      type: string
-      enum:
-      - RESOLVED
-      - FAILED
-      - PENDING
-    IActionButtonStyle:
-      title: IActionButtonStyle
-      type: string
-      enum:
-      - button
-      - link
-    Check:
-      title: Check
-      type: object
-      properties:
-        updated:
-          type: integer
-          format: int64
-      required:
-      - updated
-      allOf:
-      - $ref: '#/components/schemas/BaseCheck'
-    ElementWithChecksums:
-      title: ElementWithChecksums
-      type: object
-      description: An element with its content checksum and optional nested elements and locale checksums.
-      properties:
-        id:
-          type: string
-        checksum:
-          type: string
-          description: MD5 hash of translatable content.
-        type:
-          type: string
-          description: Element type (text, meta, action, etc.).
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementWithChecksums'
-          description: Nested child elements (for group-type elements).
-        locales:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              checksum:
-                type: string
-            required:
-            - checksum
-          description: Locale-specific content with checksums.
-      required:
-      - checksum
-      - type
-      additionalProperties: true
     NotificationChannelContent:
       title: NotificationChannelContent
       type: object
@@ -1448,215 +1087,24 @@ components:
           type:
           - string
           - 'null'
-    NotificationListResponse:
-      title: NotificationListResponse
+    NotificationTag:
+      title: NotificationTag
       type: object
       properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          description: Notification templates in this workspace.
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/Notification'
-            - $ref: '#/components/schemas/NotificationTemplateSummary'
-      required:
-      - paging
-      - results
-    NotificationGetContentResponse:
-      title: NotificationGetContentResponse
-      type: object
-      properties:
-        blocks:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationBlock'
-        channels:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/NotificationChannel'
-        checksum:
-          type:
-          - string
-          - 'null'
-    NotificationTemplateSummary:
-      title: NotificationTemplateSummary
-      type: object
-      description: V2 (CDS) template summary returned in list responses.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        tags:
+        data:
           type: array
           items:
-            type: string
-        state:
-          type: string
-          enum:
-          - DRAFT
-          - PUBLISHED
-        created:
-          type: integer
-          format: int64
-          description: Epoch milliseconds when the template was created.
-        creator:
-          type: string
-          description: User ID of the creator.
-        updated:
-          type: integer
-          format: int64
-          description: Epoch milliseconds of last update.
-        updater:
-          type: string
-          description: User ID of the last updater.
+            $ref: '#/components/schemas/NotificationTagData'
       required:
-      - id
-      - name
-      - tags
-      - state
-      - created
-      - creator
-    BlockType:
-      title: BlockType
+      - data
+    IAlignment:
+      title: IAlignment
       type: string
       enum:
-      - action
-      - divider
-      - image
-      - jsonnet
-      - list
-      - markdown
-      - quote
-      - template
-      - text
-    NotificationTemplateVersionListResponse:
-      title: NotificationTemplateVersionListResponse
-      type: object
-      properties:
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionNode'
-        paging:
-          $ref: '#/components/schemas/Paging'
-      required:
-      - versions
-      - paging
-    VersionNode:
-      title: VersionNode
-      type: object
-      description: A version entry for a notification template.
-      properties:
-        version:
-          type: string
-          description: Version identifier. One of "draft", "published:vNNN" (current published version), or "vNNN" (historical version).
-        created:
-          type: integer
-          format: int64
-          description: Epoch milliseconds when this version was created.
-        creator:
-          type: string
-          description: User ID of the version creator.
-        has_changes:
-          type: boolean
-          description: Whether the draft has unpublished changes. Only present on the draft version.
-      required:
-      - version
-      - created
-      - creator
-    NotificationTemplateUpdateRequest:
-      title: NotificationTemplateUpdateRequest
-      type: object
-      description: Request body for replacing a notification template. Same shape as create. All fields required (PUT = full replacement).
-      properties:
-        notification:
-          $ref: '#/components/schemas/NotificationTemplatePayload'
-        state:
-          type: string
-          description: Template state after update. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
-          enum:
-          - DRAFT
-          - PUBLISHED
-          default: DRAFT
-      required:
-      - notification
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    NotificationContent:
-      title: NotificationContent
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/NotificationContentHierarchy'
-    Locale:
-      title: Locale
-      type: object
-      properties:
-        content:
-          type: string
-      required:
-      - content
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    NotificationChannel:
-      title: NotificationChannel
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type:
-          - string
-          - 'null'
-        content:
-          $ref: '#/components/schemas/NotificationChannelContent'
-        locales:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/NotificationChannelContent'
-        checksum:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
+      - center
+      - left
+      - right
+      - full
     ElementalMetaNode:
       title: ElementalMetaNode
       type: object
@@ -1667,112 +1115,6 @@ components:
           - string
           - 'null'
           description: The title to be displayed by supported channels. For example, the email subject.
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    NotificationLocalePutRequest:
-      title: NotificationLocalePutRequest
-      type: object
-      description: Request body for setting locale-specific content overrides. Each element override must include the target element ID.
-      properties:
-        elements:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Target element ID.
-            required:
-            - id
-            additionalProperties: true
-          description: Elements with locale-specific content overrides.
-        state:
-          $ref: '#/components/schemas/NotificationTemplateState'
-      required:
-      - elements
-    MessageRoutingChannel:
-      title: MessageRoutingChannel
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/MessageRouting'
-    IAlignment:
-      title: IAlignment
-      type: string
-      enum:
-      - center
-      - left
-      - right
-      - full
-    MessageRouting:
-      title: MessageRouting
-      type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/MessageRoutingMethod'
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageRoutingChannel'
-      required:
-      - method
-      - channels
-    NotificationBlock:
-      title: NotificationBlock
-      type: object
-      properties:
-        alias:
-          type:
-          - string
-          - 'null'
-        context:
-          type:
-          - string
-          - 'null'
-        id:
-          type: string
-        type:
-          $ref: '#/components/schemas/BlockType'
-        content:
-          $ref: '#/components/schemas/NotificationContent'
-        locales:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/NotificationContent'
-        checksum:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - type
-    NotificationContentGetResponse:
-      title: NotificationContentGetResponse
-      type: object
-      description: Elemental content response for V2 templates. Contains versioned elements with content checksums.
-      properties:
-        version:
-          type: string
-          description: Content version identifier.
-          example: '2022-01-01'
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementWithChecksums'
-      required:
-      - version
-      - elements
-    ElementalDividerNode:
-      title: ElementalDividerNode
-      type: object
-      description: Renders a dividing line between elements.
-      properties:
-        color:
-          type:
-          - string
-          - 'null'
-          description: The CSS color to render the line with. For example, `#fff`
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
     ElementalTextNode:
@@ -1830,20 +1172,16 @@ components:
       - align
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalContent:
-      title: ElementalContent
+    SubmissionChecksGetResponse:
+      title: SubmissionChecksGetResponse
       type: object
       properties:
-        version:
-          type: string
-          description: For example, "2022-01-01"
-        elements:
+        checks:
           type: array
           items:
-            $ref: '#/components/schemas/ElementalNode'
+            $ref: '#/components/schemas/Check'
       required:
-      - version
-      - elements
+      - checks
     BadRequest:
       title: BadRequest
       type: object
@@ -1856,92 +1194,6 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    TextAlign:
-      title: TextAlign
-      type: string
-      enum:
-      - left
-      - center
-      - right
-    ElementalImageNode:
-      title: ElementalImageNode
-      type: object
-      description: Used to embed an image into the notification.
-      properties:
-        src:
-          type: string
-          description: The source of the image.
-        href:
-          type:
-          - string
-          - 'null'
-          description: A URL to link to when the image is clicked.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          description: The alignment of the image.
-        altText:
-          type:
-          - string
-          - 'null'
-          description: Alternate text for the image.
-        width:
-          type:
-          - string
-          - 'null'
-          description: CSS width properties to apply to the image. For example, 50px
-      required:
-      - src
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    NotificationContentMutationResponse:
-      title: NotificationContentMutationResponse
-      type: object
-      description: Shared mutation response for `PUT` content, `PUT` element, and `PUT` locale operations. Contains the template ID, content version, per-element checksums, and resulting state.
-      properties:
-        id:
-          type: string
-          description: Template ID.
-        version:
-          type: string
-          description: Content version identifier.
-        elements:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              checksum:
-                type: string
-            required:
-            - id
-            - checksum
-        state:
-          $ref: '#/components/schemas/NotificationTemplateState'
-      required:
-      - id
-      - version
-      - elements
-      - state
-    ElementalChannelNode:
-      title: ElementalChannelNode
-      type: object
-      description: "The channel element allows a notification to be customized based on which channel it is sent through. \nFor example, you may want to display a detailed message when the notification is sent through email, \nand a more concise message in a push notification. Channel elements are only valid as top-level \nelements; you cannot nest channel elements. If there is a channel element specified at the top-level \nof the document, all sibling elements must be channel elements.\nNote: As an alternative, most elements support a `channel` property. Which allows you to selectively \ndisplay an individual element on a per channel basis. See the \n[control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details."
-      properties:
-        channel:
-          type: string
-          example: email
-          description: 'The channel the contents of this element should be applied to. Can be `email`,
-
-            `push`, `direct_message`, `sms` or a provider such as slack'
-        raw:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
     NotificationTemplateResponse:
       title: NotificationTemplateResponse
       description: Response for GET /notifications/{id}, POST /notifications, and PUT /notifications/{id}. Returns all template fields at the top level.
@@ -1977,6 +1229,754 @@ components:
         - state
         - created
         - creator
+    VersionNode:
+      title: VersionNode
+      type: object
+      description: A version entry for a notification template.
+      properties:
+        version:
+          type: string
+          description: Version identifier. One of "draft", "published:vNNN" (current published version), or "vNNN" (historical version).
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when this version was created.
+        creator:
+          type: string
+          description: User ID of the version creator.
+        has_changes:
+          type: boolean
+          description: Whether the draft has unpublished changes. Only present on the draft version.
+      required:
+      - version
+      - created
+      - creator
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    NotificationLocalePutRequest:
+      title: NotificationLocalePutRequest
+      type: object
+      description: Request body for setting locale-specific content overrides. Each element override must include the target element ID.
+      properties:
+        elements:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Target element ID.
+            required:
+            - id
+            additionalProperties: true
+          description: Elements with locale-specific content overrides.
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - elements
+    ElementalQuoteNode:
+      title: ElementalQuoteNode
+      type: object
+      description: Renders a quote block.
+      properties:
+        content:
+          type: string
+          description: The text value of the quote.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: Alignment of the quote.
+        borderColor:
+          type:
+          - string
+          - 'null'
+          description: CSS border color property. For example, `#fff`
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      - text_style
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    CheckStatus:
+      title: CheckStatus
+      type: string
+      enum:
+      - RESOLVED
+      - FAILED
+      - PENDING
+    NotificationContent:
+      title: NotificationContent
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/NotificationContentHierarchy'
+    NotificationChannel:
+      title: NotificationChannel
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type:
+          - string
+          - 'null'
+        content:
+          $ref: '#/components/schemas/NotificationChannelContent'
+        locales:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/NotificationChannelContent'
+        checksum:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+    ElementalContent:
+      title: ElementalContent
+      type: object
+      properties:
+        version:
+          type: string
+          description: For example, "2022-01-01"
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementalNode'
+      required:
+      - version
+      - elements
+    NotificationTemplatePayload:
+      title: NotificationTemplatePayload
+      type: object
+      description: Core template fields used in POST and PUT request bodies (nested under a `notification` key) and returned at the top level in responses.
+      properties:
+        name:
+          type: string
+          description: Display name for the template.
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags for categorization. Send empty array for none.
+        brand:
+          type:
+          - object
+          - 'null'
+          description: Brand reference, or null for no brand.
+          properties:
+            id:
+              type: string
+          required:
+          - id
+        subscription:
+          type:
+          - object
+          - 'null'
+          description: Subscription topic reference, or null for none.
+          properties:
+            topic_id:
+              type: string
+          required:
+          - topic_id
+        routing:
+          type:
+          - object
+          - 'null'
+          description: Routing strategy reference, or null for none.
+          properties:
+            strategy_id:
+              type: string
+          required:
+          - strategy_id
+        content:
+          $ref: '#/components/schemas/ElementalContent'
+          description: Elemental content definition.
+      required:
+      - name
+      - tags
+      - brand
+      - subscription
+      - routing
+      - content
+    TextAlign:
+      title: TextAlign
+      type: string
+      enum:
+      - left
+      - center
+      - right
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    NotificationBlock:
+      title: NotificationBlock
+      type: object
+      properties:
+        alias:
+          type:
+          - string
+          - 'null'
+        context:
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/BlockType'
+        content:
+          $ref: '#/components/schemas/NotificationContent'
+        locales:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/NotificationContent'
+        checksum:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - type
+    ElementalChannelNode:
+      title: ElementalChannelNode
+      type: object
+      description: "The channel element allows a notification to be customized based on which channel it is sent through. \nFor example, you may want to display a detailed message when the notification is sent through email, \nand a more concise message in a push notification. Channel elements are only valid as top-level \nelements; you cannot nest channel elements. If there is a channel element specified at the top-level \nof the document, all sibling elements must be channel elements.\nNote: As an alternative, most elements support a `channel` property. Which allows you to selectively \ndisplay an individual element on a per channel basis. See the \n[control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details."
+      properties:
+        channel:
+          type: string
+          example: email
+          description: 'The channel the contents of this element should be applied to. Can be `email`,
+
+            `push`, `direct_message`, `sms` or a provider such as slack'
+        raw:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    NotificationGetContentResponse:
+      title: NotificationGetContentResponse
+      type: object
+      properties:
+        blocks:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationBlock'
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/NotificationChannel'
+        checksum:
+          type:
+          - string
+          - 'null'
+    NotificationContentHierarchy:
+      title: NotificationContentHierarchy
+      type: object
+      properties:
+        parent:
+          type:
+          - string
+          - 'null'
+        children:
+          type:
+          - string
+          - 'null'
+    ElementalBaseNode:
+      title: ElementalBaseNode
+      type: object
+      properties:
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        ref:
+          type:
+          - string
+          - 'null'
+        if:
+          type:
+          - string
+          - 'null'
+        loop:
+          type:
+          - string
+          - 'null'
+    ElementalImageNode:
+      title: ElementalImageNode
+      type: object
+      description: Used to embed an image into the notification.
+      properties:
+        src:
+          type: string
+          description: The source of the image.
+        href:
+          type:
+          - string
+          - 'null'
+          description: A URL to link to when the image is clicked.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: The alignment of the image.
+        altText:
+          type:
+          - string
+          - 'null'
+          description: Alternate text for the image.
+        width:
+          type:
+          - string
+          - 'null'
+          description: CSS width properties to apply to the image. For example, 50px
+      required:
+      - src
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    BlockType:
+      title: BlockType
+      type: string
+      enum:
+      - action
+      - divider
+      - image
+      - jsonnet
+      - list
+      - markdown
+      - quote
+      - template
+      - text
+    ElementalHtmlNode:
+      title: ElementalHtmlNode
+      type: object
+      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
+      properties:
+        content:
+          type: string
+          description: Raw HTML string to render inside the notification.
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ElementalDividerNode:
+      title: ElementalDividerNode
+      type: object
+      description: Renders a dividing line between elements.
+      properties:
+        color:
+          type:
+          - string
+          - 'null'
+          description: The CSS color to render the line with. For example, `#fff`
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    SubmissionChecksReplaceResponse:
+      title: SubmissionChecksReplaceResponse
+      type: object
+      properties:
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+      required:
+      - checks
+    ElementWithChecksums:
+      title: ElementWithChecksums
+      type: object
+      description: An element with its content checksum and optional nested elements and locale checksums.
+      properties:
+        id:
+          type: string
+        checksum:
+          type: string
+          description: MD5 hash of translatable content.
+        type:
+          type: string
+          description: Element type (text, meta, action, etc.).
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementWithChecksums'
+          description: Nested child elements (for group-type elements).
+        locales:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              checksum:
+                type: string
+            required:
+            - checksum
+          description: Locale-specific content with checksums.
+      required:
+      - checksum
+      - type
+      additionalProperties: true
+    Check:
+      title: Check
+      type: object
+      properties:
+        updated:
+          type: integer
+          format: int64
+      required:
+      - updated
+      allOf:
+      - $ref: '#/components/schemas/BaseCheck'
+    NotificationTemplateCreateRequest:
+      title: NotificationTemplateCreateRequest
+      type: object
+      description: Request body for creating a notification template.
+      properties:
+        notification:
+          $ref: '#/components/schemas/NotificationTemplatePayload'
+        state:
+          type: string
+          description: Template state after creation. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
+          enum:
+          - DRAFT
+          - PUBLISHED
+          default: DRAFT
+      required:
+      - notification
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+      required:
+      - method
+      - channels
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
+    NotificationListResponse:
+      title: NotificationListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          description: Notification templates in this workspace.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/Notification'
+            - $ref: '#/components/schemas/NotificationTemplateSummary'
+      required:
+      - paging
+      - results
+    NotificationTemplateVersionListResponse:
+      title: NotificationTemplateVersionListResponse
+      type: object
+      properties:
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionNode'
+        paging:
+          $ref: '#/components/schemas/Paging'
+      required:
+      - versions
+      - paging
+    TextStyle:
+      title: TextStyle
+      type: string
+      enum:
+      - text
+      - h1
+      - h2
+      - subtext
+    NotificationTemplateSummary:
+      title: NotificationTemplateSummary
+      type: object
+      description: V2 (CDS) template summary returned in list responses.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+          enum:
+          - DRAFT
+          - PUBLISHED
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the template was created.
+        creator:
+          type: string
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          description: Epoch milliseconds of last update.
+        updater:
+          type: string
+          description: User ID of the last updater.
+      required:
+      - id
+      - name
+      - tags
+      - state
+      - created
+      - creator
+    NotificationElementPutRequest:
+      title: NotificationElementPutRequest
+      type: object
+      description: Request body for updating a single element. Additional type-specific fields are allowed.
+      properties:
+        type:
+          type: string
+          description: Element type (text, meta, action, image, etc.).
+        channels:
+          type: array
+          items:
+            type: string
+        data:
+          type: object
+          additionalProperties: true
+        if:
+          type: string
+        loop:
+          type: string
+        ref:
+          type: string
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - type
+      additionalProperties: true
+    NotificationContentPutRequest:
+      title: NotificationContentPutRequest
+      type: object
+      description: Request body for replacing the elemental content of a notification template.
+      properties:
+        content:
+          type: object
+          description: Elemental content payload. The server defaults `version` when omitted.
+          properties:
+            version:
+              type: string
+              description: Content version identifier (e.g., `2022-01-01`). Optional; server defaults when omitted.
+            elements:
+              type: array
+              items:
+                $ref: '#/components/schemas/ElementalNode'
+          required:
+          - elements
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - content
+    NotificationTemplateUpdateRequest:
+      title: NotificationTemplateUpdateRequest
+      type: object
+      description: Request body for replacing a notification template. Same shape as create. All fields required (PUT = full replacement).
+      properties:
+        notification:
+          $ref: '#/components/schemas/NotificationTemplatePayload'
+        state:
+          type: string
+          description: Template state after update. Case-insensitive input, normalized to uppercase in the response. Defaults to "DRAFT".
+          enum:
+          - DRAFT
+          - PUBLISHED
+          default: DRAFT
+      required:
+      - notification
+    IActionButtonStyle:
+      title: IActionButtonStyle
+      type: string
+      enum:
+      - button
+      - link
+    NotificationTemplatePublishRequest:
+      title: NotificationTemplatePublishRequest
+      type: object
+      description: Optional request body for publishing a notification template. Omit or send an empty object to publish the current draft.
+      properties:
+        version:
+          type: string
+          pattern: ^v\d+$
+          description: Historical version to publish (e.g. "v001"). Omit to publish the current draft.
+    MessageRoutingMethod:
+      title: MessageRoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    Notification:
+      title: Notification
+      type: object
+      properties:
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+        id:
+          type: string
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+        tags:
+          $ref: '#/components/schemas/NotificationTag'
+        title:
+          type:
+          - string
+          - 'null'
+        topic_id:
+          type: string
+        note:
+          type: string
+        event_ids:
+          type: array
+          items:
+            type: string
+          description: Array of event IDs associated with this notification
+      required:
+      - created_at
+      - updated_at
+      - id
+      - routing
+      - topic_id
+      - event_ids
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    NotificationContentMutationResponse:
+      title: NotificationContentMutationResponse
+      type: object
+      description: Shared mutation response for `PUT` content, `PUT` element, and `PUT` locale operations. Contains the template ID, content version, per-element checksums, and resulting state.
+      properties:
+        id:
+          type: string
+          description: Template ID.
+        version:
+          type: string
+          description: Content version identifier.
+        elements:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              checksum:
+                type: string
+            required:
+            - id
+            - checksum
+        state:
+          $ref: '#/components/schemas/NotificationTemplateState'
+      required:
+      - id
+      - version
+      - elements
+      - state
+    Locales:
+      title: Locales
+      type:
+      - object
+      - 'null'
+      additionalProperties:
+        $ref: '#/components/schemas/Locale'
+    NotificationTemplateState:
+      title: NotificationTemplateState
+      type: string
+      description: Template state. Defaults to `DRAFT`.
+      enum:
+      - DRAFT
+      - PUBLISHED
+      default: DRAFT
+    BaseCheck:
+      title: BaseCheck
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          $ref: '#/components/schemas/CheckStatus'
+        type:
+          type: string
+          enum:
+          - custom
+      required:
+      - id
+      - status
+      - type
+    NotificationContentGetResponse:
+      title: NotificationContentGetResponse
+      type: object
+      description: Elemental content response for V2 templates. Contains versioned elements with content checksums.
+      properties:
+        version:
+          type: string
+          description: Content version identifier.
+          example: '2022-01-01'
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementWithChecksums'
+      required:
+      - version
+      - elements
   securitySchemes:
     BearerAuth:
       type: http

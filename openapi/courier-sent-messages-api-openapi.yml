@@ -299,6 +299,42 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    RenderOutput:
+      title: RenderOutput
+      type: object
+      properties:
+        channel:
+          type: string
+          description: The channel used for rendering the message.
+        channel_id:
+          type: string
+          description: The ID of channel used for rendering the message.
+        content:
+          $ref: '#/components/schemas/RenderedMessageContent'
+          description: Content details of the rendered message.
+      required:
+      - channel
+      - channel_id
+      - content
+    MessageStatus:
+      title: MessageStatus
+      type: string
+      enum:
+      - CANCELED
+      - CLICKED
+      - DELAYED
+      - DELIVERED
+      - DIGESTED
+      - ENQUEUED
+      - FILTERED
+      - OPENED
+      - ROUTED
+      - SENT
+      - SIMULATED
+      - THROTTLED
+      - UNDELIVERABLE
+      - UNMAPPED
+      - UNROUTABLE
     MessageDetails:
       title: MessageDetails
       type: object
@@ -353,6 +389,66 @@ components:
       - recipient
       - event
       - notification
+    RenderedMessageBlock:
+      title: RenderedMessageBlock
+      type: object
+      properties:
+        type:
+          type: string
+          description: The block type of the rendered message block.
+        text:
+          type: string
+          description: The block text of the rendered message block.
+      required:
+      - type
+      - text
+    MessageHistoryResponse:
+      title: MessageHistoryResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      required:
+      - results
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    RenderOutputResponse:
+      title: RenderOutputResponse
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderOutput'
+          description: An array of render output of a previously sent message.
+      required:
+      - results
+    MessageDetailsExtended:
+      title: MessageDetailsExtended
+      type: object
+      properties:
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+            additionalProperties: true
+      allOf:
+      - $ref: '#/components/schemas/MessageDetails'
     RenderedMessageContent:
       title: RenderedMessageContent
       type: object
@@ -384,32 +480,18 @@ components:
       - subject
       - text
       - blocks
-    RenderedMessageBlock:
-      title: RenderedMessageBlock
+    MessageNotFound:
+      title: MessageNotFound
       type: object
       properties:
         type:
           type: string
-          description: The block type of the rendered message block.
-        text:
-          type: string
-          description: The block text of the rendered message block.
+          enum:
+          - invalid_request_error
       required:
       - type
-      - text
-    MessageDetailsExtended:
-      title: MessageDetailsExtended
-      type: object
-      properties:
-        providers:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-            additionalProperties: true
       allOf:
-      - $ref: '#/components/schemas/MessageDetails'
+      - $ref: '#/components/schemas/BaseError'
     Reason:
       title: Reason
       type: string
@@ -423,26 +505,6 @@ components:
       - PROVIDER_ERROR
       - UNPUBLISHED
       - UNSUBSCRIBED
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    RenderOutputResponse:
-      title: RenderOutputResponse
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RenderOutput'
-          description: An array of render output of a previously sent message.
-      required:
-      - results
     ListMessagesResponse:
       title: ListMessagesResponse
       type: object
@@ -470,77 +532,15 @@ components:
           type: boolean
       required:
       - more
-    BadRequest:
-      title: BadRequest
+    BaseError:
+      title: BaseError
       type: object
       properties:
-        type:
+        message:
           type: string
-          enum:
-          - invalid_request_error
+          description: A message describing the error that occurred.
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    MessageNotFound:
-      title: MessageNotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    MessageHistoryResponse:
-      title: MessageHistoryResponse
-      type: object
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      required:
-      - results
-    RenderOutput:
-      title: RenderOutput
-      type: object
-      properties:
-        channel:
-          type: string
-          description: The channel used for rendering the message.
-        channel_id:
-          type: string
-          description: The ID of channel used for rendering the message.
-        content:
-          $ref: '#/components/schemas/RenderedMessageContent'
-          description: Content details of the rendered message.
-      required:
-      - channel
-      - channel_id
-      - content
-    MessageStatus:
-      title: MessageStatus
-      type: string
-      enum:
-      - CANCELED
-      - CLICKED
-      - DELAYED
-      - DELIVERED
-      - DIGESTED
-      - ENQUEUED
-      - FILTERED
-      - OPENED
-      - ROUTED
-      - SENT
-      - SIMULATED
-      - THROTTLED
-      - UNDELIVERABLE
-      - UNMAPPED
-      - UNROUTABLE
+      - message
   securitySchemes:
     BearerAuth:
       type: http

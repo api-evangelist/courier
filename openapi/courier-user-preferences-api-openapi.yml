@@ -163,21 +163,27 @@ paths:
                     - email
 components:
   schemas:
-    UsersUserPreferencesListResponse:
-      title: UsersUserPreferencesListResponse
+    UsersUserPreferencesUpdateResponse:
+      title: UsersUserPreferencesUpdateResponse
       type: object
       properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-          description: Deprecated - Paging not implemented on this endpoint
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersTopicPreference'
-          description: The Preferences associated with the user_id.
+        message:
+          type: string
+          example: success
       required:
-      - paging
-      - items
+      - message
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     UsersTopicPreferenceUpdate:
       title: UsersTopicPreferenceUpdate
       type: object
@@ -197,8 +203,8 @@ components:
           - 'null'
       required:
       - status
-    NotFound:
-      title: NotFound
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
         type:
@@ -209,14 +215,13 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    UsersUserPreferencesGetResponse:
-      title: UsersUserPreferencesGetResponse
-      type: object
-      properties:
-        topic:
-          $ref: '#/components/schemas/UsersTopicPreference'
-      required:
-      - topic
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
     Paging:
       title: Paging
       type: object
@@ -229,6 +234,14 @@ components:
           type: boolean
       required:
       - more
+    UsersUserPreferencesGetResponse:
+      title: UsersUserPreferencesGetResponse
+      type: object
+      properties:
+        topic:
+          $ref: '#/components/schemas/UsersTopicPreference'
+      required:
+      - topic
     BaseError:
       title: BaseError
       type: object
@@ -238,6 +251,31 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    UsersUserPreferencesListResponse:
+      title: UsersUserPreferencesListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+          description: Deprecated - Paging not implemented on this endpoint
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersTopicPreference'
+          description: The Preferences associated with the user_id.
+      required:
+      - paging
+      - items
     UsersTopicPreference:
       title: UsersTopicPreference
       type: object
@@ -266,44 +304,6 @@ components:
       - status
       - topic_id
       - topic_name
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    PreferenceStatus:
-      title: PreferenceStatus
-      type: string
-      enum:
-      - OPTED_IN
-      - OPTED_OUT
-      - REQUIRED
-    UsersUserPreferencesUpdateResponse:
-      title: UsersUserPreferencesUpdateResponse
-      type: object
-      properties:
-        message:
-          type: string
-          example: success
-      required:
-      - message
   securitySchemes:
     BearerAuth:
       type: http

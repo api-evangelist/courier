@@ -263,125 +263,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    ElementalQuoteNode:
-      title: ElementalQuoteNode
-      type: object
-      description: Renders a quote block.
-      properties:
-        content:
-          type: string
-          description: The text value of the quote.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          description: Alignment of the quote.
-        borderColor:
-          type:
-          - string
-          - 'null'
-          description: CSS border color property. For example, `#fff`
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      - text_style
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalActionNode:
-      title: ElementalActionNode
-      type: object
-      description: Allows the user to execute an action. Can be a button or a link.
-      properties:
-        content:
-          type: string
-          description: The text content of the action shown to the user.
-        href:
-          type: string
-          description: The target URL of the action.
-        action_id:
-          type:
-          - string
-          - 'null'
-          description: A unique id used to identify the action when it is executed.
-        align:
-          description: The alignment of the action button. Defaults to "center".
-          allOf:
-          - $ref: '#/components/schemas/IAlignment'
-        background_color:
-          type:
-          - string
-          - 'null'
-          description: The background color of the action button.
-        style:
-          description: Defaults to `button`.
-          allOf:
-          - $ref: '#/components/schemas/IActionButtonStyle'
-        locales:
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-          allOf:
-          - $ref: '#/components/schemas/Locales'
-      required:
-      - content
-      - href
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    PutTenantTemplateResponse:
-      title: PutTenantTemplateResponse
-      type: object
-      description: Response from creating or updating a tenant notification template
-      properties:
-        id:
-          type: string
-          description: The template ID
-        version:
-          type: string
-          description: The version of the saved template
-        published_at:
-          type:
-          - string
-          - 'null'
-          description: The timestamp when the template was published. Only present if the template was published as part of this request.
-      required:
-      - id
-      - version
-    Locales:
-      title: Locales
-      type:
-      - object
-      - 'null'
-      additionalProperties:
-        $ref: '#/components/schemas/Locale'
-    TenantTemplateDataNoContent:
-      title: TenantTemplateDataNoContent
-      type: object
-      description: The template's data containing it's routing configs
-      properties:
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
-      required:
-      - routing
-    ListTemplateTenantAssociation:
-      title: ListTemplateTenantAssociation
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TenantTemplateDataNoContent'
-      required:
-      - data
-      allOf:
-      - $ref: '#/components/schemas/BaseTemplateTenantAssociation'
-    TextStyle:
-      title: TextStyle
-      type: string
-      enum:
-      - text
-      - h1
-      - h2
-      - subtext
     ElementalNode:
       title: ElementalNode
       oneOf:
@@ -474,113 +355,6 @@ components:
         - $ref: '#/components/schemas/ElementalHtmlNode'
         required:
         - type
-    PayloadTooLarge:
-      title: PayloadTooLarge
-      type: object
-      description: Error returned when the request payload exceeds the maximum allowed size
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseTemplateTenantAssociation:
-      title: BaseTemplateTenantAssociation
-      type: object
-      properties:
-        id:
-          type: string
-          description: The template's id
-        created_at:
-          type: string
-          description: The timestamp at which the template was created
-        updated_at:
-          type: string
-          description: The timestamp at which the template was last updated
-        published_at:
-          type: string
-          description: The timestamp at which the template was published
-        version:
-          type: string
-          description: The version of the template
-      required:
-      - id
-      - created_at
-      - updated_at
-      - published_at
-      - version
-    ElementalBaseNode:
-      title: ElementalBaseNode
-      type: object
-      properties:
-        channels:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        ref:
-          type:
-          - string
-          - 'null'
-        if:
-          type:
-          - string
-          - 'null'
-        loop:
-          type:
-          - string
-          - 'null'
-    ElementalHtmlNode:
-      title: ElementalHtmlNode
-      type: object
-      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
-      properties:
-        content:
-          type: string
-          description: Raw HTML string to render inside the notification.
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    MessageProvidersType:
-      title: MessageProvidersType
-      type: object
-      properties:
-        override:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Provider-specific overrides.
-        if:
-          type:
-          - string
-          - 'null'
-          description: JS conditional with access to data/profile.
-        timeouts:
-          type:
-          - integer
-          - 'null'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-    MessageProviders:
-      title: MessageProviders
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MessageProvidersType'
-    MessageRoutingMethod:
-      title: MessageRoutingMethod
-      type: string
-      enum:
-      - all
-      - single
     PostTenantTemplatePublishRequest:
       title: PostTenantTemplatePublishRequest
       type: object
@@ -590,115 +364,6 @@ components:
           type: string
           default: latest
           description: The version of the template to publish (e.g., "v1", "v2", "latest"). If not provided, defaults to "latest".
-    GetTemplateByTenantResponse:
-      title: GetTemplateByTenantResponse
-      type: object
-      properties: {}
-      allOf:
-      - $ref: '#/components/schemas/SingleTemplateTenantAssociation'
-    IActionButtonStyle:
-      title: IActionButtonStyle
-      type: string
-      enum:
-      - button
-      - link
-    RoutingMethod:
-      title: RoutingMethod
-      type: string
-      enum:
-      - all
-      - single
-    ChannelMetadata:
-      title: ChannelMetadata
-      type: object
-      properties:
-        utm:
-          $ref: '#/components/schemas/UTM'
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    UTM:
-      title: UTM
-      type: object
-      properties:
-        source:
-          type:
-          - string
-          - 'null'
-        medium:
-          type:
-          - string
-          - 'null'
-        campaign:
-          type:
-          - string
-          - 'null'
-        term:
-          type:
-          - string
-          - 'null'
-        content:
-          type:
-          - string
-          - 'null'
-    Channel:
-      title: Channel
-      type: object
-      properties:
-        brand_id:
-          type:
-          - string
-          - 'null'
-          description: Brand id used for rendering.
-        providers:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Providers enabled for this channel.
-        routing_method:
-          $ref: '#/components/schemas/RoutingMethod'
-          description: Defaults to `single`.
-        if:
-          type:
-          - string
-          - 'null'
-          description: JS conditional with access to data/profile.
-        timeouts:
-          $ref: '#/components/schemas/Timeouts'
-        override:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Channel specific overrides.
-        metadata:
-          $ref: '#/components/schemas/ChannelMetadata'
-      x-stainless-naming:
-        csharp:
-          type_name: MessageChannel
     Locale:
       title: Locale
       type: object
@@ -707,51 +372,6 @@ components:
           type: string
       required:
       - content
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    ElementalMetaNode:
-      title: ElementalMetaNode
-      type: object
-      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
-      properties:
-        title:
-          type:
-          - string
-          - 'null'
-          description: The title to be displayed by supported channels. For example, the email subject.
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    TenantTemplateInput:
-      title: TenantTemplateInput
-      type: object
-      description: Template configuration for creating or updating a tenant notification template
-      properties:
-        channels:
-          $ref: '#/components/schemas/MessageChannels'
-          description: Channel-specific delivery configuration (email, SMS, push, etc.)
-        content:
-          $ref: '#/components/schemas/ElementalContent'
-          description: Template content configuration including blocks, elements, and message structure
-        providers:
-          $ref: '#/components/schemas/MessageProviders'
-          description: Provider-specific delivery configuration for routing to specific email/SMS providers
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
-          description: Message routing configuration for multi-channel delivery strategies
-      required:
-      - content
-    MessageRoutingChannel:
-      title: MessageRoutingChannel
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/MessageRouting'
     IAlignment:
       title: IAlignment
       type: string
@@ -760,104 +380,29 @@ components:
       - left
       - right
       - full
-    MessageRouting:
-      title: MessageRouting
+    PostTenantTemplatePublishResponse:
+      title: PostTenantTemplatePublishResponse
       type: object
+      description: Response from publishing a tenant template
       properties:
-        method:
-          $ref: '#/components/schemas/MessageRoutingMethod'
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageRoutingChannel'
-      required:
-      - method
-      - channels
-    PutTenantTemplateRequest:
-      title: PutTenantTemplateRequest
-      type: object
-      description: Request body for creating or updating a tenant notification template
-      properties:
-        published:
-          type: boolean
-          default: false
-          description: Whether to publish the template immediately after saving. When true, the template becomes the active/published version. When false (default), the template is saved as a draft.
-        template:
-          $ref: '#/components/schemas/TenantTemplateInput'
-      required:
-      - template
-    Timeouts:
-      title: Timeouts
-      type: object
-      properties:
-        provider:
-          type:
-          - integer
-          - 'null'
-        channel:
-          type:
-          - integer
-          - 'null'
-      x-stainless-naming:
-        csharp:
-          type_name: ChannelTimeouts
-    SingleTemplateTenantAssociation:
-      title: SingleTemplateTenantAssociation
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/TenantTemplateData'
-      required:
-      - data
-      allOf:
-      - $ref: '#/components/schemas/BaseTemplateTenantAssociation'
-    ListTemplatesByTenantResponse:
-      title: ListTemplatesByTenantResponse
-      type: object
-      properties:
-        items:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ListTemplateTenantAssociation'
-        has_more:
-          type: boolean
-          description: Set to true when there are more pages that can be retrieved.
-        url:
+        id:
           type: string
-          description: A url that may be used to generate these results.
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: "A url that may be used to generate fetch the next set of results. \nDefined only when `has_more` is set to true"
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: "A pointer to the next page of results. Defined \nonly when `has_more` is set to true"
-        type:
+          description: The template ID
+        version:
           type: string
-          enum:
-          - list
-          description: Always set to `list`. Represents the type of this object.
+          description: The published version of the template
+        published_at:
+          type: string
+          description: The timestamp when the template was published
       required:
-      - has_more
-      - url
-      - type
-    ElementalDividerNode:
-      title: ElementalDividerNode
+      - id
+      - version
+      - published_at
+    MessageProviders:
+      title: MessageProviders
       type: object
-      description: Renders a dividing line between elements.
-      properties:
-        color:
-          type:
-          - string
-          - 'null'
-          description: The CSS color to render the line with. For example, `#fff`
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
+      additionalProperties:
+        $ref: '#/components/schemas/MessageProvidersType'
     ElementalTextNode:
       title: ElementalTextNode
       type: object
@@ -913,38 +458,78 @@ components:
       - align
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    MessageChannels:
-      title: MessageChannels
+    ElementalMetaNode:
+      title: ElementalMetaNode
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Channel'
-    Metadata:
-      title: Metadata
+      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          description: The title to be displayed by supported channels. For example, the email subject.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
-        utm:
-          $ref: '#/components/schemas/UTM'
-      x-stainless-naming:
-        csharp:
-          type_name: ProviderMetadata
-    PostTenantTemplatePublishResponse:
-      title: PostTenantTemplatePublishResponse
-      type: object
-      description: Response from publishing a tenant template
-      properties:
-        id:
+        type:
           type: string
-          description: The template ID
-        version:
-          type: string
-          description: The published version of the template
-        published_at:
-          type: string
-          description: The timestamp when the template was published
+          enum:
+          - invalid_request_error
       required:
-      - id
-      - version
-      - published_at
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    TenantTemplateData:
+      title: TenantTemplateData
+      type: object
+      description: The template's data containing it's routing configs and Elemental content
+      properties:
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+        content:
+          $ref: '#/components/schemas/ElementalContent'
+      required:
+      - routing
+      - content
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    ElementalQuoteNode:
+      title: ElementalQuoteNode
+      type: object
+      description: Renders a quote block.
+      properties:
+        content:
+          type: string
+          description: The text value of the quote.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: Alignment of the quote.
+        borderColor:
+          type:
+          - string
+          - 'null'
+          description: CSS border color property. For example, `#fff`
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      - text_style
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
     ElementalContent:
       title: ElementalContent
       type: object
@@ -959,18 +544,30 @@ components:
       required:
       - version
       - elements
-    TenantTemplateData:
-      title: TenantTemplateData
+    UTM:
+      title: UTM
       type: object
-      description: The template's data containing it's routing configs and Elemental content
       properties:
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
+        source:
+          type:
+          - string
+          - 'null'
+        medium:
+          type:
+          - string
+          - 'null'
+        campaign:
+          type:
+          - string
+          - 'null'
+        term:
+          type:
+          - string
+          - 'null'
         content:
-          $ref: '#/components/schemas/ElementalContent'
-      required:
-      - routing
-      - content
+          type:
+          - string
+          - 'null'
     TextAlign:
       title: TextAlign
       type: string
@@ -978,6 +575,135 @@ components:
       - left
       - center
       - right
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    PutTenantTemplateResponse:
+      title: PutTenantTemplateResponse
+      type: object
+      description: Response from creating or updating a tenant notification template
+      properties:
+        id:
+          type: string
+          description: The template ID
+        version:
+          type: string
+          description: The version of the saved template
+        published_at:
+          type:
+          - string
+          - 'null'
+          description: The timestamp when the template was published. Only present if the template was published as part of this request.
+      required:
+      - id
+      - version
+    TenantTemplateInput:
+      title: TenantTemplateInput
+      type: object
+      description: Template configuration for creating or updating a tenant notification template
+      properties:
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          description: Channel-specific delivery configuration (email, SMS, push, etc.)
+        content:
+          $ref: '#/components/schemas/ElementalContent'
+          description: Template content configuration including blocks, elements, and message structure
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          description: Provider-specific delivery configuration for routing to specific email/SMS providers
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Message routing configuration for multi-channel delivery strategies
+      required:
+      - content
+    PutTenantTemplateRequest:
+      title: PutTenantTemplateRequest
+      type: object
+      description: Request body for creating or updating a tenant notification template
+      properties:
+        published:
+          type: boolean
+          default: false
+          description: Whether to publish the template immediately after saving. When true, the template becomes the active/published version. When false (default), the template is saved as a draft.
+        template:
+          $ref: '#/components/schemas/TenantTemplateInput'
+      required:
+      - template
+    ElementalChannelNode:
+      title: ElementalChannelNode
+      type: object
+      description: "The channel element allows a notification to be customized based on which channel it is sent through. \nFor example, you may want to display a detailed message when the notification is sent through email, \nand a more concise message in a push notification. Channel elements are only valid as top-level \nelements; you cannot nest channel elements. If there is a channel element specified at the top-level \nof the document, all sibling elements must be channel elements.\nNote: As an alternative, most elements support a `channel` property. Which allows you to selectively \ndisplay an individual element on a per channel basis. See the \n[control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details."
+      properties:
+        channel:
+          type: string
+          example: email
+          description: 'The channel the contents of this element should be applied to. Can be `email`,
+
+            `push`, `direct_message`, `sms` or a provider such as slack'
+        raw:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    TenantTemplateDataNoContent:
+      title: TenantTemplateDataNoContent
+      type: object
+      description: The template's data containing it's routing configs
+      properties:
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+      required:
+      - routing
+    RoutingMethod:
+      title: RoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    ElementalBaseNode:
+      title: ElementalBaseNode
+      type: object
+      properties:
+        channels:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        ref:
+          type:
+          - string
+          - 'null'
+        if:
+          type:
+          - string
+          - 'null'
+        loop:
+          type:
+          - string
+          - 'null'
+    ListTemplateTenantAssociation:
+      title: ListTemplateTenantAssociation
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantTemplateDataNoContent'
+      required:
+      - data
+      allOf:
+      - $ref: '#/components/schemas/BaseTemplateTenantAssociation'
     ElementalImageNode:
       title: ElementalImageNode
       type: object
@@ -1008,23 +734,297 @@ components:
       - src
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalChannelNode:
-      title: ElementalChannelNode
+    ElementalHtmlNode:
+      title: ElementalHtmlNode
       type: object
-      description: "The channel element allows a notification to be customized based on which channel it is sent through. \nFor example, you may want to display a detailed message when the notification is sent through email, \nand a more concise message in a push notification. Channel elements are only valid as top-level \nelements; you cannot nest channel elements. If there is a channel element specified at the top-level \nof the document, all sibling elements must be channel elements.\nNote: As an alternative, most elements support a `channel` property. Which allows you to selectively \ndisplay an individual element on a per channel basis. See the \n[control flow docs](https://www.courier.com/docs/platform/content/elemental/control-flow/) for more details."
+      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
       properties:
-        channel:
+        content:
           type: string
-          example: email
-          description: 'The channel the contents of this element should be applied to. Can be `email`,
-
-            `push`, `direct_message`, `sms` or a provider such as slack'
-        raw:
+          description: Raw HTML string to render inside the notification.
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    PayloadTooLarge:
+      title: PayloadTooLarge
+      type: object
+      description: Error returned when the request payload exceeds the maximum allowed size
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    ElementalDividerNode:
+      title: ElementalDividerNode
+      type: object
+      description: Renders a dividing line between elements.
+      properties:
+        color:
+          type:
+          - string
+          - 'null'
+          description: The CSS color to render the line with. For example, `#fff`
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    SingleTemplateTenantAssociation:
+      title: SingleTemplateTenantAssociation
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TenantTemplateData'
+      required:
+      - data
+      allOf:
+      - $ref: '#/components/schemas/BaseTemplateTenantAssociation'
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+      required:
+      - method
+      - channels
+    MessageProvidersType:
+      title: MessageProvidersType
+      type: object
+      properties:
+        override:
           type:
           - object
           - 'null'
           additionalProperties: true
-          description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
+          description: Provider-specific overrides.
+        if:
+          type:
+          - string
+          - 'null'
+          description: JS conditional with access to data/profile.
+        timeouts:
+          type:
+          - integer
+          - 'null'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    BaseTemplateTenantAssociation:
+      title: BaseTemplateTenantAssociation
+      type: object
+      properties:
+        id:
+          type: string
+          description: The template's id
+        created_at:
+          type: string
+          description: The timestamp at which the template was created
+        updated_at:
+          type: string
+          description: The timestamp at which the template was last updated
+        published_at:
+          type: string
+          description: The timestamp at which the template was published
+        version:
+          type: string
+          description: The version of the template
+      required:
+      - id
+      - created_at
+      - updated_at
+      - published_at
+      - version
+    TextStyle:
+      title: TextStyle
+      type: string
+      enum:
+      - text
+      - h1
+      - h2
+      - subtext
+    Timeouts:
+      title: Timeouts
+      type: object
+      properties:
+        provider:
+          type:
+          - integer
+          - 'null'
+        channel:
+          type:
+          - integer
+          - 'null'
+      x-stainless-naming:
+        csharp:
+          type_name: ChannelTimeouts
+    ChannelMetadata:
+      title: ChannelMetadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+    ListTemplatesByTenantResponse:
+      title: ListTemplatesByTenantResponse
+      type: object
+      properties:
+        items:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ListTemplateTenantAssociation'
+        has_more:
+          type: boolean
+          description: Set to true when there are more pages that can be retrieved.
+        url:
+          type: string
+          description: A url that may be used to generate these results.
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: "A url that may be used to generate fetch the next set of results. \nDefined only when `has_more` is set to true"
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: "A pointer to the next page of results. Defined \nonly when `has_more` is set to true"
+        type:
+          type: string
+          enum:
+          - list
+          description: Always set to `list`. Represents the type of this object.
+      required:
+      - has_more
+      - url
+      - type
+    GetTemplateByTenantResponse:
+      title: GetTemplateByTenantResponse
+      type: object
+      properties: {}
+      allOf:
+      - $ref: '#/components/schemas/SingleTemplateTenantAssociation'
+    Channel:
+      title: Channel
+      type: object
+      properties:
+        brand_id:
+          type:
+          - string
+          - 'null'
+          description: Brand id used for rendering.
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Providers enabled for this channel.
+        routing_method:
+          $ref: '#/components/schemas/RoutingMethod'
+          description: Defaults to `single`.
+        if:
+          type:
+          - string
+          - 'null'
+          description: JS conditional with access to data/profile.
+        timeouts:
+          $ref: '#/components/schemas/Timeouts'
+        override:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Channel specific overrides.
+        metadata:
+          $ref: '#/components/schemas/ChannelMetadata'
+      x-stainless-naming:
+        csharp:
+          type_name: MessageChannel
+    IActionButtonStyle:
+      title: IActionButtonStyle
+      type: string
+      enum:
+      - button
+      - link
+    MessageRoutingMethod:
+      title: MessageRoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    Metadata:
+      title: Metadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+      x-stainless-naming:
+        csharp:
+          type_name: ProviderMetadata
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    Locales:
+      title: Locales
+      type:
+      - object
+      - 'null'
+      additionalProperties:
+        $ref: '#/components/schemas/Locale'
+    MessageChannels:
+      title: MessageChannels
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Channel'
+    ElementalActionNode:
+      title: ElementalActionNode
+      type: object
+      description: Allows the user to execute an action. Can be a button or a link.
+      properties:
+        content:
+          type: string
+          description: The text content of the action shown to the user.
+        href:
+          type: string
+          description: The target URL of the action.
+        action_id:
+          type:
+          - string
+          - 'null'
+          description: A unique id used to identify the action when it is executed.
+        align:
+          description: The alignment of the action button. Defaults to "center".
+          allOf:
+          - $ref: '#/components/schemas/IAlignment'
+        background_color:
+          type:
+          - string
+          - 'null'
+          description: The background color of the action button.
+        style:
+          description: Defaults to `button`.
+          allOf:
+          - $ref: '#/components/schemas/IActionButtonStyle'
+        locales:
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+          allOf:
+          - $ref: '#/components/schemas/Locales'
+      required:
+      - content
+      - href
+      - locales
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
   securitySchemes:

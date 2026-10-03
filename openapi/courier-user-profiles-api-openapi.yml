@@ -272,63 +272,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    ChannelPreference:
-      title: ChannelPreference
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
-      required:
-      - channel
-    MergeProfileResponse:
-      title: MergeProfileResponse
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
-      required:
-      - status
-    UserProfilePatch:
-      title: UserProfilePatch
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to perform.
-        path:
-          type: string
-          description: The JSON path specifying the part of the profile to operate on.
-        value:
-          type: string
-          description: The value for the operation.
-      required:
-      - op
-      - path
-      - value
-    ProfileGetResponse:
-      title: ProfileGetResponse
-      type: object
-      properties:
-        profile:
-          type: object
-          additionalProperties: true
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-      required:
-      - profile
-    ProfileUpdateRequest:
-      title: ProfileUpdateRequest
-      type: object
-      properties:
-        patch:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserProfilePatch'
-          description: List of patch operations to apply to the profile.
-      required:
-      - patch
     GetListSubscriptionsItem:
       title: GetListSubscriptionsItem
       type: object
@@ -351,45 +294,35 @@ components:
       - name
       - created
       - updated
-    NotificationPreferences:
-      title: NotificationPreferences
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/NotificationPreferenceDetails'
-    ReplaceProfileResponse:
-      title: ReplaceProfileResponse
+    UserProfilePatch:
+      title: UserProfilePatch
       type: object
       properties:
-        status:
+        op:
+          type: string
+          description: The operation to perform.
+        path:
+          type: string
+          description: The JSON path specifying the part of the profile to operate on.
+        value:
+          type: string
+          description: The value for the operation.
+      required:
+      - op
+      - path
+      - value
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
           type: string
           enum:
-          - SUCCESS
+          - invalid_request_error
       required:
-      - status
-    SubscribeToListsResponse:
-      title: SubscribeToListsResponse
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
-      required:
-      - status
-    GetListSubscriptionsResponse:
-      title: GetListSubscriptionsResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetListSubscriptionsItem'
-          description: An array of lists
-      required:
-      - paging
-      - results
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     BaseError:
       title: BaseError
       type: object
@@ -399,35 +332,17 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
-    DeleteListSubscriptionResponse:
-      title: DeleteListSubscriptionResponse
+    ProfileUpdateRequest:
+      title: ProfileUpdateRequest
       type: object
       properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserProfilePatch'
+          description: List of patch operations to apply to the profile.
       required:
-      - status
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
-    PreferenceStatus:
-      title: PreferenceStatus
-      type: string
-      enum:
-      - OPTED_IN
-      - OPTED_OUT
-      - REQUIRED
+      - patch
     RecipientPreferences:
       title: RecipientPreferences
       type: object
@@ -436,18 +351,6 @@ components:
           $ref: '#/components/schemas/NotificationPreferences'
         notifications:
           $ref: '#/components/schemas/NotificationPreferences'
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type:
-          - string
-          - 'null'
-        until:
-          type: string
-      required:
-      - until
     NotificationPreferenceDetails:
       title: NotificationPreferenceDetails
       type: object
@@ -468,16 +371,42 @@ components:
             $ref: '#/components/schemas/ChannelPreference'
       required:
       - status
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
+    ProfileGetResponse:
+      title: ProfileGetResponse
+      type: object
+      properties:
+        profile:
+          type: object
+          additionalProperties: true
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - profile
+    SubscribeToListsResponse:
+      title: SubscribeToListsResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    ReplaceProfileResponse:
+      title: ReplaceProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
     SubscribeToListsRequest:
       title: SubscribeToListsRequest
       type: object
@@ -488,18 +417,52 @@ components:
             $ref: '#/components/schemas/SubscribeToListsRequestItem'
       required:
       - lists
-    BadRequest:
-      title: BadRequest
+    GetListSubscriptionsResponse:
+      title: GetListSubscriptionsResponse
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetListSubscriptionsItem'
+          description: An array of lists
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
+      - paging
+      - results
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
+          type: string
+      required:
+      - until
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
     SubscribeToListsRequestItem:
       title: SubscribeToListsRequestItem
       type: object
@@ -510,6 +473,43 @@ components:
           $ref: '#/components/schemas/RecipientPreferences'
       required:
       - listId
+    MergeProfileResponse:
+      title: MergeProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    PreferenceStatus:
+      title: PreferenceStatus
+      type: string
+      enum:
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    DeleteListSubscriptionResponse:
+      title: DeleteListSubscriptionResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
   securitySchemes:
     BearerAuth:
       type: http

@@ -160,6 +160,143 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    PaymentRequired:
+      title: PaymentRequired
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - authorization_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    EmailHead:
+      title: EmailHead
+      type: object
+      properties:
+        inheritDefault:
+          type: boolean
+        content:
+          type:
+          - string
+          - 'null'
+      required:
+      - inheritDefault
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Icons:
+      title: Icons
+      type: object
+      properties:
+        bell:
+          type:
+          - string
+          - 'null'
+        message:
+          type:
+          - string
+          - 'null'
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    WidgetBackground:
+      title: WidgetBackground
+      type: object
+      properties:
+        topColor:
+          type:
+          - string
+          - 'null'
+        bottomColor:
+          type:
+          - string
+          - 'null'
+    BrandSettingsEmail:
+      title: BrandSettingsEmail
+      type: object
+      properties:
+        templateOverride:
+          $ref: '#/components/schemas/BrandTemplateOverride'
+        head:
+          $ref: '#/components/schemas/EmailHead'
+        footer:
+          $ref: '#/components/schemas/EmailFooter'
+        header:
+          $ref: '#/components/schemas/EmailHeader'
+    EmailHeader:
+      title: EmailHeader
+      type: object
+      properties:
+        inheritDefault:
+          type:
+          - boolean
+          - 'null'
+        barColor:
+          type:
+          - string
+          - 'null'
+        logo:
+          $ref: '#/components/schemas/Logo'
+      required:
+      - logo
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    BrandSettingsInApp:
+      title: BrandSettingsInApp
+      type: object
+      properties:
+        borderRadius:
+          type:
+          - string
+          - 'null'
+        disableMessageIcon:
+          type:
+          - boolean
+          - 'null'
+        fontFamily:
+          type:
+          - string
+          - 'null'
+        placement:
+          $ref: '#/components/schemas/InAppPlacement'
+        widgetBackground:
+          $ref: '#/components/schemas/WidgetBackground'
+        colors:
+          $ref: '#/components/schemas/BrandColors'
+        icons:
+          $ref: '#/components/schemas/Icons'
+      required:
+      - widgetBackground
+      - colors
+      - icons
     BrandsResponse:
       title: BrandsResponse
       type: object
@@ -173,25 +310,26 @@ components:
       required:
       - paging
       - results
-    BrandSnippet:
-      title: BrandSnippet
+    BrandColors:
+      title: BrandColors
       type: object
       properties:
-        name:
+        primary:
           type: string
-        value:
+        secondary:
           type: string
-      required:
-      - name
-      - value
-    InAppPlacement:
-      title: InAppPlacement
-      type: string
-      enum:
-      - top
-      - bottom
-      - left
-      - right
+      additionalProperties:
+        type: string
+    BrandSettings:
+      title: BrandSettings
+      type: object
+      properties:
+        colors:
+          $ref: '#/components/schemas/BrandColors'
+        email:
+          $ref: '#/components/schemas/BrandSettingsEmail'
+        inapp:
+          $ref: '#/components/schemas/BrandSettingsInApp'
     BrandSnippets:
       title: BrandSnippets
       type: object
@@ -202,6 +340,18 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/BrandSnippet'
+    EmailFooter:
+      title: EmailFooter
+      type: object
+      properties:
+        content:
+          type:
+          - string
+          - 'null'
+        inheritDefault:
+          type:
+          - boolean
+          - 'null'
     BrandTemplateOverride:
       title: BrandTemplateOverride
       type: object
@@ -220,6 +370,53 @@ components:
       - mjml
       allOf:
       - $ref: '#/components/schemas/BrandTemplate'
+    Logo:
+      title: Logo
+      type: object
+      properties:
+        href:
+          type:
+          - string
+          - 'null'
+        image:
+          type:
+          - string
+          - 'null'
+    BrandSnippet:
+      title: BrandSnippet
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+    AlreadyExists:
+      title: AlreadyExists
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Paging:
+      title: Paging
+      type: object
+      properties:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
     BrandTemplate:
       title: BrandTemplate
       type: object
@@ -252,227 +449,6 @@ components:
           - 'null'
       required:
       - enabled
-    Logo:
-      title: Logo
-      type: object
-      properties:
-        href:
-          type:
-          - string
-          - 'null'
-        image:
-          type:
-          - string
-          - 'null'
-    BrandSettings:
-      title: BrandSettings
-      type: object
-      properties:
-        colors:
-          $ref: '#/components/schemas/BrandColors'
-        email:
-          $ref: '#/components/schemas/BrandSettingsEmail'
-        inapp:
-          $ref: '#/components/schemas/BrandSettingsInApp'
-    EmailHead:
-      title: EmailHead
-      type: object
-      properties:
-        inheritDefault:
-          type: boolean
-        content:
-          type:
-          - string
-          - 'null'
-      required:
-      - inheritDefault
-    AlreadyExists:
-      title: AlreadyExists
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    PaymentRequired:
-      title: PaymentRequired
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - authorization_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
-    EmailHeader:
-      title: EmailHeader
-      type: object
-      properties:
-        inheritDefault:
-          type:
-          - boolean
-          - 'null'
-        barColor:
-          type:
-          - string
-          - 'null'
-        logo:
-          $ref: '#/components/schemas/Logo'
-      required:
-      - logo
-    BrandSettingsInApp:
-      title: BrandSettingsInApp
-      type: object
-      properties:
-        borderRadius:
-          type:
-          - string
-          - 'null'
-        disableMessageIcon:
-          type:
-          - boolean
-          - 'null'
-        fontFamily:
-          type:
-          - string
-          - 'null'
-        placement:
-          $ref: '#/components/schemas/InAppPlacement'
-        widgetBackground:
-          $ref: '#/components/schemas/WidgetBackground'
-        colors:
-          $ref: '#/components/schemas/BrandColors'
-        icons:
-          $ref: '#/components/schemas/Icons'
-      required:
-      - widgetBackground
-      - colors
-      - icons
-    BrandColors:
-      title: BrandColors
-      type: object
-      properties:
-        primary:
-          type: string
-        secondary:
-          type: string
-      additionalProperties:
-        type: string
-    BrandParameters:
-      title: BrandParameters
-      type: object
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        settings:
-          $ref: '#/components/schemas/BrandSettings'
-        snippets:
-          $ref: '#/components/schemas/BrandSnippets'
-      required:
-      - name
-    WidgetBackground:
-      title: WidgetBackground
-      type: object
-      properties:
-        topColor:
-          type:
-          - string
-          - 'null'
-        bottomColor:
-          type:
-          - string
-          - 'null'
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    Icons:
-      title: Icons
-      type: object
-      properties:
-        bell:
-          type:
-          - string
-          - 'null'
-        message:
-          type:
-          - string
-          - 'null'
-    EmailFooter:
-      title: EmailFooter
-      type: object
-      properties:
-        content:
-          type:
-          - string
-          - 'null'
-        inheritDefault:
-          type:
-          - boolean
-          - 'null'
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BrandSettingsEmail:
-      title: BrandSettingsEmail
-      type: object
-      properties:
-        templateOverride:
-          $ref: '#/components/schemas/BrandTemplateOverride'
-        head:
-          $ref: '#/components/schemas/EmailHead'
-        footer:
-          $ref: '#/components/schemas/EmailFooter'
-        header:
-          $ref: '#/components/schemas/EmailHeader'
     Brand:
       title: Brand
       type: object
@@ -505,6 +481,30 @@ components:
       - name
       - created
       - updated
+    InAppPlacement:
+      title: InAppPlacement
+      type: string
+      enum:
+      - top
+      - bottom
+      - left
+      - right
+    BrandParameters:
+      title: BrandParameters
+      type: object
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        settings:
+          $ref: '#/components/schemas/BrandSettings'
+        snippets:
+          $ref: '#/components/schemas/BrandSnippets'
+      required:
+      - name
   securitySchemes:
     BearerAuth:
       type: http

@@ -93,672 +93,6 @@ paths:
                       - email
 components:
   schemas:
-    Content:
-      title: Content
-      oneOf:
-      - $ref: '#/components/schemas/ElementalContentSugar'
-      - $ref: '#/components/schemas/ElementalContent'
-    ElementalContentSugar:
-      title: ElementalContentSugar
-      type: object
-      description: Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
-      properties:
-        title:
-          type: string
-          description: Title/subject displayed by supported channels.
-        body:
-          type: string
-          description: The text content displayed in the notification.
-      required:
-      - title
-      - body
-    WebhookRecipient:
-      title: Webhook Recipient
-      description: Send via webhook
-      type: object
-      properties:
-        webhook:
-          $ref: '#/components/schemas/WebhookProfile'
-      required:
-      - webhook
-    MsTeams:
-      title: MsTeams
-      oneOf:
-      - $ref: '#/components/schemas/SendToMsTeamsUserId'
-      - $ref: '#/components/schemas/SendToMsTeamsEmail'
-      - $ref: '#/components/schemas/SendToMsTeamsChannelId'
-      - $ref: '#/components/schemas/SendToMsTeamsConversationId'
-      - $ref: '#/components/schemas/SendToMsTeamsChannelName'
-    Pagerduty:
-      title: Pagerduty
-      type: object
-      properties:
-        routing_key:
-          type:
-          - string
-          - 'null'
-        event_action:
-          type:
-          - string
-          - 'null'
-        severity:
-          type:
-          - string
-          - 'null'
-        source:
-          type:
-          - string
-          - 'null'
-    Routing:
-      title: Routing
-      type: object
-      description: Customize which channels/providers Courier may deliver the message through.
-      properties:
-        method:
-          $ref: '#/components/schemas/RoutingMethod'
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageRoutingChannel'
-          description: A list of channels or providers (or nested routing rules).
-      required:
-      - method
-      - channels
-    SendToMsTeamsChannelId:
-      title: SendToMsTeamsChannelId
-      type: object
-      properties:
-        tenant_id:
-          type: string
-        service_url:
-          type: string
-        channel_id:
-          type: string
-      required:
-      - tenant_id
-      - service_url
-      - channel_id
-    ListPatternRecipient:
-      title: List Pattern Recipient
-      description: Send to users in lists matching a pattern
-      type: object
-      properties:
-        list_pattern:
-          type:
-          - string
-          - 'null'
-        data:
-          $ref: '#/components/schemas/MessageData'
-    SendToMsTeamsChannelName:
-      title: SendToMsTeamsChannelName
-      type: object
-      properties:
-        tenant_id:
-          type: string
-        service_url:
-          type: string
-        channel_name:
-          type: string
-        team_id:
-          type: string
-      required:
-      - tenant_id
-      - service_url
-      - channel_name
-      - team_id
-    Recipient:
-      title: Recipient
-      description: 'A single recipient of the message. Choose one of the following types based on how you want to identify the recipient: - **User**: Send to a specific user by user_id, email, or phone number - **Audience**: Send to all users in an audience - **List**: Send to all users in a list - **List Pattern**: Send to users in lists matching a pattern - **Slack**: Send via Slack (channel, email, or user_id) - **MS Teams**: Send via Microsoft Teams - **PagerDuty**: Send via PagerDuty - **Webhook**: Send via webhook'
-      oneOf:
-      - $ref: '#/components/schemas/UserRecipient'
-      - $ref: '#/components/schemas/AudienceRecipient'
-      - $ref: '#/components/schemas/ListRecipient'
-      - $ref: '#/components/schemas/ListPatternRecipient'
-      - $ref: '#/components/schemas/SlackRecipient'
-      - $ref: '#/components/schemas/MsTeamsRecipient'
-      - $ref: '#/components/schemas/PagerdutyRecipient'
-      - $ref: '#/components/schemas/WebhookRecipient'
-      discriminator:
-        propertyName: _type
-        mapping:
-          user: '#/components/schemas/UserRecipient'
-          audience: '#/components/schemas/AudienceRecipient'
-          list: '#/components/schemas/ListRecipient'
-          list_pattern: '#/components/schemas/ListPatternRecipient'
-          slack: '#/components/schemas/SlackRecipient'
-          ms_teams: '#/components/schemas/MsTeamsRecipient'
-          pagerduty: '#/components/schemas/PagerdutyRecipient'
-          webhook: '#/components/schemas/WebhookRecipient'
-    Expiry:
-      title: Expiry
-      type: object
-      properties:
-        expires_at:
-          type:
-          - string
-          - 'null'
-          description: Epoch or ISO8601 timestamp with timezone.
-        expires_in:
-          $ref: '#/components/schemas/ExpiresInType'
-          description: Duration in ms or ISO8601 duration (e.g. P1DT4H).
-      required:
-      - expires_in
-    AudienceRecipient:
-      title: Audience Recipient
-      description: Send to all users in an audience
-      type: object
-      properties:
-        audience_id:
-          type: string
-          description: A unique identifier associated with an Audience. A message will be sent to each user in the audience.
-        data:
-          $ref: '#/components/schemas/MessageData'
-        filters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/AudienceFilter'
-      required:
-      - audience_id
-    Preference:
-      title: Preference
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/PreferenceStatus'
-        rules:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/Rule'
-        channel_preferences:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChannelPreference'
-        source:
-          $ref: '#/components/schemas/ChannelSource'
-      required:
-      - status
-    PreferenceStatus:
-      title: PreferenceStatus
-      type: string
-      enum:
-      - OPTED_IN
-      - OPTED_OUT
-      - REQUIRED
-    Message:
-      title: Message
-      oneOf:
-      - $ref: '#/components/schemas/ContentMessage'
-    MessageRouting:
-      title: MessageRouting
-      type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/MessageRoutingMethod'
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageRoutingChannel'
-      required:
-      - method
-      - channels
-    WebhookProfile:
-      title: WebhookProfile
-      type: object
-      properties:
-        url:
-          type: string
-          description: The URL to send the webhook request to.
-        method:
-          $ref: '#/components/schemas/WebhookMethod'
-          description: The HTTP method to use for the webhook request. Defaults to POST if not specified.
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-          description: Custom headers to include in the webhook request.
-        authentication:
-          $ref: '#/components/schemas/WebhookAuthentication'
-          description: Authentication configuration for the webhook request.
-        profile:
-          $ref: '#/components/schemas/WebhookProfileType'
-          description: Specifies what profile information is included in the request payload. Defaults to 'limited' if not specified.
-      required:
-      - url
-    ElementalDividerNode:
-      title: ElementalDividerNode
-      type: object
-      description: Renders a dividing line between elements.
-      properties:
-        color:
-          type:
-          - string
-          - 'null'
-          description: The CSS color to render the line with. For example, `#fff`
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ContentMessage:
-      title: ContentMessage
-      type: object
-      description: The message property has the following primary top-level properties. They define the destination and content of the message.
-      properties:
-        content:
-          $ref: '#/components/schemas/Content'
-          description: Describes content that will work for email, inbox, push, chat, or any channel id.
-      allOf:
-      - $ref: '#/components/schemas/BaseMessage'
-      - $ref: '#/components/schemas/BaseMessageSendTo'
-    SendMessageResponse:
-      title: SendMessageResponse
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: 'A successful call to `POST /send` returns a `202` status code along with a `requestId` in the response body.
-
-            For single-recipient requests, the `requestId` is the derived message_id. For multiple recipients, Courier assigns a unique message_id to each derived message.'
-          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
-      required:
-      - requestId
-    MessageChannels:
-      title: MessageChannels
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Channel'
-    ElementalContent:
-      title: ElementalContent
-      type: object
-      properties:
-        version:
-          type: string
-          description: For example, "2022-01-01"
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElementalNode'
-      required:
-      - version
-      - elements
-    TextAlign:
-      title: TextAlign
-      type: string
-      enum:
-      - left
-      - center
-      - right
-    ElementalQuoteNode:
-      title: ElementalQuoteNode
-      type: object
-      description: Renders a quote block.
-      properties:
-        content:
-          type: string
-          description: The text value of the quote.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          description: Alignment of the quote.
-        borderColor:
-          type:
-          - string
-          - 'null'
-          description: CSS border color property. For example, `#fff`
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      - text_style
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ElementalActionNode:
-      title: ElementalActionNode
-      type: object
-      description: Allows the user to execute an action. Can be a button or a link.
-      properties:
-        content:
-          type: string
-          description: The text content of the action shown to the user.
-        href:
-          type: string
-          description: The target URL of the action.
-        action_id:
-          type:
-          - string
-          - 'null'
-          description: A unique id used to identify the action when it is executed.
-        align:
-          description: The alignment of the action button. Defaults to "center".
-          allOf:
-          - $ref: '#/components/schemas/IAlignment'
-        background_color:
-          type:
-          - string
-          - 'null'
-          description: The background color of the action button.
-        style:
-          description: Defaults to `button`.
-          allOf:
-          - $ref: '#/components/schemas/IActionButtonStyle'
-        locales:
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-          allOf:
-          - $ref: '#/components/schemas/Locales'
-      required:
-      - content
-      - href
-      - locales
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ListRecipient:
-      title: List Recipient
-      description: Send to all users in a specific list
-      type: object
-      properties:
-        list_id:
-          type:
-          - string
-          - 'null'
-        data:
-          $ref: '#/components/schemas/MessageData'
-        filters:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ListFilter'
-    Locales:
-      title: Locales
-      type:
-      - object
-      - 'null'
-      additionalProperties:
-        $ref: '#/components/schemas/Locale'
-    PagerdutyRecipient:
-      title: PagerDuty Recipient
-      description: Send via PagerDuty
-      type: object
-      properties:
-        pagerduty:
-          $ref: '#/components/schemas/Pagerduty'
-      required:
-      - pagerduty
-    TextStyle:
-      title: TextStyle
-      type: string
-      enum:
-      - text
-      - h1
-      - h2
-      - subtext
-    ElementalHtmlNode:
-      title: ElementalHtmlNode
-      type: object
-      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
-      properties:
-        content:
-          type: string
-          description: Raw HTML string to render inside the notification.
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-      required:
-      - content
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    MessageRecipient:
-      title: MessageRecipient
-      description: The recipient of a message. Can be a single recipient or an array of recipients.
-      oneOf:
-      - $ref: '#/components/schemas/Recipient'
-      - type: array
-        items:
-          $ref: '#/components/schemas/Recipient'
-    MsTeamsRecipient:
-      title: MS Teams Recipient
-      description: Send via Microsoft Teams
-      type: object
-      properties:
-        ms_teams:
-          $ref: '#/components/schemas/MsTeams'
-      required:
-      - ms_teams
-    UTM:
-      title: UTM
-      type: object
-      properties:
-        source:
-          type:
-          - string
-          - 'null'
-        medium:
-          type:
-          - string
-          - 'null'
-        campaign:
-          type:
-          - string
-          - 'null'
-        term:
-          type:
-          - string
-          - 'null'
-        content:
-          type:
-          - string
-          - 'null'
-    MessagePreferences:
-      title: MessagePreferences
-      type: object
-      properties:
-        subscription_topic_id:
-          type: string
-          description: The subscription topic to apply to the message.
-      required:
-      - subscription_topic_id
-    Locale:
-      title: Locale
-      type: object
-      properties:
-        content:
-          type: string
-      required:
-      - content
-    AudienceFilter:
-      title: AudienceFilter
-      type: object
-      properties:
-        operator:
-          type: string
-          enum:
-          - MEMBER_OF
-          description: Send to users only if they are member of the account
-        path:
-          type: string
-          enum:
-          - account_id
-        value:
-          type: string
-      required:
-      - operator
-      - path
-      - value
-    MessageRoutingChannel:
-      title: MessageRoutingChannel
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/MessageRouting'
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type:
-          - string
-          - 'null'
-        until:
-          type: string
-      required:
-      - until
-    ElementalTextNode:
-      title: ElementalTextNode
-      type: object
-      description: Represents a body of text to be rendered inside of the notification.
-      properties:
-        content:
-          type: string
-          description: 'The text content displayed in the notification. Either this
-
-            field must be specified, or the elements field'
-        align:
-          $ref: '#/components/schemas/TextAlign'
-          description: Text alignment.
-        text_style:
-          $ref: '#/components/schemas/TextStyle'
-          description: Allows the text to be rendered as a heading level.
-        color:
-          type:
-          - string
-          - 'null'
-          description: Specifies the color of text. Can be any valid css color value
-        bold:
-          type:
-          - string
-          - 'null'
-          description: Apply bold to the text
-        italic:
-          type:
-          - string
-          - 'null'
-          description: Apply italics to the text
-        strikethrough:
-          type:
-          - string
-          - 'null'
-          description: Apply a strike through the text
-        underline:
-          type:
-          - string
-          - 'null'
-          description: Apply an underline to the text
-        locales:
-          $ref: '#/components/schemas/Locales'
-          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
-        format:
-          type:
-          - string
-          - 'null'
-          enum:
-          - markdown
-      required:
-      - content
-      - align
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
-    BaseMessageSendTo:
-      title: BaseMessageSendTo
-      type: object
-      properties:
-        to:
-          $ref: '#/components/schemas/MessageRecipient'
-          description: The recipient or a list of recipients of the message
-    ElementalImageNode:
-      title: ElementalImageNode
-      type: object
-      description: Used to embed an image into the notification.
-      properties:
-        src:
-          type: string
-          description: The source of the image.
-        href:
-          type:
-          - string
-          - 'null'
-          description: A URL to link to when the image is clicked.
-        align:
-          $ref: '#/components/schemas/IAlignment'
-          description: The alignment of the image.
-        altText:
-          type:
-          - string
-          - 'null'
-          description: Alternate text for the image.
-        width:
-          type:
-          - string
-          - 'null'
-          description: CSS width properties to apply to the image. For example, 50px
-      required:
-      - src
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
-    ListFilter:
-      title: ListFilter
-      type: object
-      properties:
-        operator:
-          type: string
-          enum:
-          - MEMBER_OF
-          description: Send to users only if they are member of the account
-        path:
-          type: string
-          enum:
-          - account_id
-        value:
-          type: string
-      required:
-      - operator
-      - path
-      - value
-    SendToSlackChannel:
-      title: SendToSlackChannel
-      type: object
-      properties:
-        access_token:
-          type: string
-        channel:
-          type: string
-      required:
-      - access_token
-      - channel
-    UserRecipientType:
-      title: UserRecipientType
-      type: object
-      properties: {}
-    SendToMsTeamsUserId:
-      title: SendToMsTeamsUserId
-      type: object
-      properties:
-        tenant_id:
-          type: string
-        service_url:
-          type: string
-        user_id:
-          type: string
-      required:
-      - tenant_id
-      - service_url
-      - user_id
     ElementalNode:
       title: ElementalNode
       oneOf:
@@ -851,6 +185,163 @@ components:
         - $ref: '#/components/schemas/ElementalHtmlNode'
         required:
         - type
+    SendMessageResponse:
+      title: SendMessageResponse
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: 'A successful call to `POST /send` returns a `202` status code along with a `requestId` in the response body.
+
+            For single-recipient requests, the `requestId` is the derived message_id. For multiple recipients, Courier assigns a unique message_id to each derived message.'
+          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
+      required:
+      - requestId
+    Locale:
+      title: Locale
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+      - content
+    ContentMessage:
+      title: ContentMessage
+      type: object
+      description: The message property has the following primary top-level properties. They define the destination and content of the message.
+      properties:
+        content:
+          $ref: '#/components/schemas/Content'
+          description: Describes content that will work for email, inbox, push, chat, or any channel id.
+      allOf:
+      - $ref: '#/components/schemas/BaseMessage'
+      - $ref: '#/components/schemas/BaseMessageSendTo'
+    BaseMessageSendTo:
+      title: BaseMessageSendTo
+      type: object
+      properties:
+        to:
+          $ref: '#/components/schemas/MessageRecipient'
+          description: The recipient or a list of recipients of the message
+    MessageProviders:
+      title: MessageProviders
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MessageProvidersType'
+    ElementalTextNode:
+      title: ElementalTextNode
+      type: object
+      description: Represents a body of text to be rendered inside of the notification.
+      properties:
+        content:
+          type: string
+          description: 'The text content displayed in the notification. Either this
+
+            field must be specified, or the elements field'
+        align:
+          $ref: '#/components/schemas/TextAlign'
+          description: Text alignment.
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+          description: Allows the text to be rendered as a heading level.
+        color:
+          type:
+          - string
+          - 'null'
+          description: Specifies the color of text. Can be any valid css color value
+        bold:
+          type:
+          - string
+          - 'null'
+          description: Apply bold to the text
+        italic:
+          type:
+          - string
+          - 'null'
+          description: Apply italics to the text
+        strikethrough:
+          type:
+          - string
+          - 'null'
+          description: Apply a strike through the text
+        underline:
+          type:
+          - string
+          - 'null'
+          description: Apply an underline to the text
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+        format:
+          type:
+          - string
+          - 'null'
+          enum:
+          - markdown
+      required:
+      - content
+      - align
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    SendToMsTeamsChannelId:
+      title: SendToMsTeamsChannelId
+      type: object
+      properties:
+        tenant_id:
+          type: string
+        service_url:
+          type: string
+        channel_id:
+          type: string
+      required:
+      - tenant_id
+      - service_url
+      - channel_id
+    ExpiresInType:
+      title: ExpiresInType
+      oneOf:
+      - type: string
+      - type: integer
+    ElementalContent:
+      title: ElementalContent
+      type: object
+      properties:
+        version:
+          type: string
+          description: For example, "2022-01-01"
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementalNode'
+      required:
+      - version
+      - elements
+    Slack:
+      title: Slack
+      oneOf:
+      - $ref: '#/components/schemas/SendToSlackChannel'
+      - $ref: '#/components/schemas/SendToSlackEmail'
+      - $ref: '#/components/schemas/SendToSlackUserId'
+    WebhookMethod:
+      title: WebhookMethod
+      type: string
+      enum:
+      - POST
+      - PUT
+    ProfilePreferences:
+      title: ProfilePreferences
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/Preferences'
+        notifications:
+          $ref: '#/components/schemas/Preferences'
+        templateId:
+          type:
+          - string
+          - 'null'
+      required:
+      - notifications
     ElementalBaseNode:
       title: ElementalBaseNode
       type: object
@@ -873,32 +364,170 @@ components:
           type:
           - string
           - 'null'
-    MessageProvidersType:
-      title: MessageProvidersType
+    ElementalImageNode:
+      title: ElementalImageNode
+      type: object
+      description: Used to embed an image into the notification.
+      properties:
+        src:
+          type: string
+          description: The source of the image.
+        href:
+          type:
+          - string
+          - 'null'
+          description: A URL to link to when the image is clicked.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: The alignment of the image.
+        altText:
+          type:
+          - string
+          - 'null'
+          description: Alternate text for the image.
+        width:
+          type:
+          - string
+          - 'null'
+          description: CSS width properties to apply to the image. For example, 50px
+      required:
+      - src
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ElementalDividerNode:
+      title: ElementalDividerNode
+      type: object
+      description: Renders a dividing line between elements.
+      properties:
+        color:
+          type:
+          - string
+          - 'null'
+          description: The CSS color to render the line with. For example, `#fff`
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    SlackRecipient:
+      title: Slack Recipient
+      description: Send via Slack (channel, email, or user_id)
       type: object
       properties:
-        override:
+        slack:
+          $ref: '#/components/schemas/Slack'
+      required:
+      - slack
+    SendToMsTeamsChannelName:
+      title: SendToMsTeamsChannelName
+      type: object
+      properties:
+        tenant_id:
+          type: string
+        service_url:
+          type: string
+        channel_name:
+          type: string
+        team_id:
+          type: string
+      required:
+      - tenant_id
+      - service_url
+      - channel_name
+      - team_id
+    Message:
+      title: Message
+      oneOf:
+      - $ref: '#/components/schemas/ContentMessage'
+    Timeouts:
+      title: Timeouts
+      type: object
+      properties:
+        provider:
           type:
-          - object
+          - integer
           - 'null'
-          additionalProperties: true
-          description: Provider-specific overrides.
+        channel:
+          type:
+          - integer
+          - 'null'
+      x-stainless-naming:
+        csharp:
+          type_name: ChannelTimeouts
+    ChannelMetadata:
+      title: ChannelMetadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+    SendToMsTeamsConversationId:
+      title: SendToMsTeamsConversationId
+      type: object
+      properties:
+        tenant_id:
+          type: string
+        service_url:
+          type: string
+        conversation_id:
+          type: string
+      required:
+      - tenant_id
+      - service_url
+      - conversation_id
+    Channel:
+      title: Channel
+      type: object
+      properties:
+        brand_id:
+          type:
+          - string
+          - 'null'
+          description: Brand id used for rendering.
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Providers enabled for this channel.
+        routing_method:
+          $ref: '#/components/schemas/RoutingMethod'
+          description: Defaults to `single`.
         if:
           type:
           - string
           - 'null'
           description: JS conditional with access to data/profile.
         timeouts:
+          $ref: '#/components/schemas/Timeouts'
+        override:
           type:
-          - integer
+          - object
           - 'null'
+          additionalProperties: true
+          description: Channel specific overrides.
         metadata:
-          $ref: '#/components/schemas/Metadata'
-    MessageProviders:
-      title: MessageProviders
+          $ref: '#/components/schemas/ChannelMetadata'
+      x-stainless-naming:
+        csharp:
+          type_name: MessageChannel
+    MessageRoutingMethod:
+      title: MessageRoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    MessageContext:
+      title: MessageContext
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MessageProvidersType'
+      properties:
+        tenant_id:
+          type:
+          - string
+          - 'null'
+          description: Tenant id used to load brand/default preferences/context.
     UserRecipient:
       title: User Recipient
       description: Send to a specific user by user_id, email, phone_number, or list_id
@@ -948,161 +577,28 @@ components:
           description: The id of the tenant the user is associated with.
       allOf:
       - $ref: '#/components/schemas/UserRecipientType'
-    RoutingMethod:
-      title: RoutingMethod
-      type: string
-      enum:
-      - all
-      - single
-    Delay:
-      title: Delay
-      type: object
-      properties:
-        duration:
-          type:
-          - integer
-          - 'null'
-          description: The duration of the delay in milliseconds.
-        until:
-          type:
-          - string
-          - 'null'
-          description: ISO 8601 timestamp or opening_hours-like format.
-        timezone:
-          type:
-          - string
-          - 'null'
-          description: IANA timezone identifier (e.g., "America/Los_Angeles", "UTC"). Used when resolving opening hours expressions. Takes precedence over user profile timezone settings.
-    WebhookMethod:
-      title: WebhookMethod
-      type: string
-      enum:
-      - POST
-      - PUT
-    ExpiresInType:
-      title: ExpiresInType
-      oneOf:
-      - type: string
-      - type: integer
-    MessageMetadata:
-      title: MessageMetadata
-      type: object
-      properties:
-        event:
-          type:
-          - string
-          - 'null'
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        utm:
-          $ref: '#/components/schemas/UTM'
-        trace_id:
-          type:
-          - string
-          - 'null'
-    SlackRecipient:
-      title: Slack Recipient
-      description: Send via Slack (channel, email, or user_id)
-      type: object
-      properties:
-        slack:
-          $ref: '#/components/schemas/Slack'
-      required:
-      - slack
-    Preferences:
-      title: Preferences
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Preference'
-    Timeouts:
-      title: Timeouts
-      type: object
-      properties:
-        provider:
-          type:
-          - integer
-          - 'null'
-        channel:
-          type:
-          - integer
-          - 'null'
-      x-stainless-naming:
-        csharp:
-          type_name: ChannelTimeouts
-    Metadata:
-      title: Metadata
-      type: object
-      properties:
-        utm:
-          $ref: '#/components/schemas/UTM'
-      x-stainless-naming:
-        csharp:
-          type_name: ProviderMetadata
-    Slack:
-      title: Slack
-      oneOf:
-      - $ref: '#/components/schemas/SendToSlackChannel'
-      - $ref: '#/components/schemas/SendToSlackEmail'
-      - $ref: '#/components/schemas/SendToSlackUserId'
-    WebhookAuthMode:
-      title: WebhookAuthMode
-      type: string
-      enum:
-      - none
-      - basic
-      - bearer
-    ChannelPreference:
-      title: ChannelPreference
-      type: object
-      properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
-      required:
-      - channel
-    MessageContext:
-      title: MessageContext
+    SendToMsTeamsEmail:
+      title: SendToMsTeamsEmail
       type: object
       properties:
         tenant_id:
-          type:
-          - string
-          - 'null'
-          description: Tenant id used to load brand/default preferences/context.
-    WebhookProfileType:
-      title: WebhookProfileType
+          type: string
+        service_url:
+          type: string
+        email:
+          type: string
+      required:
+      - tenant_id
+      - service_url
+      - email
+    IAlignment:
+      title: IAlignment
       type: string
       enum:
-      - limited
-      - expanded
-    ProfilePreferences:
-      title: ProfilePreferences
-      type: object
-      properties:
-        categories:
-          $ref: '#/components/schemas/Preferences'
-        notifications:
-          $ref: '#/components/schemas/Preferences'
-        templateId:
-          type:
-          - string
-          - 'null'
-      required:
-      - notifications
-    SendToSlackUserId:
-      title: SendToSlackUserId
-      type: object
-      properties:
-        access_token:
-          type: string
-        user_id:
-          type: string
-      required:
-      - access_token
-      - user_id
+      - center
+      - left
+      - right
+      - full
     WebhookAuthentication:
       title: WebhookAuthentication
       type: object
@@ -1127,39 +623,6 @@ components:
           description: Token for bearer authentication.
       required:
       - mode
-    MessageRoutingMethod:
-      title: MessageRoutingMethod
-      type: string
-      enum:
-      - all
-      - single
-    ChannelSource:
-      title: ChannelSource
-      type: string
-      enum:
-      - subscription
-      - list
-      - recipient
-    SendToMsTeamsConversationId:
-      title: SendToMsTeamsConversationId
-      type: object
-      properties:
-        tenant_id:
-          type: string
-        service_url:
-          type: string
-        conversation_id:
-          type: string
-      required:
-      - tenant_id
-      - service_url
-      - conversation_id
-    IActionButtonStyle:
-      title: IActionButtonStyle
-      type: string
-      enum:
-      - button
-      - link
     Timeout:
       title: Timeout
       type: object
@@ -1186,84 +649,154 @@ components:
           - 'null'
         criteria:
           $ref: '#/components/schemas/Criteria'
-    ChannelMetadata:
-      title: ChannelMetadata
+    ElementalQuoteNode:
+      title: ElementalQuoteNode
       type: object
+      description: Renders a quote block.
       properties:
-        utm:
-          $ref: '#/components/schemas/UTM'
-    Channel:
-      title: Channel
-      type: object
-      properties:
-        brand_id:
+        content:
+          type: string
+          description: The text value of the quote.
+        align:
+          $ref: '#/components/schemas/IAlignment'
+          description: Alignment of the quote.
+        borderColor:
           type:
           - string
           - 'null'
-          description: Brand id used for rendering.
-        providers:
+          description: CSS border color property. For example, `#fff`
+        text_style:
+          $ref: '#/components/schemas/TextStyle'
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      - text_style
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ElementalContentSugar:
+      title: ElementalContentSugar
+      type: object
+      description: Syntactic sugar to provide a fast shorthand for Courier Elemental Blocks.
+      properties:
+        title:
+          type: string
+          description: Title/subject displayed by supported channels.
+        body:
+          type: string
+          description: The text content displayed in the notification.
+      required:
+      - title
+      - body
+    TextAlign:
+      title: TextAlign
+      type: string
+      enum:
+      - left
+      - center
+      - right
+    RoutingMethod:
+      title: RoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    ElementalHtmlNode:
+      title: ElementalHtmlNode
+      type: object
+      description: Raw HTML string inside an Elemental document. When rendering a message, this node is turned into output only for the email channel; for other channels it produces no blocks.
+      properties:
+        content:
+          type: string
+          description: Raw HTML string to render inside the notification.
+        locales:
+          $ref: '#/components/schemas/Locales'
+          description: Region-specific `content` overrides. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+      required:
+      - content
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    WebhookRecipient:
+      title: Webhook Recipient
+      description: Send via webhook
+      type: object
+      properties:
+        webhook:
+          $ref: '#/components/schemas/WebhookProfile'
+      required:
+      - webhook
+    PagerdutyRecipient:
+      title: PagerDuty Recipient
+      description: Send via PagerDuty
+      type: object
+      properties:
+        pagerduty:
+          $ref: '#/components/schemas/Pagerduty'
+      required:
+      - pagerduty
+    ChannelSource:
+      title: ChannelSource
+      type: string
+      enum:
+      - subscription
+      - list
+      - recipient
+    ChannelPreference:
+      title: ChannelPreference
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
+      required:
+      - channel
+    MessageProvidersType:
+      title: MessageProvidersType
+      type: object
+      properties:
+        override:
           type:
-          - array
+          - object
           - 'null'
-          items:
-            type: string
-          description: Providers enabled for this channel.
-        routing_method:
-          $ref: '#/components/schemas/RoutingMethod'
-          description: Defaults to `single`.
+          additionalProperties: true
+          description: Provider-specific overrides.
         if:
           type:
           - string
           - 'null'
           description: JS conditional with access to data/profile.
         timeouts:
-          $ref: '#/components/schemas/Timeouts'
-        override:
           type:
-          - object
+          - integer
           - 'null'
-          additionalProperties: true
-          description: Channel specific overrides.
         metadata:
-          $ref: '#/components/schemas/ChannelMetadata'
-      x-stainless-naming:
-        csharp:
-          type_name: MessageChannel
-    Criteria:
-      title: Criteria
-      type: string
-      enum:
-      - no-escalation
-      - delivered
-      - viewed
-      - engaged
-    SendToSlackEmail:
-      title: SendToSlackEmail
+          $ref: '#/components/schemas/Metadata'
+    ListFilter:
+      title: ListFilter
       type: object
       properties:
-        access_token:
+        operator:
           type: string
-        email:
+          enum:
+          - MEMBER_OF
+          description: Send to users only if they are member of the account
+        path:
+          type: string
+          enum:
+          - account_id
+        value:
           type: string
       required:
-      - access_token
-      - email
-    MessageData:
-      title: MessageData
-      type: object
-      additionalProperties: true
-    ElementalMetaNode:
-      title: ElementalMetaNode
-      type: object
-      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
-      properties:
-        title:
-          type:
-          - string
-          - 'null'
-          description: The title to be displayed by supported channels. For example, the email subject.
-      allOf:
-      - $ref: '#/components/schemas/ElementalBaseNode'
+      - operator
+      - path
+      - value
+    IActionButtonStyle:
+      title: IActionButtonStyle
+      type: string
+      enum:
+      - button
+      - link
     BaseMessage:
       title: BaseMessage
       type: object
@@ -1297,28 +830,396 @@ components:
           $ref: '#/components/schemas/Delay'
         expiry:
           $ref: '#/components/schemas/Expiry'
-    IAlignment:
-      title: IAlignment
+    PreferenceStatus:
+      title: PreferenceStatus
       type: string
       enum:
-      - center
-      - left
-      - right
-      - full
-    SendToMsTeamsEmail:
-      title: SendToMsTeamsEmail
+      - OPTED_IN
+      - OPTED_OUT
+      - REQUIRED
+    SendToSlackChannel:
+      title: SendToSlackChannel
+      type: object
+      properties:
+        access_token:
+          type: string
+        channel:
+          type: string
+      required:
+      - access_token
+      - channel
+    Expiry:
+      title: Expiry
+      type: object
+      properties:
+        expires_at:
+          type:
+          - string
+          - 'null'
+          description: Epoch or ISO8601 timestamp with timezone.
+        expires_in:
+          $ref: '#/components/schemas/ExpiresInType'
+          description: Duration in ms or ISO8601 duration (e.g. P1DT4H).
+      required:
+      - expires_in
+    Preference:
+      title: Preference
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/PreferenceStatus'
+        rules:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/Rule'
+        channel_preferences:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChannelPreference'
+        source:
+          $ref: '#/components/schemas/ChannelSource'
+      required:
+      - status
+    Pagerduty:
+      title: Pagerduty
+      type: object
+      properties:
+        routing_key:
+          type:
+          - string
+          - 'null'
+        event_action:
+          type:
+          - string
+          - 'null'
+        severity:
+          type:
+          - string
+          - 'null'
+        source:
+          type:
+          - string
+          - 'null'
+    MessageData:
+      title: MessageData
+      type: object
+      additionalProperties: true
+    SendToSlackUserId:
+      title: SendToSlackUserId
+      type: object
+      properties:
+        access_token:
+          type: string
+        user_id:
+          type: string
+      required:
+      - access_token
+      - user_id
+    MessagePreferences:
+      title: MessagePreferences
+      type: object
+      properties:
+        subscription_topic_id:
+          type: string
+          description: The subscription topic to apply to the message.
+      required:
+      - subscription_topic_id
+    UTM:
+      title: UTM
+      type: object
+      properties:
+        source:
+          type:
+          - string
+          - 'null'
+        medium:
+          type:
+          - string
+          - 'null'
+        campaign:
+          type:
+          - string
+          - 'null'
+        term:
+          type:
+          - string
+          - 'null'
+        content:
+          type:
+          - string
+          - 'null'
+    Routing:
+      title: Routing
+      type: object
+      description: Customize which channels/providers Courier may deliver the message through.
+      properties:
+        method:
+          $ref: '#/components/schemas/RoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+          description: A list of channels or providers (or nested routing rules).
+      required:
+      - method
+      - channels
+    Criteria:
+      title: Criteria
+      type: string
+      enum:
+      - no-escalation
+      - delivered
+      - viewed
+      - engaged
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
+          type: string
+      required:
+      - until
+    ListPatternRecipient:
+      title: List Pattern Recipient
+      description: Send to users in lists matching a pattern
+      type: object
+      properties:
+        list_pattern:
+          type:
+          - string
+          - 'null'
+        data:
+          $ref: '#/components/schemas/MessageData'
+    Preferences:
+      title: Preferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Preference'
+    UserRecipientType:
+      title: UserRecipientType
+      type: object
+      properties: {}
+    Locales:
+      title: Locales
+      type:
+      - object
+      - 'null'
+      additionalProperties:
+        $ref: '#/components/schemas/Locale'
+    MessageChannels:
+      title: MessageChannels
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Channel'
+    WebhookProfileType:
+      title: WebhookProfileType
+      type: string
+      enum:
+      - limited
+      - expanded
+    ElementalActionNode:
+      title: ElementalActionNode
+      type: object
+      description: Allows the user to execute an action. Can be a button or a link.
+      properties:
+        content:
+          type: string
+          description: The text content of the action shown to the user.
+        href:
+          type: string
+          description: The target URL of the action.
+        action_id:
+          type:
+          - string
+          - 'null'
+          description: A unique id used to identify the action when it is executed.
+        align:
+          description: The alignment of the action button. Defaults to "center".
+          allOf:
+          - $ref: '#/components/schemas/IAlignment'
+        background_color:
+          type:
+          - string
+          - 'null'
+          description: The background color of the action button.
+        style:
+          description: Defaults to `button`.
+          allOf:
+          - $ref: '#/components/schemas/IActionButtonStyle'
+        locales:
+          description: Region specific content. See [locales docs](https://www.courier.com/docs/platform/content/elemental/locales/) for more details.
+          allOf:
+          - $ref: '#/components/schemas/Locales'
+      required:
+      - content
+      - href
+      - locales
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    MsTeamsRecipient:
+      title: MS Teams Recipient
+      description: Send via Microsoft Teams
+      type: object
+      properties:
+        ms_teams:
+          $ref: '#/components/schemas/MsTeams'
+      required:
+      - ms_teams
+    Content:
+      title: Content
+      oneOf:
+      - $ref: '#/components/schemas/ElementalContentSugar'
+      - $ref: '#/components/schemas/ElementalContent'
+    ElementalMetaNode:
+      title: ElementalMetaNode
+      type: object
+      description: "The meta element contains information describing the notification that may \nbe used by a particular channel or provider. One important field is the title \nfield which will be used as the title for channels that support it."
+      properties:
+        title:
+          type:
+          - string
+          - 'null'
+          description: The title to be displayed by supported channels. For example, the email subject.
+      allOf:
+      - $ref: '#/components/schemas/ElementalBaseNode'
+    Recipient:
+      title: Recipient
+      description: 'A single recipient of the message. Choose one of the following types based on how you want to identify the recipient: - **User**: Send to a specific user by user_id, email, or phone number - **Audience**: Send to all users in an audience - **List**: Send to all users in a list - **List Pattern**: Send to users in lists matching a pattern - **Slack**: Send via Slack (channel, email, or user_id) - **MS Teams**: Send via Microsoft Teams - **PagerDuty**: Send via PagerDuty - **Webhook**: Send via webhook'
+      oneOf:
+      - $ref: '#/components/schemas/UserRecipient'
+      - $ref: '#/components/schemas/AudienceRecipient'
+      - $ref: '#/components/schemas/ListRecipient'
+      - $ref: '#/components/schemas/ListPatternRecipient'
+      - $ref: '#/components/schemas/SlackRecipient'
+      - $ref: '#/components/schemas/MsTeamsRecipient'
+      - $ref: '#/components/schemas/PagerdutyRecipient'
+      - $ref: '#/components/schemas/WebhookRecipient'
+      discriminator:
+        propertyName: _type
+        mapping:
+          user: '#/components/schemas/UserRecipient'
+          audience: '#/components/schemas/AudienceRecipient'
+          list: '#/components/schemas/ListRecipient'
+          list_pattern: '#/components/schemas/ListPatternRecipient'
+          slack: '#/components/schemas/SlackRecipient'
+          ms_teams: '#/components/schemas/MsTeamsRecipient'
+          pagerduty: '#/components/schemas/PagerdutyRecipient'
+          webhook: '#/components/schemas/WebhookRecipient'
+    AudienceFilter:
+      title: AudienceFilter
+      type: object
+      properties:
+        operator:
+          type: string
+          enum:
+          - MEMBER_OF
+          description: Send to users only if they are member of the account
+        path:
+          type: string
+          enum:
+          - account_id
+        value:
+          type: string
+      required:
+      - operator
+      - path
+      - value
+    Delay:
+      title: Delay
+      type: object
+      properties:
+        duration:
+          type:
+          - integer
+          - 'null'
+          description: The duration of the delay in milliseconds.
+        until:
+          type:
+          - string
+          - 'null'
+          description: ISO 8601 timestamp or opening_hours-like format.
+        timezone:
+          type:
+          - string
+          - 'null'
+          description: IANA timezone identifier (e.g., "America/Los_Angeles", "UTC"). Used when resolving opening hours expressions. Takes precedence over user profile timezone settings.
+    WebhookProfile:
+      title: WebhookProfile
+      type: object
+      properties:
+        url:
+          type: string
+          description: The URL to send the webhook request to.
+        method:
+          $ref: '#/components/schemas/WebhookMethod'
+          description: The HTTP method to use for the webhook request. Defaults to POST if not specified.
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+          description: Custom headers to include in the webhook request.
+        authentication:
+          $ref: '#/components/schemas/WebhookAuthentication'
+          description: Authentication configuration for the webhook request.
+        profile:
+          $ref: '#/components/schemas/WebhookProfileType'
+          description: Specifies what profile information is included in the request payload. Defaults to 'limited' if not specified.
+      required:
+      - url
+    MessageMetadata:
+      title: MessageMetadata
+      type: object
+      properties:
+        event:
+          type:
+          - string
+          - 'null'
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        utm:
+          $ref: '#/components/schemas/UTM'
+        trace_id:
+          type:
+          - string
+          - 'null'
+    SendToMsTeamsUserId:
+      title: SendToMsTeamsUserId
       type: object
       properties:
         tenant_id:
           type: string
         service_url:
           type: string
-        email:
+        user_id:
           type: string
       required:
       - tenant_id
       - service_url
-      - email
+      - user_id
     ElementalChannelNode:
       title: ElementalChannelNode
       type: object
@@ -1338,6 +1239,105 @@ components:
           description: Raw data to apply to the channel. If `elements` has not been specified, `raw` is required.
       allOf:
       - $ref: '#/components/schemas/ElementalBaseNode'
+    MessageRecipient:
+      title: MessageRecipient
+      description: The recipient of a message. Can be a single recipient or an array of recipients.
+      oneOf:
+      - $ref: '#/components/schemas/Recipient'
+      - type: array
+        items:
+          $ref: '#/components/schemas/Recipient'
+    WebhookAuthMode:
+      title: WebhookAuthMode
+      type: string
+      enum:
+      - none
+      - basic
+      - bearer
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageRoutingChannel'
+      required:
+      - method
+      - channels
+    SendToSlackEmail:
+      title: SendToSlackEmail
+      type: object
+      properties:
+        access_token:
+          type: string
+        email:
+          type: string
+      required:
+      - access_token
+      - email
+    TextStyle:
+      title: TextStyle
+      type: string
+      enum:
+      - text
+      - h1
+      - h2
+      - subtext
+    Metadata:
+      title: Metadata
+      type: object
+      properties:
+        utm:
+          $ref: '#/components/schemas/UTM'
+      x-stainless-naming:
+        csharp:
+          type_name: ProviderMetadata
+    AudienceRecipient:
+      title: Audience Recipient
+      description: Send to all users in an audience
+      type: object
+      properties:
+        audience_id:
+          type: string
+          description: A unique identifier associated with an Audience. A message will be sent to each user in the audience.
+        data:
+          $ref: '#/components/schemas/MessageData'
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/AudienceFilter'
+      required:
+      - audience_id
+    ListRecipient:
+      title: List Recipient
+      description: Send to all users in a specific list
+      type: object
+      properties:
+        list_id:
+          type:
+          - string
+          - 'null'
+        data:
+          $ref: '#/components/schemas/MessageData'
+        filters:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ListFilter'
+    MsTeams:
+      title: MsTeams
+      oneOf:
+      - $ref: '#/components/schemas/SendToMsTeamsUserId'
+      - $ref: '#/components/schemas/SendToMsTeamsEmail'
+      - $ref: '#/components/schemas/SendToMsTeamsChannelId'
+      - $ref: '#/components/schemas/SendToMsTeamsConversationId'
+      - $ref: '#/components/schemas/SendToMsTeamsChannelName'
   securitySchemes:
     BearerAuth:
       type: http

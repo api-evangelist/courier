@@ -59,6 +59,18 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    Actor:
+      title: Actor
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
     ListAuditEventsResponse:
       title: ListAuditEventsResponse
       type: object
@@ -72,18 +84,18 @@ components:
       required:
       - paging
       - results
-    Actor:
-      title: Actor
+    Paging:
+      title: Paging
       type: object
       properties:
-        id:
-          type: string
-        email:
+        cursor:
           type:
           - string
           - 'null'
+        more:
+          type: boolean
       required:
-      - id
+      - more
     AuditEvent:
       title: AuditEvent
       type: object
@@ -107,18 +119,6 @@ components:
       - source
       - timestamp
       - type
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
   securitySchemes:
     BearerAuth:
       type: http
