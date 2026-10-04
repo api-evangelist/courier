@@ -190,48 +190,30 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    ProvidersCatalogEntry:
-      title: ProvidersCatalogEntry
+    Paging:
+      title: Paging
       type: object
-      description: A provider type from the catalog. Contains the key, display name, description, and a `settings` object describing configuration schema fields.
       properties:
-        provider:
-          type: string
-          description: The provider key (e.g. "sendgrid", "twilio").
-        name:
-          type: string
-          description: Human-readable display name.
-        description:
-          type: string
-          description: Short description of the provider.
-        channel:
-          type: string
-          description: Courier taxonomy channel (e.g. email, push, sms, direct_message, inbox, webhook).
-        settings:
-          type: object
-          description: Map of setting field names (snake_case) to their schema descriptors. Each descriptor has `type` and `required`. Empty when the provider has no configurable schema.
-          additionalProperties:
-            $ref: '#/components/schemas/ProviderSchemaField'
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
       required:
-      - provider
-      - name
-      - description
-      - channel
-      - settings
-    ProvidersCatalogResponse:
-      title: ProvidersCatalogResponse
+      - more
+    BadRequest:
+      title: BadRequest
       type: object
-      description: Paginated list of available provider types with their configuration schemas.
       properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProvidersCatalogEntry'
+        type:
+          type: string
+          enum:
+          - invalid_request_error
       required:
-      - paging
-      - results
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     NotFound:
       title: NotFound
       type: object
@@ -265,6 +247,65 @@ components:
           additionalProperties: true
       required:
       - provider
+    ProvidersCatalogResponse:
+      title: ProvidersCatalogResponse
+      type: object
+      description: Paginated list of available provider types with their configuration schemas.
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProvidersCatalogEntry'
+      required:
+      - paging
+      - results
+    ProviderSchemaField:
+      title: ProviderSchemaField
+      type: object
+      description: Describes a single configuration field in the provider catalog.
+      properties:
+        type:
+          type: string
+          description: The field's data type (e.g. "string", "boolean", "enum").
+        required:
+          type: boolean
+          description: Whether this field is required when configuring the provider.
+        values:
+          type: array
+          items:
+            type: string
+          description: Allowed values when `type` is "enum".
+      required:
+      - type
+      - required
+    ProvidersListResponse:
+      title: ProvidersListResponse
+      type: object
+      description: Paginated list of provider configurations.
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Provider'
+      required:
+      - paging
+      - results
+    Conflict:
+      title: Conflict
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     Provider:
       title: Provider
       type: object
@@ -300,6 +341,15 @@ components:
       - provider
       - settings
       - created
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     ProvidersCreateRequest:
       title: ProvidersCreateRequest
       type: object
@@ -321,84 +371,34 @@ components:
           additionalProperties: true
       required:
       - provider
-    BadRequest:
-      title: BadRequest
+    ProvidersCatalogEntry:
+      title: ProvidersCatalogEntry
       type: object
+      description: A provider type from the catalog. Contains the key, display name, description, and a `settings` object describing configuration schema fields.
       properties:
-        type:
+        provider:
           type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    Conflict:
-      title: Conflict
-      type: object
-      properties:
-        type:
+          description: The provider key (e.g. "sendgrid", "twilio").
+        name:
           type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    ProviderSchemaField:
-      title: ProviderSchemaField
-      type: object
-      description: Describes a single configuration field in the provider catalog.
-      properties:
-        type:
+          description: Human-readable display name.
+        description:
           type: string
-          description: The field's data type (e.g. "string", "boolean", "enum").
-        required:
-          type: boolean
-          description: Whether this field is required when configuring the provider.
-        values:
-          type: array
-          items:
-            type: string
-          description: Allowed values when `type` is "enum".
-      required:
-      - type
-      - required
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
+          description: Short description of the provider.
+        channel:
           type: string
-          description: A message describing the error that occurred.
+          description: Courier taxonomy channel (e.g. email, push, sms, direct_message, inbox, webhook).
+        settings:
+          type: object
+          description: Map of setting field names (snake_case) to their schema descriptors. Each descriptor has `type` and `required`. Empty when the provider has no configurable schema.
+          additionalProperties:
+            $ref: '#/components/schemas/ProviderSchemaField'
       required:
-      - message
-    ProvidersListResponse:
-      title: ProvidersListResponse
-      type: object
-      description: Paginated list of provider configurations.
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Provider'
-      required:
-      - paging
-      - results
+      - provider
+      - name
+      - description
+      - channel
+      - settings
   securitySchemes:
     BearerAuth:
       type: http

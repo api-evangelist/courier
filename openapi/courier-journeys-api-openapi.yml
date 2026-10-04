@@ -206,26 +206,6 @@ components:
           type: object
           additionalProperties: true
           description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
-    JourneysInvokeResponse:
-      title: JourneysInvokeResponse
-      type: object
-      properties:
-        runId:
-          type: string
-          description: A unique identifier for the journey run that was created.
-      required:
-      - runId
-    JourneysListResponse:
-      title: JourneysListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/Journey'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
     Journey:
       title: Journey
       type: object
@@ -255,6 +235,18 @@ components:
       - name
       - id
       - version
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     NotFound:
       title: NotFound
       type: object
@@ -279,18 +271,15 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    BadRequest:
-      title: BadRequest
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
       type: object
       properties:
-        type:
+        runId:
           type: string
-          enum:
-          - invalid_request_error
+          description: A unique identifier for the journey run that was created.
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
+      - runId
     BaseError:
       title: BaseError
       type: object
@@ -300,6 +289,17 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
+    JourneysListResponse:
+      title: JourneysListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Journey'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
   securitySchemes:
     BearerAuth:
       type: http

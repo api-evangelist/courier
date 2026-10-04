@@ -373,27 +373,167 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    AssociatedNotificationListResponse:
-      title: AssociatedNotificationListResponse
+    MessageProvidersType:
+      title: MessageProvidersType
       type: object
-      description: Paginated list of notification templates associated with a routing strategy.
       properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
+        override:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Provider-specific overrides.
+        if:
+          type:
+          - string
+          - 'null'
+          description: JS conditional with access to data/profile.
+        timeouts:
+          type:
+          - integer
+          - 'null'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    MessageRouting:
+      title: MessageRouting
+      type: object
+      properties:
+        method:
+          $ref: '#/components/schemas/MessageRoutingMethod'
+        channels:
           type: array
           items:
-            $ref: '#/components/schemas/NotificationTemplateSummary'
+            $ref: '#/components/schemas/MessageRoutingChannel'
       required:
-      - paging
-      - results
-    MessageProviders:
-      title: MessageProviders
+      - method
+      - channels
+    RoutingStrategyCreateRequest:
+      title: RoutingStrategyCreateRequest
       type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MessageProvidersType'
+      description: Request body for creating a routing strategy.
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the routing strategy.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description of the routing strategy.
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Optional tags for categorization.
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Routing tree defining channel selection method and order.
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          description: Per-channel delivery configuration. Defaults to empty if omitted.
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          description: Per-provider delivery configuration. Defaults to empty if omitted.
+      required:
+      - name
+      - routing
+    RoutingStrategyReplaceRequest:
+      title: RoutingStrategyReplaceRequest
+      type: object
+      description: Request body for replacing a routing strategy. Full document replacement; missing optional fields are cleared.
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the routing strategy.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Optional description. Omit or null to clear.
+        tags:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Optional tags. Omit or null to clear.
+        routing:
+          $ref: '#/components/schemas/MessageRouting'
+          description: Routing tree defining channel selection method and order.
+        channels:
+          $ref: '#/components/schemas/MessageChannels'
+          description: Per-channel delivery configuration. Omit to clear.
+        providers:
+          $ref: '#/components/schemas/MessageProviders'
+          description: Per-provider delivery configuration. Omit to clear.
+      required:
+      - name
+      - routing
+    Channel:
+      title: Channel
+      type: object
+      properties:
+        brand_id:
+          type:
+          - string
+          - 'null'
+          description: Brand id used for rendering.
+        providers:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Providers enabled for this channel.
+        routing_method:
+          $ref: '#/components/schemas/RoutingMethod'
+          description: Defaults to `single`.
+        if:
+          type:
+          - string
+          - 'null'
+          description: JS conditional with access to data/profile.
+        timeouts:
+          $ref: '#/components/schemas/Timeouts'
+        override:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Channel specific overrides.
+        metadata:
+          $ref: '#/components/schemas/ChannelMetadata'
+      x-stainless-naming:
+        csharp:
+          type_name: MessageChannel
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     BadRequest:
       title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    Conflict:
+      title: Conflict
       type: object
       properties:
         type:
@@ -462,91 +602,65 @@ components:
       - providers
       - created
       - creator
-    Conflict:
-      title: Conflict
+    NotificationTemplateSummary:
+      title: NotificationTemplateSummary
       type: object
+      description: V2 (CDS) template summary returned in list responses.
       properties:
-        type:
+        id:
+          type: string
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        state:
           type: string
           enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
+          - DRAFT
+          - PUBLISHED
+        created:
+          type: integer
+          format: int64
+          description: Epoch milliseconds when the template was created.
+        creator:
           type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    RoutingStrategyCreateRequest:
-      title: RoutingStrategyCreateRequest
-      type: object
-      description: Request body for creating a routing strategy.
-      properties:
-        name:
+          description: User ID of the creator.
+        updated:
+          type: integer
+          format: int64
+          description: Epoch milliseconds of last update.
+        updater:
           type: string
-          description: Human-readable name for the routing strategy.
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description of the routing strategy.
-        tags:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Optional tags for categorization.
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
-          description: Routing tree defining channel selection method and order.
-        channels:
-          $ref: '#/components/schemas/MessageChannels'
-          description: Per-channel delivery configuration. Defaults to empty if omitted.
-        providers:
-          $ref: '#/components/schemas/MessageProviders'
-          description: Per-provider delivery configuration. Defaults to empty if omitted.
+          description: User ID of the last updater.
       required:
+      - id
       - name
-      - routing
-    RoutingStrategyReplaceRequest:
-      title: RoutingStrategyReplaceRequest
+      - tags
+      - state
+      - created
+      - creator
+    RoutingMethod:
+      title: RoutingMethod
+      type: string
+      enum:
+      - all
+      - single
+    AssociatedNotificationListResponse:
+      title: AssociatedNotificationListResponse
       type: object
-      description: Request body for replacing a routing strategy. Full document replacement; missing optional fields are cleared.
+      description: Paginated list of notification templates associated with a routing strategy.
       properties:
-        name:
-          type: string
-          description: Human-readable name for the routing strategy.
-        description:
-          type:
-          - string
-          - 'null'
-          description: Optional description. Omit or null to clear.
-        tags:
-          type:
-          - array
-          - 'null'
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
           items:
-            type: string
-          description: Optional tags. Omit or null to clear.
-        routing:
-          $ref: '#/components/schemas/MessageRouting'
-          description: Routing tree defining channel selection method and order.
-        channels:
-          $ref: '#/components/schemas/MessageChannels'
-          description: Per-channel delivery configuration. Omit to clear.
-        providers:
-          $ref: '#/components/schemas/MessageProviders'
-          description: Per-provider delivery configuration. Omit to clear.
+            $ref: '#/components/schemas/NotificationTemplateSummary'
       required:
-      - name
-      - routing
+      - paging
+      - results
     UTM:
       title: UTM
       type: object
@@ -571,38 +685,21 @@ components:
           type:
           - string
           - 'null'
-    NotFound:
-      title: NotFound
+    Timeouts:
+      title: Timeouts
       type: object
       properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    RoutingMethod:
-      title: RoutingMethod
-      type: string
-      enum:
-      - all
-      - single
-    RoutingStrategyListResponse:
-      title: RoutingStrategyListResponse
-      type: object
-      description: Paginated list of routing strategy summaries.
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoutingStrategySummary'
-      required:
-      - paging
-      - results
+        provider:
+          type:
+          - integer
+          - 'null'
+        channel:
+          type:
+          - integer
+          - 'null'
+      x-stainless-naming:
+        csharp:
+          type_name: ChannelTimeouts
     RoutingStrategySummary:
       title: RoutingStrategySummary
       type: object
@@ -649,19 +746,16 @@ components:
       - name
       - created
       - creator
-    MessageRouting:
-      title: MessageRouting
+    MessageChannels:
+      title: MessageChannels
       type: object
-      properties:
-        method:
-          $ref: '#/components/schemas/MessageRoutingMethod'
-        channels:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageRoutingChannel'
-      required:
-      - method
-      - channels
+      additionalProperties:
+        $ref: '#/components/schemas/Channel'
+    MessageProviders:
+      title: MessageProviders
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/MessageProvidersType'
     Paging:
       title: Paging
       type: object
@@ -674,130 +768,46 @@ components:
           type: boolean
       required:
       - more
-    MessageProvidersType:
-      title: MessageProvidersType
+    RoutingStrategyListResponse:
+      title: RoutingStrategyListResponse
       type: object
+      description: Paginated list of routing strategy summaries.
       properties:
-        override:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Provider-specific overrides.
-        if:
-          type:
-          - string
-          - 'null'
-          description: JS conditional with access to data/profile.
-        timeouts:
-          type:
-          - integer
-          - 'null'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-    Timeouts:
-      title: Timeouts
-      type: object
-      properties:
-        provider:
-          type:
-          - integer
-          - 'null'
-        channel:
-          type:
-          - integer
-          - 'null'
-      x-stainless-naming:
-        csharp:
-          type_name: ChannelTimeouts
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoutingStrategySummary'
+      required:
+      - paging
+      - results
     ChannelMetadata:
       title: ChannelMetadata
       type: object
       properties:
         utm:
           $ref: '#/components/schemas/UTM'
-    NotificationTemplateSummary:
-      title: NotificationTemplateSummary
-      type: object
-      description: V2 (CDS) template summary returned in list responses.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        state:
-          type: string
-          enum:
-          - DRAFT
-          - PUBLISHED
-        created:
-          type: integer
-          format: int64
-          description: Epoch milliseconds when the template was created.
-        creator:
-          type: string
-          description: User ID of the creator.
-        updated:
-          type: integer
-          format: int64
-          description: Epoch milliseconds of last update.
-        updater:
-          type: string
-          description: User ID of the last updater.
-      required:
-      - id
-      - name
-      - tags
-      - state
-      - created
-      - creator
-    Channel:
-      title: Channel
-      type: object
-      properties:
-        brand_id:
-          type:
-          - string
-          - 'null'
-          description: Brand id used for rendering.
-        providers:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Providers enabled for this channel.
-        routing_method:
-          $ref: '#/components/schemas/RoutingMethod'
-          description: Defaults to `single`.
-        if:
-          type:
-          - string
-          - 'null'
-          description: JS conditional with access to data/profile.
-        timeouts:
-          $ref: '#/components/schemas/Timeouts'
-        override:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Channel specific overrides.
-        metadata:
-          $ref: '#/components/schemas/ChannelMetadata'
-      x-stainless-naming:
-        csharp:
-          type_name: MessageChannel
     MessageRoutingMethod:
       title: MessageRoutingMethod
       type: string
       enum:
       - all
       - single
+    MessageRoutingChannel:
+      title: MessageRoutingChannel
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/MessageRouting'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     Metadata:
       title: Metadata
       type: object
@@ -807,16 +817,6 @@ components:
       x-stainless-naming:
         csharp:
           type_name: ProviderMetadata
-    MessageRoutingChannel:
-      title: MessageRoutingChannel
-      oneOf:
-      - type: string
-      - $ref: '#/components/schemas/MessageRouting'
-    MessageChannels:
-      title: MessageChannels
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/Channel'
   securitySchemes:
     BearerAuth:
       type: http

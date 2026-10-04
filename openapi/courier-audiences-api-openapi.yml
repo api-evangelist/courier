@@ -164,18 +164,59 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    AudienceFilterConfig:
-      title: AudienceFilterConfig
+    Paging:
+      title: Paging
       type: object
-      description: Filter configuration for audience membership containing an array of filter rules
       properties:
-        filters:
+        cursor:
+          type:
+          - string
+          - 'null'
+        more:
+          type: boolean
+      required:
+      - more
+    Audience:
+      title: Audience
+      type: object
+      properties:
+        id:
+          type: string
+          description: A unique identifier representing the audience_id
+        name:
+          type: string
+          description: The name of the audience
+        description:
+          type: string
+          description: A description of the audience
+        operator:
+          $ref: '#/components/schemas/LogicalOperator'
+          description: The logical operator (AND/OR) for the top-level filter
+        filter:
+          $ref: '#/components/schemas/AudienceFilterConfig'
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - created_at
+      - updated_at
+    AudienceMemberListResponse:
+      title: AudienceMemberListResponse
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        items:
           type: array
           items:
-            $ref: '#/components/schemas/FilterConfig'
-          description: Array of filter rules (single conditions or nested groups)
+            $ref: '#/components/schemas/AudienceMember'
       required:
-      - filters
+      - paging
+      - items
     AudienceListResponse:
       title: AudienceListResponse
       type: object
@@ -222,6 +263,35 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
+    AudienceUpdateResponse:
+      title: AudienceUpdateResponse
+      type: object
+      properties:
+        audience:
+          $ref: '#/components/schemas/Audience'
+      required:
+      - audience
+    AudienceFilterConfig:
+      title: AudienceFilterConfig
+      type: object
+      description: Filter configuration for audience membership containing an array of filter rules
+      properties:
+        filters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FilterConfig'
+          description: Array of filter rules (single conditions or nested groups)
+      required:
+      - filters
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     AudienceMember:
       title: AudienceMember
       type: object
@@ -242,82 +312,12 @@ components:
       - audience_version
       - member_id
       - reason
-    Paging:
-      title: Paging
-      type: object
-      properties:
-        cursor:
-          type:
-          - string
-          - 'null'
-        more:
-          type: boolean
-      required:
-      - more
-    Audience:
-      title: Audience
-      type: object
-      properties:
-        id:
-          type: string
-          description: A unique identifier representing the audience_id
-        name:
-          type: string
-          description: The name of the audience
-        description:
-          type: string
-          description: A description of the audience
-        operator:
-          $ref: '#/components/schemas/LogicalOperator'
-          description: The logical operator (AND/OR) for the top-level filter
-        filter:
-          $ref: '#/components/schemas/AudienceFilterConfig'
-        created_at:
-          type: string
-        updated_at:
-          type: string
-      required:
-      - id
-      - name
-      - description
-      - created_at
-      - updated_at
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
     LogicalOperator:
       title: LogicalOperator
       type: string
       enum:
       - AND
       - OR
-    AudienceMemberListResponse:
-      title: AudienceMemberListResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AudienceMember'
-      required:
-      - paging
-      - items
-    AudienceUpdateResponse:
-      title: AudienceUpdateResponse
-      type: object
-      properties:
-        audience:
-          $ref: '#/components/schemas/Audience'
-      required:
-      - audience
   securitySchemes:
     BearerAuth:
       type: http

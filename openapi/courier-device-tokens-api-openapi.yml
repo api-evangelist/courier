@@ -198,64 +198,6 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    UsersGetUserTokenResponse:
-      title: UsersGetUserTokenResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/UsersTokenStatus'
-        status_reason:
-          type:
-          - string
-          - 'null'
-          description: The reason for the token status.
-      allOf:
-      - $ref: '#/components/schemas/UsersUserToken'
-    UsersDevice:
-      title: UsersDevice
-      type: object
-      properties:
-        app_id:
-          type:
-          - string
-          - 'null'
-          description: Id of the application the token is used for
-        ad_id:
-          type:
-          - string
-          - 'null'
-          description: Id of the advertising identifier
-        device_id:
-          type:
-          - string
-          - 'null'
-          description: Id of the device the token is associated with
-        platform:
-          type:
-          - string
-          - 'null'
-          description: The device platform i.e. android, ios, web
-        manufacturer:
-          type:
-          - string
-          - 'null'
-          description: The device manufacturer
-        model:
-          type:
-          - string
-          - 'null'
-          description: The device model
-    UsersGetAllTokensResponse:
-      title: UsersGetAllTokensResponse
-      type: object
-      properties:
-        tokens:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersUserToken'
-      required:
-      - tokens
-      description: A list of tokens registered with the user.
     UsersTracking:
       title: usersTracking
       type: object
@@ -300,24 +242,6 @@ components:
           description: Tracking information about the device the token came from.
       required:
       - provider_key
-    UsersPatchOperation:
-      title: UsersPatchOperation
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to perform.
-        path:
-          type: string
-          description: The JSON path specifying the part of the profile to operate on.
-        value:
-          type:
-          - string
-          - 'null'
-          description: The value for the operation.
-      required:
-      - op
-      - path
     BadRequest:
       title: BadRequest
       type: object
@@ -330,42 +254,40 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    UsersExpiryDate:
-      title: UsersExpiryDate
-      oneOf:
-      - type: string
-      - type: boolean
-    UsersProviderKey:
-      title: UsersProviderKey
-      type: string
-      enum:
-      - firebase-fcm
-      - apn
-      - expo
-      - onesignal
-    UsersUserToken:
-      title: UsersUserToken
+    UsersDevice:
+      title: UsersDevice
       type: object
       properties:
-        token:
-          type: string
-          description: Full body of the token. Must match token in URL path parameter.
-        provider_key:
-          $ref: '#/components/schemas/UsersProviderKey'
-        expiry_date:
-          $ref: '#/components/schemas/UsersExpiryDate'
-          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
-        properties:
-          description: Properties about the token.
-        device:
-          $ref: '#/components/schemas/UsersDevice'
-          description: Information about the device the token came from.
-        tracking:
-          $ref: '#/components/schemas/UsersTracking'
-          description: Tracking information about the device the token came from.
-      required:
-      - provider_key
-      - token
+        app_id:
+          type:
+          - string
+          - 'null'
+          description: Id of the application the token is used for
+        ad_id:
+          type:
+          - string
+          - 'null'
+          description: Id of the advertising identifier
+        device_id:
+          type:
+          - string
+          - 'null'
+          description: Id of the device the token is associated with
+        platform:
+          type:
+          - string
+          - 'null'
+          description: The device platform i.e. android, ios, web
+        manufacturer:
+          type:
+          - string
+          - 'null'
+          description: The device manufacturer
+        model:
+          type:
+          - string
+          - 'null'
+          description: The device model
     UsersPatchUserTokenOpts:
       title: UsersPatchUserTokenOpts
       type: object
@@ -393,6 +315,84 @@ components:
       - unknown
       - failed
       - revoked
+    UsersPatchOperation:
+      title: UsersPatchOperation
+      type: object
+      properties:
+        op:
+          type: string
+          description: The operation to perform.
+        path:
+          type: string
+          description: The JSON path specifying the part of the profile to operate on.
+        value:
+          type:
+          - string
+          - 'null'
+          description: The value for the operation.
+      required:
+      - op
+      - path
+    UsersUserToken:
+      title: UsersUserToken
+      type: object
+      properties:
+        token:
+          type: string
+          description: Full body of the token. Must match token in URL path parameter.
+        provider_key:
+          $ref: '#/components/schemas/UsersProviderKey'
+        expiry_date:
+          $ref: '#/components/schemas/UsersExpiryDate'
+          description: ISO 8601 formatted date the token expires. Defaults to 2 months. Set to false to disable expiration.
+        properties:
+          description: Properties about the token.
+        device:
+          $ref: '#/components/schemas/UsersDevice'
+          description: Information about the device the token came from.
+        tracking:
+          $ref: '#/components/schemas/UsersTracking'
+          description: Tracking information about the device the token came from.
+      required:
+      - provider_key
+      - token
+    UsersGetAllTokensResponse:
+      title: UsersGetAllTokensResponse
+      type: object
+      properties:
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersUserToken'
+      required:
+      - tokens
+      description: A list of tokens registered with the user.
+    UsersExpiryDate:
+      title: UsersExpiryDate
+      oneOf:
+      - type: string
+      - type: boolean
+    UsersGetUserTokenResponse:
+      title: UsersGetUserTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UsersTokenStatus'
+        status_reason:
+          type:
+          - string
+          - 'null'
+          description: The reason for the token status.
+      allOf:
+      - $ref: '#/components/schemas/UsersUserToken'
+    UsersProviderKey:
+      title: UsersProviderKey
+      type: string
+      enum:
+      - firebase-fcm
+      - apn
+      - expo
+      - onesignal
   securitySchemes:
     BearerAuth:
       type: http

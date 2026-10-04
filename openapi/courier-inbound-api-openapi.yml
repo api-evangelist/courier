@@ -101,6 +101,16 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
+    TrackAcceptedResponse:
+      title: TrackAcceptedResponse
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: A successful call returns a `202` status code along with a `requestId` in the response body.
+          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
+      required:
+      - messageId
     Conflict:
       title: Conflict
       type: object
@@ -122,16 +132,6 @@ components:
           description: A message describing the error that occurred.
       required:
       - message
-    TrackAcceptedResponse:
-      title: TrackAcceptedResponse
-      type: object
-      properties:
-        messageId:
-          type: string
-          description: A successful call returns a `202` status code along with a `requestId` in the response body.
-          example: 1-65f240a0-47a6a120c8374de9bcf9f22c
-      required:
-      - messageId
   securitySchemes:
     BearerAuth:
       type: http
