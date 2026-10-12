@@ -1,0 +1,70 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/courier/integrations
+checked:
+- https://composio.dev/toolkits/courier
+- https://monid.ai/tools/courier
+- https://n8n.io/integrations/courier/
+- https://zapier.com/apps/courier/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: courier
+  url: https://zapier.com/apps/courier/integrations
+  external_url: https://app.courier.com/signup
+  partner_tier: BRONZE
+  triggers:
+  - key: new_audience_member
+    label: New Audience Member
+  actions:
+  - key: send_message
+    label: Send Message
+  searches: []
+edges:
+- partner_name: Google Forms
+  partner: google-forms
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/courier/integrations/google-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: Typeform
+  partner: typeform
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/courier/integrations/typeform
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.typeform.com/signup?utm_medium=referral&utm_source=zapier&utm_campaign=zapier_integration&utm_content=marketplace
+- partner_name: Gumlet
+  partner: gumlet
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/courier/integrations/gumlet
+  direction: third-party
+  category: Video & Audio
+  partner_url: https://www.gumlet.com/
+- partner_name: Taskworld
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/courier/integrations/taskworld-1
+  direction: third-party
+  category: Project Management
+  partner_url: https://taskworld.com/
+templates: []
