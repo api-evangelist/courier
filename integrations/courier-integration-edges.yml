@@ -67,4 +67,36 @@ edges:
   direction: third-party
   category: Project Management
   partner_url: https://taskworld.com/
+- partner_name: expo
+  partner: expo
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: delivery-provider
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/courier/blob/main/openapi/courier-device-tokens-api-openapi.yml
+  contract_reference:
+    repo: courier
+    spec_file: courier-device-tokens-api-openapi.yml
+    value: expo
+    property: components.schemas.UsersProviderKey
+    matched_domain: expo.dev
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
+- partner_name: onesignal
+  partner: onesignal
+  partner_match: domain
+  type: contract
+  channel: contract-enum
+  relationship: delivery-provider
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/courier/blob/main/openapi/courier-device-tokens-api-openapi.yml
+  contract_reference:
+    repo: courier
+    spec_file: courier-device-tokens-api-openapi.yml
+    value: onesignal
+    property: components.schemas.UsersProviderKey
+    matched_domain: onesignal.com
+    detected_by: sweep-cpaas.py
+    detected: '2026-10-12'
 templates: []
