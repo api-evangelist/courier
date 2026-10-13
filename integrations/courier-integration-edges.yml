@@ -3,6 +3,7 @@ method: searched
 source:
 - https://zapier.com/apps/courier/integrations
 checked:
+- https://aws.amazon.com/marketplace/
 - https://composio.dev/toolkits/courier
 - https://monid.ai/tools/courier
 - https://n8n.io/integrations/courier/
@@ -99,4 +100,20 @@ edges:
     matched_domain: onesignal.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
+- partner_name: AWS Marketplace
+  partner: amazon-web-services
+  partner_match: aggregator
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=4f3d149f-66d4-4616-a562-f2c01397b49d
+  listing_count: 2
+  apps:
+  - Courier Intelligent Notification Infrastructure Platform
+  - Courier Intelligent Notification Infrastructure Platform
+  seller_name: Courier
+  detected_by: sweep-cloud-marketplaces.py
+  detected: '2026-10-13'
 templates: []

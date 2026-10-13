@@ -67,7 +67,7 @@
     matched_domain: expo.dev
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: courier-onesignal
   label: onesignal
@@ -86,5 +86,17 @@
     matched_domain: onesignal.com
     detected_by: sweep-cpaas.py
     detected: '2026-10-12'
-  status: pending-generation
+  status: not-a-workflow
+  arazzo: null
+- slug: courier-aws-marketplace
+  label: AWS Marketplace
+  partner: amazon-web-services
+  partner_name: AWS Marketplace
+  type: marketplace
+  marketplace: aws-marketplace
+  channel: distribution
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=4f3d149f-66d4-4616-a562-f2c01397b49d
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
   arazzo: null
