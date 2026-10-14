@@ -9,6 +9,7 @@ checked:
 - https://hightouch.com/docs/destinations/courier
 - https://monid.ai/tools/courier
 - https://n8n.io/integrations/courier/
+- https://registry.modelcontextprotocol.io/v0/servers
 - https://www.twilio.com/docs/segment/connections/destinations/catalog/courier
 - https://zapier.com/apps/courier/integrations
 summary: null
@@ -182,5 +183,36 @@ edges:
       - mirror
       - update or create
   detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: MCP Registry
+  partner: mcp
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.trycourier
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: io.github.trycourier/courier
+    register_id: io.github.trycourier/courier
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-14'
+  mcp_registry:
+    servers:
+    - io.github.trycourier/courier
+    hosted_remote: 1
+    local_package: 0
+    transports:
+      streamable-http: 1
+    auth_declared: 1
+    catalog_declared: false
+    namespace_domains:
+    - courier.com
+  matched_by:
+  - remote-domain
+  detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
 templates: []
