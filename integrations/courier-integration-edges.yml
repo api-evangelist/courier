@@ -11,6 +11,7 @@ checked:
 - https://n8n.io/integrations/courier/
 - https://registry.modelcontextprotocol.io/v0/servers
 - https://www.twilio.com/docs/segment/connections/destinations/catalog/courier
+- https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/courier/integrations
 summary: null
 marketplace_apps:
@@ -199,7 +200,7 @@ edges:
     registered_name: io.github.trycourier/courier
     register_id: io.github.trycourier/courier
     detected_by: sweep-agent-tools.py
-    detected: '2026-10-14'
+    detected: '2026-10-15'
   mcp_registry:
     servers:
     - io.github.trycourier/courier
@@ -215,4 +216,29 @@ edges:
   - remote-domain
   detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
+- partner_name: Zapier
+  partner: zapier
+  partner_match: aggregator
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://zapier.com/apps/courier/integrations
+  category: null
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Courier
+    matched_domain: courier.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: courier
+    beta: false
+    builder: unknown (not in the directory record)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-15'
 templates: []
