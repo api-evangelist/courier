@@ -198,30 +198,25 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    UsersTracking:
-      title: usersTracking
+    UsersGetAllTokensResponse:
+      title: UsersGetAllTokensResponse
       type: object
       properties:
-        os_version:
-          type:
-          - string
-          - 'null'
-          description: The operating system version
-        ip:
-          type:
-          - string
-          - 'null'
-          description: The IP address of the device
-        lat:
-          type:
-          - string
-          - 'null'
-          description: The latitude of the device
-        long:
-          type:
-          - string
-          - 'null'
-          description: The longitude of the device
+        tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersUserToken'
+      required:
+      - tokens
+      description: A list of tokens registered with the user.
+    UsersTokenStatus:
+      title: UsersTokenStatus
+      type: string
+      enum:
+      - active
+      - unknown
+      - failed
+      - revoked
     UsersAddSingleTokenBody:
       title: UsersAddSingleTokenBody
       type: object
@@ -242,18 +237,11 @@ components:
           description: Tracking information about the device the token came from.
       required:
       - provider_key
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
+    UsersExpiryDate:
+      title: UsersExpiryDate
+      oneOf:
+      - type: string
+      - type: boolean
     UsersDevice:
       title: UsersDevice
       type: object
@@ -288,33 +276,51 @@ components:
           - string
           - 'null'
           description: The device model
-    UsersPatchUserTokenOpts:
-      title: UsersPatchUserTokenOpts
+    UsersTracking:
+      title: usersTracking
       type: object
       properties:
-        patch:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersPatchOperation'
-      required:
-      - patch
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
-    UsersTokenStatus:
-      title: UsersTokenStatus
+        os_version:
+          type:
+          - string
+          - 'null'
+          description: The operating system version
+        ip:
+          type:
+          - string
+          - 'null'
+          description: The IP address of the device
+        lat:
+          type:
+          - string
+          - 'null'
+          description: The latitude of the device
+        long:
+          type:
+          - string
+          - 'null'
+          description: The longitude of the device
+    UsersProviderKey:
+      title: UsersProviderKey
       type: string
       enum:
-      - active
-      - unknown
-      - failed
-      - revoked
+      - firebase-fcm
+      - apn
+      - expo
+      - onesignal
+    UsersGetUserTokenResponse:
+      title: UsersGetUserTokenResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/UsersTokenStatus'
+        status_reason:
+          type:
+          - string
+          - 'null'
+          description: The reason for the token status.
+      allOf:
+      - $ref: '#/components/schemas/UsersUserToken'
     UsersPatchOperation:
       title: UsersPatchOperation
       type: object
@@ -333,6 +339,25 @@ components:
       required:
       - op
       - path
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    UsersPatchUserTokenOpts:
+      title: UsersPatchUserTokenOpts
+      type: object
+      properties:
+        patch:
+          type: array
+          items:
+            $ref: '#/components/schemas/UsersPatchOperation'
+      required:
+      - patch
     UsersUserToken:
       title: UsersUserToken
       type: object
@@ -356,43 +381,18 @@ components:
       required:
       - provider_key
       - token
-    UsersGetAllTokensResponse:
-      title: UsersGetAllTokensResponse
+    BadRequest:
+      title: BadRequest
       type: object
       properties:
-        tokens:
-          type: array
-          items:
-            $ref: '#/components/schemas/UsersUserToken'
+        type:
+          type: string
+          enum:
+          - invalid_request_error
       required:
-      - tokens
-      description: A list of tokens registered with the user.
-    UsersExpiryDate:
-      title: UsersExpiryDate
-      oneOf:
-      - type: string
-      - type: boolean
-    UsersGetUserTokenResponse:
-      title: UsersGetUserTokenResponse
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/UsersTokenStatus'
-        status_reason:
-          type:
-          - string
-          - 'null'
-          description: The reason for the token status.
+      - type
       allOf:
-      - $ref: '#/components/schemas/UsersUserToken'
-    UsersProviderKey:
-      title: UsersProviderKey
-      type: string
-      enum:
-      - firebase-fcm
-      - apn
-      - expo
-      - onesignal
+      - $ref: '#/components/schemas/BaseError'
   securitySchemes:
     BearerAuth:
       type: http

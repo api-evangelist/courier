@@ -59,6 +59,18 @@ paths:
       - BearerAuth: []
 components:
   schemas:
+    Actor:
+      title: Actor
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
     Paging:
       title: Paging
       type: object
@@ -107,18 +119,6 @@ components:
       required:
       - paging
       - results
-    Actor:
-      title: Actor
-      type: object
-      properties:
-        id:
-          type: string
-        email:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
   securitySchemes:
     BearerAuth:
       type: http

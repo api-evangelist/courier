@@ -272,31 +272,42 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    DeleteListSubscriptionResponse:
-      title: DeleteListSubscriptionResponse
+    UserProfilePatch:
+      title: UserProfilePatch
       type: object
       properties:
-        status:
+        op:
           type: string
-          enum:
-          - SUCCESS
+          description: The operation to perform.
+        path:
+          type: string
+          description: The JSON path specifying the part of the profile to operate on.
+        value:
+          type: string
+          description: The value for the operation.
       required:
-      - status
-    NotificationPreferences:
-      title: NotificationPreferences
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/NotificationPreferenceDetails'
-    SubscribeToListsRequest:
-      title: SubscribeToListsRequest
+      - op
+      - path
+      - value
+    ChannelPreference:
+      title: ChannelPreference
       type: object
       properties:
-        lists:
-          type: array
-          items:
-            $ref: '#/components/schemas/SubscribeToListsRequestItem'
+        channel:
+          $ref: '#/components/schemas/ChannelClassification'
       required:
-      - lists
+      - channel
+    ProfileGetResponse:
+      title: ProfileGetResponse
+      type: object
+      properties:
+        profile:
+          type: object
+          additionalProperties: true
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
+      required:
+      - profile
     ProfileUpdateRequest:
       title: ProfileUpdateRequest
       type: object
@@ -308,36 +319,45 @@ components:
           description: List of patch operations to apply to the profile.
       required:
       - patch
-    ChannelPreference:
-      title: ChannelPreference
+    GetListSubscriptionsItem:
+      title: GetListSubscriptionsItem
       type: object
       properties:
-        channel:
-          $ref: '#/components/schemas/ChannelClassification'
-      required:
-      - channel
-    BadRequest:
-      title: BadRequest
-      type: object
-      properties:
-        type:
+        id:
           type: string
-          enum:
-          - invalid_request_error
+        name:
+          type: string
+          description: List name
+        created:
+          type: string
+          description: The date/time of when the list was created. Represented as a string in ISO format.
+        updated:
+          type: string
+          description: The date/time of when the list was updated. Represented as a string in ISO format.
+        preferences:
+          $ref: '#/components/schemas/RecipientPreferences'
       required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    ChannelClassification:
-      title: ChannelClassification
-      type: string
-      enum:
-      - direct_message
-      - email
-      - push
-      - sms
-      - webhook
-      - inbox
+      - id
+      - name
+      - created
+      - updated
+    NotificationPreferences:
+      title: NotificationPreferences
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/NotificationPreferenceDetails'
+    Rule:
+      title: Rule
+      type: object
+      properties:
+        start:
+          type:
+          - string
+          - 'null'
+        until:
+          type: string
+      required:
+      - until
     SubscribeToListsResponse:
       title: SubscribeToListsResponse
       type: object
@@ -348,6 +368,26 @@ components:
           - SUCCESS
       required:
       - status
+    ReplaceProfileResponse:
+      title: ReplaceProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
+    SubscribeToListsRequest:
+      title: SubscribeToListsRequest
+      type: object
+      properties:
+        lists:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscribeToListsRequestItem'
+      required:
+      - lists
     NotificationPreferenceDetails:
       title: NotificationPreferenceDetails
       type: object
@@ -375,102 +415,8 @@ components:
       - OPTED_IN
       - OPTED_OUT
       - REQUIRED
-    UserProfilePatch:
-      title: UserProfilePatch
-      type: object
-      properties:
-        op:
-          type: string
-          description: The operation to perform.
-        path:
-          type: string
-          description: The JSON path specifying the part of the profile to operate on.
-        value:
-          type: string
-          description: The value for the operation.
-      required:
-      - op
-      - path
-      - value
-    MergeProfileResponse:
-      title: MergeProfileResponse
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - SUCCESS
-      required:
-      - status
-    RecipientPreferences:
-      title: RecipientPreferences
-      type: object
-      properties:
-        categories:
-          $ref: '#/components/schemas/NotificationPreferences'
-        notifications:
-          $ref: '#/components/schemas/NotificationPreferences'
-    GetListSubscriptionsItem:
-      title: GetListSubscriptionsItem
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: List name
-        created:
-          type: string
-          description: The date/time of when the list was created. Represented as a string in ISO format.
-        updated:
-          type: string
-          description: The date/time of when the list was updated. Represented as a string in ISO format.
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-      required:
-      - id
-      - name
-      - created
-      - updated
-    Rule:
-      title: Rule
-      type: object
-      properties:
-        start:
-          type:
-          - string
-          - 'null'
-        until:
-          type: string
-      required:
-      - until
-    ProfileGetResponse:
-      title: ProfileGetResponse
-      type: object
-      properties:
-        profile:
-          type: object
-          additionalProperties: true
-        preferences:
-          $ref: '#/components/schemas/RecipientPreferences'
-      required:
-      - profile
-    GetListSubscriptionsResponse:
-      title: GetListSubscriptionsResponse
-      type: object
-      properties:
-        paging:
-          $ref: '#/components/schemas/Paging'
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/GetListSubscriptionsItem'
-          description: An array of lists
-      required:
-      - paging
-      - results
-    ReplaceProfileResponse:
-      title: ReplaceProfileResponse
+    DeleteListSubscriptionResponse:
+      title: DeleteListSubscriptionResponse
       type: object
       properties:
         status:
@@ -491,15 +437,30 @@ components:
           type: boolean
       required:
       - more
-    BaseError:
-      title: BaseError
+    GetListSubscriptionsResponse:
+      title: GetListSubscriptionsResponse
       type: object
       properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
+        paging:
+          $ref: '#/components/schemas/Paging'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/GetListSubscriptionsItem'
+          description: An array of lists
       required:
-      - message
+      - paging
+      - results
+    MergeProfileResponse:
+      title: MergeProfileResponse
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - SUCCESS
+      required:
+      - status
     SubscribeToListsRequestItem:
       title: SubscribeToListsRequestItem
       type: object
@@ -510,6 +471,45 @@ components:
           $ref: '#/components/schemas/RecipientPreferences'
       required:
       - listId
+    ChannelClassification:
+      title: ChannelClassification
+      type: string
+      enum:
+      - direct_message
+      - email
+      - push
+      - sms
+      - webhook
+      - inbox
+    RecipientPreferences:
+      title: RecipientPreferences
+      type: object
+      properties:
+        categories:
+          $ref: '#/components/schemas/NotificationPreferences'
+        notifications:
+          $ref: '#/components/schemas/NotificationPreferences'
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
+    BadRequest:
+      title: BadRequest
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
   securitySchemes:
     BearerAuth:
       type: http

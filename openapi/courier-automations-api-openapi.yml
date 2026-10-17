@@ -146,6 +146,139 @@ paths:
                       template: 64TP5HKPFTM8VTK1Y75SJDQX9JK0
 components:
   schemas:
+    Automation:
+      title: Automation
+      type: object
+      properties:
+        cancelation_token:
+          type:
+          - string
+          - 'null'
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationStep'
+      required:
+      - steps
+    AutomationTemplateListResponse:
+      title: AutomationTemplateListResponse
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/AutomationTemplate'
+        cursor:
+          type: string
+          description: A cursor token for pagination. Present when there are more results available.
+    AutomationSendStep:
+      title: AutomationSendStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - send
+        template:
+          type:
+          - string
+          - 'null'
+        brand:
+          type:
+          - string
+          - 'null'
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        profile:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+        recipient:
+          type:
+          - string
+          - 'null'
+      required:
+      - action
+    AutomationInvokeResponse:
+      title: AutomationInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+      required:
+      - runId
+    AutomationCancelStep:
+      title: AutomationCancelStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - cancel
+        cancelation_token:
+          type: string
+      required:
+      - action
+      - cancelation_token
+    AutomationWebhookParams:
+      title: AutomationWebhookParams
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        headers:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: string
+        body:
+          type:
+          - string
+          - 'null'
+      required:
+      - url
+      - method
+    AutomationTemplate:
+      title: AutomationTemplate
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the automation template.
+        id:
+          type: string
+          description: The unique identifier of the automation template.
+        version:
+          type: string
+          description: The version of the template published or drafted.
+          enum:
+          - published
+          - draft
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the template was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp when the template was last updated.
+      required:
+      - name
+      - id
+      - version
     AutomationInvokeParams:
       title: AutomationInvokeParams
       type: object
@@ -211,157 +344,6 @@ components:
       - $ref: '#/components/schemas/AutomationCancelStep'
       - $ref: '#/components/schemas/AutomationFetchDataStep'
       - $ref: '#/components/schemas/AutomationInvokeStep'
-    AutomationFetchDataStep:
-      title: AutomationFetchDataStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - fetch-data
-        webhook:
-          $ref: '#/components/schemas/AutomationWebhookParams'
-        merge_strategy:
-          type:
-          - string
-          - 'null'
-          enum:
-          - replace
-          - overwrite
-          - soft-merge
-      required:
-      - action
-      - webhook
-    AutomationWebhookParams:
-      title: AutomationWebhookParams
-      type: object
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-          - DELETE
-        headers:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: string
-        body:
-          type:
-          - string
-          - 'null'
-      required:
-      - url
-      - method
-    AutomationSendListStep:
-      title: AutomationSendListStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - send-list
-        list:
-          type: string
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        brand:
-          type:
-          - string
-          - 'null'
-      required:
-      - action
-      - list
-    AutomationCancelStep:
-      title: AutomationCancelStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - cancel
-        cancelation_token:
-          type: string
-      required:
-      - action
-      - cancelation_token
-    AutomationInvokeResponse:
-      title: AutomationInvokeResponse
-      type: object
-      properties:
-        runId:
-          type: string
-      required:
-      - runId
-    AutomationTemplate:
-      title: AutomationTemplate
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the automation template.
-        id:
-          type: string
-          description: The unique identifier of the automation template.
-        version:
-          type: string
-          description: The version of the template published or drafted.
-          enum:
-          - published
-          - draft
-        createdAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the template was created.
-        updatedAt:
-          type: string
-          format: date-time
-          description: ISO 8601 timestamp when the template was last updated.
-      required:
-      - name
-      - id
-      - version
-    AutomationDelayStep:
-      title: AutomationDelayStep
-      type: object
-      properties:
-        action:
-          type: string
-          enum:
-          - delay
-        duration:
-          type:
-          - string
-          - 'null'
-        until:
-          type:
-          - string
-          - 'null'
-      required:
-      - action
-    Automation:
-      title: Automation
-      type: object
-      properties:
-        cancelation_token:
-          type:
-          - string
-          - 'null'
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationStep'
-      required:
-      - steps
     AutomationAdHocInvokeParams:
       title: AutomationAdHocInvokeParams
       type: object
@@ -392,6 +374,45 @@ components:
           - 'null'
       required:
       - automation
+    AutomationDelayStep:
+      title: AutomationDelayStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - delay
+        duration:
+          type:
+          - string
+          - 'null'
+        until:
+          type:
+          - string
+          - 'null'
+      required:
+      - action
+    AutomationFetchDataStep:
+      title: AutomationFetchDataStep
+      type: object
+      properties:
+        action:
+          type: string
+          enum:
+          - fetch-data
+        webhook:
+          $ref: '#/components/schemas/AutomationWebhookParams'
+        merge_strategy:
+          type:
+          - string
+          - 'null'
+          enum:
+          - replace
+          - overwrite
+          - soft-merge
+      required:
+      - action
+      - webhook
     AutomationInvokeStep:
       title: AutomationInvokeStep
       type: object
@@ -405,49 +426,28 @@ components:
       required:
       - action
       - template
-    AutomationTemplateListResponse:
-      title: AutomationTemplateListResponse
-      type: object
-      properties:
-        templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/AutomationTemplate'
-        cursor:
-          type: string
-          description: A cursor token for pagination. Present when there are more results available.
-    AutomationSendStep:
-      title: AutomationSendStep
+    AutomationSendListStep:
+      title: AutomationSendListStep
       type: object
       properties:
         action:
           type: string
           enum:
-          - send
-        template:
-          type:
-          - string
-          - 'null'
-        brand:
-          type:
-          - string
-          - 'null'
+          - send-list
+        list:
+          type: string
         data:
           type:
           - object
           - 'null'
           additionalProperties: true
-        profile:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-        recipient:
+        brand:
           type:
           - string
           - 'null'
       required:
       - action
+      - list
   securitySchemes:
     BearerAuth:
       type: http

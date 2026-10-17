@@ -206,6 +206,39 @@ components:
           type: object
           additionalProperties: true
           description: Data payload passed to the journey. The expected shape can be predefined using the schema builder in the journey editor. This data is available in journey steps for condition evaluation and template variable interpolation. Can also contain user identifiers (user_id, userId, anonymousId) if not provided elsewhere.
+    NotFound:
+      title: NotFound
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+    JourneysInvokeResponse:
+      title: JourneysInvokeResponse
+      type: object
+      properties:
+        runId:
+          type: string
+          description: A unique identifier for the journey run that was created.
+      required:
+      - runId
+    UnprocessableEntity:
+      title: UnprocessableEntity
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - invalid_request_error
+      required:
+      - type
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
     Journey:
       title: Journey
       type: object
@@ -235,6 +268,15 @@ components:
       - name
       - id
       - version
+    BaseError:
+      title: BaseError
+      type: object
+      properties:
+        message:
+          type: string
+          description: A message describing the error that occurred.
+      required:
+      - message
     BadRequest:
       title: BadRequest
       type: object
@@ -247,48 +289,6 @@ components:
       - type
       allOf:
       - $ref: '#/components/schemas/BaseError'
-    NotFound:
-      title: NotFound
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    UnprocessableEntity:
-      title: UnprocessableEntity
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - invalid_request_error
-      required:
-      - type
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-    JourneysInvokeResponse:
-      title: JourneysInvokeResponse
-      type: object
-      properties:
-        runId:
-          type: string
-          description: A unique identifier for the journey run that was created.
-      required:
-      - runId
-    BaseError:
-      title: BaseError
-      type: object
-      properties:
-        message:
-          type: string
-          description: A message describing the error that occurred.
-      required:
-      - message
     JourneysListResponse:
       title: JourneysListResponse
       type: object
