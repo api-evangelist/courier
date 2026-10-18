@@ -6,6 +6,7 @@ checked:
 - https://aws.amazon.com/marketplace/
 - https://composio.dev/toolkits/courier
 - https://fivetran.com/docs/activations/destinations/available-destinations/courier
+- https://github.com/meltano/hub
 - https://hightouch.com/docs/destinations/courier
 - https://monid.ai/tools/courier
 - https://n8n.io/integrations/courier/
@@ -241,4 +242,33 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Meltano
+  partner: meltano
+  partner_match: aggregator
+  type: marketplace
+  marketplace: meltano-hub
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://hub.meltano.com/extractors/tap-courier--airbyte
+  category: null
+  contract_reference:
+    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
+    spec_file: null
+    role: elt-connector:meltano-hub
+    registered_name: Courier
+    matched_domain: courier.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    plugins:
+    - tap-courier--airbyte
+    maintenance_status:
+    - beta
+    quality:
+    - bronze
+    builder: 'community (Meltano Hub variant maintainers: airbyte)'
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
 templates: []
