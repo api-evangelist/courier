@@ -207,5 +207,5 @@
     quality:
     - bronze
     builder: 'community (Meltano Hub variant maintainers: airbyte)'
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
